@@ -1,9 +1,10 @@
+"use client";
+
 // Author: Marty Orchard
 // Area: Frontend / UI
 
-"use client";
-
 import { useState } from "react";
+import styles from "@/app/profile/page.module.css";
 
 type ProfileFormData = {
   patientName: string;
@@ -59,9 +60,9 @@ export default function ProfileForm() {
   }
 
   return (
-    <section className="profile-page">
-      <div className="profile-header">
-        <p className="eyebrow">Sprint 1 · Basic Version</p>
+    <section className={styles.profilePage}>
+      <div className={styles.profileHeader}>
+        <p className={styles.eyebrow}>Sprint 1 · Basic Version</p>
         <h1>User Profile Setup</h1>
         <p>
           Enter basic patient information so the nutrition app can later provide
@@ -69,14 +70,14 @@ export default function ProfileForm() {
         </p>
       </div>
 
-      <div className="profile-layout">
-        <form className="profile-form-card" onSubmit={handleSubmit}>
-          <div className="form-section-title">
+      <div className={styles.profileLayout}>
+        <form className={styles.profileFormCard} onSubmit={handleSubmit}>
+          <div className={styles.formSectionTitle}>
             <h2>Patient Information</h2>
             <p>Required fields are marked with an asterisk.</p>
           </div>
 
-          <div className="form-grid">
+          <div className={styles.formGrid}>
             <label>
               Patient name *
               <input
@@ -185,7 +186,7 @@ export default function ProfileForm() {
               />
             </label>
 
-            <label className="full-width">
+            <label className={styles.fullWidth}>
               Medical conditions
               <textarea
                 name="medicalConditions"
@@ -197,13 +198,13 @@ export default function ProfileForm() {
             </label>
           </div>
 
-          <div className="form-actions">
-            <button className="primary-button" type="submit">
+          <div className={styles.formActions}>
+            <button className={styles.primaryButton} type="submit">
               Save Profile Details
             </button>
 
             <button
-              className="secondary-button"
+              className={styles.secondaryButton}
               type="button"
               onClick={handleReset}
             >
@@ -212,16 +213,16 @@ export default function ProfileForm() {
           </div>
         </form>
 
-        <aside className="profile-preview-card">
+        <aside className={styles.profilePreviewCard}>
           <h2>Profile Preview</h2>
 
           {!submittedProfile ? (
-            <p className="muted-text">
+            <p className={styles.mutedText}>
               Submit the form to preview the captured profile details. This is
               frontend-only for Sprint 1.
             </p>
           ) : (
-            <div className="preview-list">
+            <div className={styles.previewList}>
               <div>
                 <span>Name</span>
                 <strong>{submittedProfile.patientName}</strong>
