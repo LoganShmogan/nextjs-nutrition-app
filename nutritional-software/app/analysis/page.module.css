@@ -104,3 +104,28 @@
   font: inherit;
   padding: 13px 14px;
 }
+
+.formSection textarea {
+  resize: vertical;
+}
+
+.formSection input:focus,
+.formSection textarea:focus {
+  outline: 3px solid rgba(47, 125, 50, 0.18);
+  border-color: #2f7d32;
+}
+
+.saveInfoBox {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid #9db8ff;
+  border-radius: 18px;
+  background: #dfe9ff;
+}
+
+.saveInfoBox h2 {
+  margin-bottom: 10px;
+  color: #171717;
+  font-size: 1rem;
+}
+
