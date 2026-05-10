@@ -1,0 +1,20 @@
+/*
+  Author: Marty Orchard
+  Area: Save Analysis page styling
+*/
+
+.pageShell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.analysisPage {
+  display: grid;
+  gap: 28px;
+}
+
+.analysisHeader {
+  max-width: 820px;
+}
+
