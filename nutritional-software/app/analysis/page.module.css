@@ -134,3 +134,11 @@
   color: #171717;
   line-height: 1.6;
 }
+
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
