@@ -166,3 +166,21 @@
   background: #236326;
 }
 
+.secondaryButton {
+  border: 1px solid #dfe5dc;
+  background: #eef4ec;
+  color: #171717;
+}
+
+.secondaryButton:hover {
+  background: #e1eadf;
+}
+
+.successMessage {
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #e8f7e8;
+  color: #1f6b24;
+  font-weight: 800;
+}
