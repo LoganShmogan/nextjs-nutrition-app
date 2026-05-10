@@ -96,3 +96,22 @@ a {
   line-height: 1.6;
 }
 
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.profile-form-card,
+.profile-preview-card {
+  border: 1px solid #dfe5dc;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(25, 42, 25, 0.08);
+}
+
+.profile-form-card {
+  padding: 32px;
+}
+
