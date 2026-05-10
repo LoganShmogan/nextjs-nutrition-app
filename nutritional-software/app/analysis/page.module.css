@@ -142,3 +142,27 @@
   margin-top: 24px;
 }
 
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.primaryButton {
+  border: 0;
+  background: #2f7d32;
+  color: #ffffff;
+}
+
+.primaryButton:hover {
+  background: #236326;
+}
+
