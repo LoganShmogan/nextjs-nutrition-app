@@ -99,21 +99,24 @@
 
 .summaryGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
   gap: 18px;
 }
 
 .nutrientCard {
   display: grid;
   gap: 14px;
+  min-width: 0;
   padding: 24px;
+  overflow: hidden;
 }
 
 .nutrientTopRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .nutrientTopRow span {
@@ -137,11 +140,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
   padding: 6px 10px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  white-space: nowrap;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
 }
 
 .successBadge {
