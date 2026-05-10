@@ -8,5 +8,7 @@ import { useState } from "react";
 type ProfileFormData = 
 {
     patientName: string;
+    age: string;
+    
 
 }
