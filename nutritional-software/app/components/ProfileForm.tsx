@@ -9,6 +9,7 @@ type ProfileFormData =
 {
     patientName: string;
     age: string;
+    gender: string;
     
 
 }
