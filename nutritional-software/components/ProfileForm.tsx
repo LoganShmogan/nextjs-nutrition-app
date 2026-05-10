@@ -144,6 +144,36 @@ export default function ProfileForm() {
               />
             </label>
 
+            <label>
+              Height cm *
+              <input
+                type="number"
+                name="height"
+                value={formData.height}
+                onChange={handleChange}
+                placeholder="e.g. 175"
+                min="1"
+                step="0.1"
+                required
+              />
+            </label>
+
+            <label>
+              Activity level *
+              <select
+                name="activityLevel"
+                value={formData.activityLevel}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select activity level</option>
+                <option value="Sedentary">Sedentary</option>
+                <option value="Lightly active">Lightly active</option>
+                <option value="Active">Active</option>
+                <option value="Very active">Very active</option>
+              </select>
+            </label>
+
           )}
         </aside>
       </div>
