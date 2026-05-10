@@ -45,6 +45,14 @@ export default function NutritionSummaryCard() {
           frontend-only for Sprint 1.
         </p>
       </div>
-	  </section>
-  );
-}
+
+      <section className={styles.overviewCard}>
+        <div>
+          <p className={styles.cardLabel}>Daily Intake Summary</p>
+          <h2>Basic nutritional feedback</h2>
+          <p>
+            This summary gives a quick view of estimated energy and
+            macronutrient intake against placeholder targets.
+          </p>
+        </div>
+
