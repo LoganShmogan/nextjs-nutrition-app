@@ -184,3 +184,20 @@
   color: #1f6b24;
   font-weight: 800;
 }
+
+.supportCard h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.supportCard p {
+  color: #5f6b5f;
+  line-height: 1.6;
+}
+
+.previewList {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
