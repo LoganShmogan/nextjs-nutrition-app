@@ -4,3 +4,48 @@
 "use client";
 
 import { useState } from "react";
+
+type ProfileFormData = {
+    patientName: string;
+    age: string;
+    gender: string;
+    ethnicity: string;
+    weight: string;
+    height: string;
+    activityLevel: string;
+    dietaryRestrictions: string;
+    medicalConditions: string;
+};
+
+const initialFormData: ProfileFormData = {
+    patientName: "",
+    age: "",
+    gender: "",
+    ethnicity: "",
+    weight: "",
+    height: "",
+    activityLevel: "",
+    dietaryRestrictions: "",
+    medicalConditions: "",
+};
+
+export default function ProfileForm() {
+    const [formData, setFormData] = useState<ProfileFormData>(initialFormData);
+    const [submittedProfile, setSubmittedProfile] =
+        useState<ProfileFormData | null>(null);
+
+    function handleChange(
+        event:
+            | React.ChangeEvent<HTMLInputElement>
+            | React.ChangeEvent<HTMLSelectElement>
+            | React.ChangeEvent<HTMLTextAreaElement>,
+    ) {
+        const { name, value } = event.target;
+
+        setFormData((currentData) => ({
+            ...currentData,
+            [name]: value,
+        }));
+    }
+
+}
