@@ -1,3 +1,6 @@
+// Author: Marty & Logan
+// Shared due to app wide layout, mainly frontend effects however does affect the whole app
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";

@@ -1,3 +1,8 @@
+<!--
+Authors: Marty Orchard & Logan Young
+Area: Project documentation
+-->
+
 # nextjs-nutrition-app
 The purpose of the software is to be able to input a person's dietary intake and match both the overall intake against Recommended Dietary Intakes or Nutritional Requirements/Recommendations.
 
@@ -18,3 +23,4 @@ https://www.figma.com/design/SGXr5tPGSLicdQaBvHxwzm/Prototype-SWE-A1?node-id=0-1
 - @types/react-dom
 - babel-plugin-react-compiler
 - typescript
+
