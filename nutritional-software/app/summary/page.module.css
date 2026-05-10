@@ -109,3 +109,15 @@
   padding: 24px;
 }
 
+.nutrientTopRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nutrientTopRow span {
+  color: #5f6b5f;
+  font-weight: 800;
+}
+
