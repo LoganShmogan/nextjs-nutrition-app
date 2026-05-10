@@ -164,3 +164,109 @@
   margin-top: 22px;
 }
 
+.feedbackList div {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid #dfe5dc;
+  border-radius: 16px;
+  background: #fbfdfb;
+}
+
+.feedbackList span {
+  color: #5f6b5f;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.feedbackList strong {
+  color: #171717;
+  line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+  .summaryHeader h1,
+  .overviewCard h2,
+  .feedbackCard h2,
+  .nutrientCard strong,
+  .feedbackList strong {
+    color: #f2f5f1;
+  }
+
+  .summaryHeader p,
+  .overviewCard p,
+  .feedbackCard p,
+  .nutrientCard p {
+    color: #b8c2b7;
+  }
+
+  .eyebrow,
+  .cardLabel {
+    color: #8fcf91;
+  }
+
+  .overviewCard,
+  .nutrientCard,
+  .feedbackCard {
+    border-color: #445047;
+    background: #2b332e;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .overallStatus,
+  .feedbackList div {
+    border-color: #445047;
+    background: #222923;
+  }
+
+  .overallStatus span,
+  .nutrientTopRow span,
+  .feedbackList span {
+    color: #aebbad;
+  }
+
+  .overallStatus strong {
+    color: #8fcf91;
+  }
+
+  .successBadge {
+    background: rgba(143, 207, 145, 0.16);
+    color: #9ee6a0;
+  }
+
+  .warningBadge {
+    background: rgba(255, 207, 92, 0.14);
+    color: #ffd978;
+  }
+}
+
+@media (max-width: 950px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overviewCard {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .overallStatus {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .pageShell {
+    padding: 28px 16px;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .overviewCard,
+  .feedbackCard,
+  .nutrientCard {
+    padding: 22px;
+  }
+}
