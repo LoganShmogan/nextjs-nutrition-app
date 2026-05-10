@@ -20,7 +20,7 @@ export default function Home() {
 						<u>Summary</u>
 					</Link>
 					<Link href="/nutritional-feedback">
-						<u>nutritional feedback</u>
+						<u>Nutritional Feedback</u>
 					</Link>
 					<Link href="/analysis">
 						<u>Analysis</u>
