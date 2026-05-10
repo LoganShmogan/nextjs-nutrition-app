@@ -18,6 +18,19 @@ const summaryItems = [
     status: "Meeting target",
     statusType: "success",
   },
-
+  {
+    label: "Carbohydrates",
+    value: "230 g",
+    target: "Target: 260 g",
+    status: "Slightly under",
+    statusType: "warning",
+  },
+  {
+    label: "Fat",
+    value: "62 g",
+    target: "Target: 70 g",
+    status: "Within range",
+    statusType: "success",
+  },
 ];
 
