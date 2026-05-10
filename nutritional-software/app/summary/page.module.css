@@ -97,3 +97,15 @@
   font-size: 1.2rem;
 }
 
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.nutrientCard {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+}
+
