@@ -9,7 +9,7 @@ The purpose of the software is to be able to input a person's dietary intake and
 # LIVE HERE = https://nextjs-nutrition-app-sooty.vercel.app/
 
 ## Figma design
-[https://www.figma.com/proto/V04QhCvXvDZz7aP9gYCOJp/Prototype-SWE-A1--Frontend-Wireframe-Diagram-?node-id=0-1&t=34uMyQwJYsx9egKD-1](url)
+https://www.figma.com/proto/V04QhCvXvDZz7aP9gYCOJp/Prototype-SWE-A1--Frontend-Wireframe-Diagram-?node-id=0-1&t=34uMyQwJYsx9egKD-1
 
 # Dependencies:
 - next
