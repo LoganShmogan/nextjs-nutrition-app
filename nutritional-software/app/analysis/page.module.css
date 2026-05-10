@@ -201,3 +201,18 @@
   margin-top: 22px;
 }
 
+.previewList div {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  border: 1px solid #dfe5dc;
+  border-radius: 16px;
+  background: #fbfdfb;
+}
+
+.previewList span {
+  color: #5f6b5f;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
