@@ -1,0 +1,338 @@
+/*
+  Author: Marty Orchard
+  Area: Save Analysis page styling
+*/
+
+.pageShell {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.analysisPage {
+    display: grid;
+    gap: 28px;
+}
+
+.analysisHeader {
+    max-width: 820px;
+}
+
+.eyebrow {
+    margin-bottom: 10px;
+    color: #2f7d32;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.analysisHeader h1 {
+    margin-bottom: 12px;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+}
+
+.analysisHeader p {
+    color: #5f6b5f;
+    line-height: 1.6;
+}
+
+.analysisLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.analysisCard,
+.supportCard {
+    border: 1px solid #dfe5dc;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 18px 50px rgba(25, 42, 25, 0.08);
+}
+
+.analysisCard {
+    padding: 32px;
+}
+
+.supportCard {
+    padding: 28px;
+}
+
+.cardTopBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+    border: 1px solid #dfe5dc;
+    border-radius: 16px;
+    background: #eef4ec;
+}
+
+.backButton {
+    border: 0;
+    background: transparent;
+    color: #171717;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+.formSection {
+    display: grid;
+    gap: 18px;
+}
+
+.formSection label {
+    display: grid;
+    gap: 8px;
+    color: #171717;
+    font-weight: 800;
+}
+
+.formSection input,
+.formSection textarea {
+    width: 100%;
+    border: 1px solid #dfe5dc;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #171717;
+    font: inherit;
+    padding: 13px 14px;
+}
+
+.formSection textarea {
+    resize: vertical;
+}
+
+.formSection input:focus,
+.formSection textarea:focus {
+    outline: 3px solid rgba(47, 125, 50, 0.18);
+    border-color: #2f7d32;
+}
+
+.saveInfoBox {
+    margin-top: 22px;
+    padding: 20px;
+    border: 1px solid #9db8ff;
+    border-radius: 18px;
+    background: #dfe9ff;
+}
+
+.saveInfoBox h2 {
+    margin-bottom: 10px;
+    color: #171717;
+    font-size: 1rem;
+}
+
+.saveInfoBox ul {
+    padding-left: 20px;
+    color: #171717;
+    line-height: 1.6;
+}
+
+.formActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.primaryButton,
+.secondaryButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.primaryButton {
+    border: 0;
+    background: #2f7d32;
+    color: #ffffff;
+}
+
+.primaryButton:hover {
+    background: #236326;
+}
+
+.secondaryButton {
+    border: 1px solid #dfe5dc;
+    background: #eef4ec;
+    color: #171717;
+}
+
+.secondaryButton:hover {
+    background: #e1eadf;
+}
+
+.successMessage {
+    margin-top: 20px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: #e8f7e8;
+    color: #1f6b24;
+    font-weight: 800;
+}
+
+.supportCard h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.supportCard p {
+    color: #5f6b5f;
+    line-height: 1.6;
+}
+
+.previewList {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.previewList div {
+    display: grid;
+    gap: 4px;
+    padding: 14px;
+    border: 1px solid #dfe5dc;
+    border-radius: 16px;
+    background: #fbfdfb;
+}
+
+.previewList span {
+    color: #5f6b5f;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.previewList strong {
+    color: #171717;
+    line-height: 1.4;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+
+    .analysisHeader h1,
+    .cardTopBar strong,
+    .saveInfoBox h2,
+    .supportCard h2,
+    .previewList strong {
+        color: #f2f5f1;
+    }
+
+    .analysisHeader p,
+    .supportCard p {
+        color: #b8c2b7;
+    }
+
+    .eyebrow {
+        color: #8fcf91;
+    }
+
+    .analysisCard,
+    .supportCard {
+        border-color: #445047;
+        background: #2b332e;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .cardTopBar,
+    .previewList div {
+        border-color: #445047;
+        background: #222923;
+    }
+
+    .backButton {
+        color: #f2f5f1;
+    }
+
+    .formSection label {
+        color: #e8eee5;
+    }
+
+    .formSection input,
+    .formSection textarea {
+        border-color: #4c594f;
+        background: #222923;
+        color: #f2f5f1;
+    }
+
+    .formSection input::placeholder,
+    .formSection textarea::placeholder {
+        color: #9ca89d;
+    }
+
+    .formSection input:focus,
+    .formSection textarea:focus {
+        outline: 3px solid rgba(143, 207, 145, 0.2);
+        border-color: #8fcf91;
+    }
+
+    .saveInfoBox {
+        border-color: #5f76b8;
+        background: #26334f;
+    }
+
+    .saveInfoBox ul {
+        color: #dce6ff;
+    }
+
+    .secondaryButton {
+        border-color: #4c594f;
+        background: #3a443c;
+        color: #f2f5f1;
+    }
+
+    .secondaryButton:hover {
+        background: #465248;
+    }
+
+    .successMessage {
+        background: rgba(143, 207, 145, 0.16);
+        color: #9ee6a0;
+    }
+
+    .previewList span {
+        color: #aebbad;
+    }
+}
+
+@media (max-width: 900px) {
+    .analysisLayout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .pageShell {
+        padding: 28px 16px;
+    }
+
+    .analysisCard,
+    .supportCard {
+        padding: 22px;
+    }
+
+    .cardTopBar,
+    .formActions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .primaryButton,
+    .secondaryButton {
+        width: 100%;
+    }
+}
