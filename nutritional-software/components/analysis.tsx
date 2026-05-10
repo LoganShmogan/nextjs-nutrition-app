@@ -148,3 +148,22 @@ export default function Analysis() {
             </div>
           )}
         </form>
+
+        <aside className={styles.supportCard}>
+          <h2>Study Support</h2>
+          <p>
+            Students can save multiple patient analyses for coursework,
+            comparison, and later review.
+          </p>
+
+          <div className={styles.previewList}>
+            <div>
+              <span>Analysis</span>
+              <strong>{formData.analysisName || "Not provided"}</strong>
+            </div>
+
+            <div>
+              <span>Patient ID</span>
+              <strong>{formData.patientIdentifier || "Not provided"}</strong>
+            </div>
+
