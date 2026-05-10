@@ -27,3 +27,31 @@
   text-transform: uppercase;
 }
 
+.summaryHeader h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.summaryHeader p {
+  color: #5f6b5f;
+  line-height: 1.6;
+}
+
+.overviewCard,
+.nutrientCard,
+.feedbackCard {
+  border: 1px solid #dfe5dc;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(25, 42, 25, 0.08);
+}
+
+.overviewCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px;
+}
+
