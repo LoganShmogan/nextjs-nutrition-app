@@ -238,3 +238,37 @@ a {
   line-height: 1.4;
 }
 
+@media (max-width: 900px) {
+  .profile-layout,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-preview-card {
+    position: static;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-shell {
+    padding: 28px 16px;
+  }
+
+  .profile-form-card,
+  .profile-preview-card {
+    padding: 22px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+}
