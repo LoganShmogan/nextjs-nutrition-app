@@ -72,3 +72,35 @@
   border-radius: 16px;
   background: #eef4ec;
 }
+
+.backButton {
+  border: 0;
+  background: transparent;
+  color: #171717;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.formSection {
+  display: grid;
+  gap: 18px;
+}
+
+.formSection label {
+  display: grid;
+  gap: 8px;
+  color: #171717;
+  font-weight: 800;
+}
+
+.formSection input,
+.formSection textarea {
+  width: 100%;
+  border: 1px solid #dfe5dc;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #171717;
+  font: inherit;
+  padding: 13px 14px;
+}
