@@ -1,9 +1,13 @@
-// Author: Marty
+// Author: Marty Orchard
 // Area: Frontend / UI
-export default function summaryPage() {
-	return (
-		<main>
-			<h1>Summary</h1>
-		</main>
-	);
+
+import NutritionSummaryCard from "@/components/NutritionSummaryCard";
+import styles from "./page.module.css";
+
+export default function SummaryPage() {
+  return (
+    <main className={styles.pageShell}>
+      <NutritionSummaryCard />
+    </main>
+  );
 }
