@@ -216,3 +216,122 @@
   font-weight: 800;
 }
 
+.previewList strong {
+  color: #171717;
+  line-height: 1.4;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .analysisHeader h1,
+  .cardTopBar strong,
+  .saveInfoBox h2,
+  .supportCard h2,
+  .previewList strong {
+    color: #f2f5f1;
+  }
+
+  .analysisHeader p,
+  .supportCard p {
+    color: #b8c2b7;
+  }
+
+  .eyebrow {
+    color: #8fcf91;
+  }
+
+  .analysisCard,
+  .supportCard {
+    border-color: #445047;
+    background: #2b332e;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .cardTopBar,
+  .previewList div {
+    border-color: #445047;
+    background: #222923;
+  }
+
+  .backButton {
+    color: #f2f5f1;
+  }
+
+  .formSection label {
+    color: #e8eee5;
+  }
+
+  .formSection input,
+  .formSection textarea {
+    border-color: #4c594f;
+    background: #222923;
+    color: #f2f5f1;
+  }
+
+  .formSection input::placeholder,
+  .formSection textarea::placeholder {
+    color: #9ca89d;
+  }
+
+  .formSection input:focus,
+  .formSection textarea:focus {
+    outline: 3px solid rgba(143, 207, 145, 0.2);
+    border-color: #8fcf91;
+  }
+
+  .saveInfoBox {
+    border-color: #5f76b8;
+    background: #26334f;
+  }
+
+  .saveInfoBox ul {
+    color: #dce6ff;
+  }
+
+  .secondaryButton {
+    border-color: #4c594f;
+    background: #3a443c;
+    color: #f2f5f1;
+  }
+
+  .secondaryButton:hover {
+    background: #465248;
+  }
+
+  .successMessage {
+    background: rgba(143, 207, 145, 0.16);
+    color: #9ee6a0;
+  }
+
+  .previewList span {
+    color: #aebbad;
+  }
+}
+
+@media (max-width: 900px) {
+  .analysisLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .pageShell {
+    padding: 28px 16px;
+  }
+
+  .analysisCard,
+  .supportCard {
+    padding: 22px;
+  }
+
+  .cardTopBar,
+  .formActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}
