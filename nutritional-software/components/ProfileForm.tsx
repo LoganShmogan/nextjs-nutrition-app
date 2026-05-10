@@ -48,4 +48,15 @@ export default function ProfileForm() {
         }));
     }
 
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        setSubmittedProfile(formData);
+    }
+
+    function handleReset() {
+        setFormData(initialFormData);
+        setSubmittedProfile(null);
+    }
+
+
 }
