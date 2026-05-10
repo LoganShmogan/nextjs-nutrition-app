@@ -1,5 +1,9 @@
 // Author: Marty
 // Area: Frontend / UI
-export default function GET() {
-	return Response.json({ message: "Foodi log form placeholder" });
+export default function profilePage() {
+	return (
+		<main>
+			<h1>profile</h1>
+		</main>
+	);
 }
