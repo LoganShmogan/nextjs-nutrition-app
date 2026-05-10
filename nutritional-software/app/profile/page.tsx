@@ -2,10 +2,11 @@
 // Area: Frontend / UI
 
 import ProfileForm from "@/components/ProfileForm";
+import styles from "./page.module.css";
 
 export default function ProfilePage() {
   return (
-    <main className="page-shell">
+    <main className={styles.pageShell}>
       <ProfileForm />
     </main>
   );
