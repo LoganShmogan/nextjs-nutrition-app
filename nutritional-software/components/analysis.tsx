@@ -117,3 +117,34 @@ export default function Analysis() {
               />
             </label>
           </div>
+
+          <div className={styles.saveInfoBox}>
+            <h2>What will be saved:</h2>
+            <ul>
+              <li>Patient information and goals</li>
+              <li>All food items and quantities</li>
+              <li>Nutritional calculations and summary</li>
+              <li>Comparison to recommendations</li>
+            </ul>
+          </div>
+
+          <div className={styles.formActions}>
+            <button className={styles.primaryButton} type="submit">
+              Save Analysis
+            </button>
+
+            <button
+              className={styles.secondaryButton}
+              type="button"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+          </div>
+
+          {saved && (
+            <div className={styles.successMessage}>
+              Analysis saved as a Sprint 1 frontend placeholder.
+            </div>
+          )}
+        </form>
