@@ -58,4 +58,29 @@ export default function Analysis() {
         </p>
       </div>
 
-     
+      <div className={styles.analysisLayout}>
+        <form className={styles.analysisCard} onSubmit={handleSubmit}>
+          <div className={styles.cardTopBar}>
+            <button
+              className={styles.backButton}
+              type="button"
+              onClick={handleCancel}
+            >
+              ← Cancel
+            </button>
+
+            <strong>Save current Analysis</strong>
+          </div>
+
+          <div className={styles.formSection}>
+            <label>
+              Analysis Name
+              <input
+                type="text"
+                name="analysisName"
+                value={formData.analysisName}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
