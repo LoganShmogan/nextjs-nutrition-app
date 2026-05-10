@@ -212,7 +212,65 @@ export default function ProfileForm() {
           </div>
         </form>
 
+        <aside className="profile-preview-card">
+          <h2>Profile Preview</h2>
 
+          {!submittedProfile ? (
+            <p className="muted-text">
+              Submit the form to preview the captured profile details. This is
+              frontend-only for Sprint 1.
+            </p>
+          ) : (
+            <div className="preview-list">
+              <div>
+                <span>Name</span>
+                <strong>{submittedProfile.patientName}</strong>
+              </div>
+
+              <div>
+                <span>Age</span>
+                <strong>{submittedProfile.age}</strong>
+              </div>
+
+              <div>
+                <span>Gender</span>
+                <strong>{submittedProfile.gender}</strong>
+              </div>
+
+              <div>
+                <span>Ethnicity</span>
+                <strong>{submittedProfile.ethnicity || "Not provided"}</strong>
+              </div>
+
+              <div>
+                <span>Weight</span>
+                <strong>{submittedProfile.weight} kg</strong>
+              </div>
+
+              <div>
+                <span>Height</span>
+                <strong>{submittedProfile.height} cm</strong>
+              </div>
+
+              <div>
+                <span>Activity level</span>
+                <strong>{submittedProfile.activityLevel}</strong>
+              </div>
+
+              <div>
+                <span>Dietary restrictions</span>
+                <strong>
+                  {submittedProfile.dietaryRestrictions || "Not provided"}
+                </strong>
+              </div>
+
+              <div>
+                <span>Medical conditions</span>
+                <strong>
+                  {submittedProfile.medicalConditions || "Not provided"}
+                </strong>
+              </div>
+            </div>
           )}
         </aside>
       </div>
