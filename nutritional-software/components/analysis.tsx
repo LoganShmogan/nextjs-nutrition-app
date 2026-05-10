@@ -47,3 +47,15 @@ export default function Analysis() {
     setSaved(false);
   }
 
+  return (
+    <section className={styles.analysisPage}>
+      <div className={styles.analysisHeader}>
+        <p className={styles.eyebrow}>Sprint 1 · Basic Version</p>
+        <h1>Save Analysis</h1>
+        <p>
+          Save the current patient nutrition analysis as a frontend-only
+          placeholder. Backend saving will be added later.
+        </p>
+      </div>
+
+     
