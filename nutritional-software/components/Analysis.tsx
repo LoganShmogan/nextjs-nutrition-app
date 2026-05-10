@@ -67,7 +67,9 @@ export default function Analysis() {
               type="button"
               onClick={handleCancel}
             >
-              ← Cancel
+              <Link className={styles.secondaryButton} href="/">
+                ← Cancel
+              </Link>
             </button>
 
             <strong>Save current Analysis</strong>
