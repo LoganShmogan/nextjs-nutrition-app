@@ -51,3 +51,48 @@ a {
     color-scheme: dark;
   }
 }
+
+/*
+  Author: Marty Orchard
+  Area: Frontend styling / UI
+*/
+
+/* Profile setup UI */
+
+.page-shell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.profile-page {
+  display: grid;
+  gap: 28px;
+}
+
+.profile-header {
+  max-width: 820px;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  color: #2f7d32;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.profile-header h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.profile-header p,
+.form-section-title p,
+.muted-text {
+  color: #5f6b5f;
+  line-height: 1.6;
+}
+
