@@ -58,5 +58,16 @@ export default function ProfileForm() {
         setSubmittedProfile(null);
     }
 
-
+    return (
+        <section className="profile-page">
+            <div className="profile-header">
+                <p className="eyebrow">Sprint 1 · Basic Version</p>
+                <h1>User Profile Setup</h1>
+                <p>
+                    Enter basic patient information so the nutrition app can later provide
+                    more personalised dietary recommendations.
+                </p>
+            </div>
+        </section>
+    );
 }
