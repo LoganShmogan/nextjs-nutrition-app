@@ -115,3 +115,19 @@ a {
   padding: 32px;
 }
 
+.profile-preview-card {
+  position: sticky;
+  top: 24px;
+  padding: 28px;
+}
+
+.form-section-title {
+  margin-bottom: 24px;
+}
+
+.form-section-title h2,
+.profile-preview-card h2 {
+  margin-bottom: 8px;
+  font-size: 1.4rem;
+}
+
