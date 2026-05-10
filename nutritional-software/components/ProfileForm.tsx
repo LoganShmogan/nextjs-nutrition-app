@@ -68,6 +68,15 @@ export default function ProfileForm() {
                     more personalised dietary recommendations.
                 </p>
             </div>
+
+            <div className="profile-layout">
+                <form className="profile-form-card" onSubmit={handleSubmit}>
+                    <div className="form-section-title">
+                        <h2>Patient Information</h2>
+                        <p>Required fields are marked with an asterisk.</p>
+                    </div>
+                </form>
+            </div>
         </section>
     );
 }
