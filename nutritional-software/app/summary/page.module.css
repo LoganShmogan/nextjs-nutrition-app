@@ -121,3 +121,14 @@
   font-weight: 800;
 }
 
+.nutrientCard strong {
+  color: #171717;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.nutrientCard p {
+  color: #5f6b5f;
+  line-height: 1.5;
+}
+
