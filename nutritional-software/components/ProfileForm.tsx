@@ -264,7 +264,13 @@ export default function ProfileForm() {
                 </strong>
               </div>
 
-
+              <div>
+                <span>Medical conditions</span>
+                <strong>
+                  {submittedProfile.medicalConditions || "Not provided"}
+                </strong>
+              </div>
+            </div>
           )}
         </aside>
       </div>
