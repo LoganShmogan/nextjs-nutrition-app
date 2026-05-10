@@ -4,6 +4,7 @@
 // Area: Frontend / UI
 
 import { useState } from "react";
+import Link from "next/link";
 import styles from "@/app/analysis/page.module.css";
 
 type AnalysisFormData = {
