@@ -95,3 +95,25 @@ export default function Analysis() {
               />
             </label>
 
+            <label>
+              Notes
+              <textarea
+                name="notes"
+                value={formData.notes}
+                onChange={handleChange}
+                rows={4}
+                placeholder="Add notes about this analysis"
+              />
+            </label>
+
+            <label>
+              Date
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+            </label>
+          </div>
