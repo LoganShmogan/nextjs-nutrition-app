@@ -62,16 +62,9 @@ export default function Analysis() {
       <div className={styles.analysisLayout}>
         <form className={styles.analysisCard} onSubmit={handleSubmit}>
           <div className={styles.cardTopBar}>
-            <button
-              className={styles.backButton}
-              type="button"
-              onClick={handleCancel}
-            >
-              <Link className={styles.secondaryButton} href="/">
-                ← Cancel
-              </Link>
-            </button>
-
+            <Link className={styles.secondaryButton} href="/">
+              ← Cancel
+            </Link>
             <strong>Save current Analysis</strong>
           </div>
 
