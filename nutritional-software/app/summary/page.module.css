@@ -76,3 +76,24 @@
   line-height: 1.6;
 }
 
+.overallStatus {
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+  padding: 18px;
+  border: 1px solid #dfe5dc;
+  border-radius: 18px;
+  background: #eef4ec;
+}
+
+.overallStatus span {
+  color: #5f6b5f;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.overallStatus strong {
+  color: #2f7d32;
+  font-size: 1.2rem;
+}
+
