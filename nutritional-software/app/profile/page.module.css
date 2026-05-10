@@ -1,0 +1,295 @@
+/*
+  Author: Marty Orchard
+  Area: User Profile Setup page styling
+*/
+
+.pageShell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.profilePage {
+  display: grid;
+  gap: 28px;
+}
+
+.profileHeader {
+  max-width: 820px;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  color: #2f7d32;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.profileHeader h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.profileHeader p,
+.formSectionTitle p,
+.mutedText {
+  color: #5f6b5f;
+  line-height: 1.6;
+}
+
+.profileLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.profileFormCard,
+.profilePreviewCard {
+  border: 1px solid #dfe5dc;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(25, 42, 25, 0.08);
+}
+
+.profileFormCard {
+  display: flex;
+  min-height: 875px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+}
+
+.profilePreviewCard {
+  position: sticky;
+  top: 24px;
+  padding: 28px;
+}
+
+.formSectionTitle {
+  margin-bottom: 32px;
+}
+
+.formSectionTitle h2,
+.profilePreviewCard h2 {
+  margin-bottom: 8px;
+  font-size: 1.4rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 18px;
+}
+
+.formGrid label {
+  display: grid;
+  gap: 8px;
+  color: #171717;
+  font-weight: 800;
+}
+
+.formGrid input,
+.formGrid select,
+.formGrid textarea {
+  width: 100%;
+  border: 1px solid #dfe5dc;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #171717;
+  font: inherit;
+  padding: 13px 14px;
+}
+
+.formGrid textarea {
+  resize: vertical;
+}
+
+.formGrid input:focus,
+.formGrid select:focus,
+.formGrid textarea:focus {
+  outline: 3px solid rgba(47, 125, 50, 0.18);
+  border-color: #2f7d32;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.primaryButton {
+  border: 0;
+  background: #2f7d32;
+  color: #ffffff;
+}
+
+.primaryButton:hover {
+  background: #236326;
+}
+
+.secondaryButton {
+  border: 1px solid #dfe5dc;
+  background: #eef4ec;
+  color: #171717;
+}
+
+.secondaryButton:hover {
+  background: #e1eadf;
+}
+
+.previewList {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.previewList div {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  border: 1px solid #dfe5dc;
+  border-radius: 16px;
+  background: #fbfdfb;
+}
+
+.previewList span {
+  color: #5f6b5f;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.previewList strong {
+  color: #171717;
+  line-height: 1.4;
+}
+
+/* Dark mode for profile page */
+@media (prefers-color-scheme: dark) {
+  .profileHeader h1,
+  .formSectionTitle h2,
+  .profilePreviewCard h2 {
+    color: #f2f5f1;
+  }
+
+  .profileHeader p,
+  .formSectionTitle p,
+  .mutedText {
+    color: #b8c2b7;
+  }
+
+  .eyebrow {
+    color: #8fcf91;
+  }
+
+  .profileFormCard,
+  .profilePreviewCard {
+    border-color: #445047;
+    background: #2b332e;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .formGrid label {
+    color: #e8eee5;
+  }
+
+  .formGrid input,
+  .formGrid select,
+  .formGrid textarea {
+    border-color: #4c594f;
+    background: #222923;
+    color: #f2f5f1;
+  }
+
+  .formGrid input::placeholder,
+  .formGrid textarea::placeholder {
+    color: #9ca89d;
+  }
+
+  .formGrid input:focus,
+  .formGrid select:focus,
+  .formGrid textarea:focus {
+    outline: 3px solid rgba(143, 207, 145, 0.2);
+    border-color: #8fcf91;
+  }
+
+  .secondaryButton {
+    border-color: #4c594f;
+    background: #3a443c;
+    color: #f2f5f1;
+  }
+
+  .secondaryButton:hover {
+    background: #465248;
+  }
+
+  .previewList div {
+    border-color: #445047;
+    background: #222923;
+  }
+
+  .previewList span {
+    color: #aebbad;
+  }
+
+  .previewList strong {
+    color: #f2f5f1;
+  }
+}
+
+@media (max-width: 900px) {
+  .profileLayout,
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .profilePreviewCard {
+    position: static;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .pageShell {
+    padding: 28px 16px;
+  }
+
+  .profileFormCard,
+  .profilePreviewCard {
+    padding: 22px;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}
