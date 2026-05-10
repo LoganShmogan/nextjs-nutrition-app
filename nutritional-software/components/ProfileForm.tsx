@@ -232,45 +232,7 @@ export default function ProfileForm() {
                 <strong>{submittedProfile.age}</strong>
               </div>
 
-              <div>
-                <span>Gender</span>
-                <strong>{submittedProfile.gender}</strong>
-              </div>
 
-              <div>
-                <span>Ethnicity</span>
-                <strong>{submittedProfile.ethnicity || "Not provided"}</strong>
-              </div>
-
-              <div>
-                <span>Weight</span>
-                <strong>{submittedProfile.weight} kg</strong>
-              </div>
-
-              <div>
-                <span>Height</span>
-                <strong>{submittedProfile.height} cm</strong>
-              </div>
-
-              <div>
-                <span>Activity level</span>
-                <strong>{submittedProfile.activityLevel}</strong>
-              </div>
-
-              <div>
-                <span>Dietary restrictions</span>
-                <strong>
-                  {submittedProfile.dietaryRestrictions || "Not provided"}
-                </strong>
-              </div>
-
-              <div>
-                <span>Medical conditions</span>
-                <strong>
-                  {submittedProfile.medicalConditions || "Not provided"}
-                </strong>
-              </div>
-            </div>
           )}
         </aside>
       </div>
