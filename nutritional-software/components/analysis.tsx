@@ -4,7 +4,7 @@
 // Area: Frontend / UI
 
 import { useState } from "react";
-import styles from "@/app/analysis/page.module.css";
+import styles from "@/app/Analysis/page.module.css";
 
 type AnalysisFormData = {
   analysisName: string;
