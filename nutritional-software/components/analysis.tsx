@@ -167,3 +167,18 @@ export default function Analysis() {
               <strong>{formData.patientIdentifier || "Not provided"}</strong>
             </div>
 
+            <div>
+              <span>Date</span>
+              <strong>{formData.date || "Not selected"}</strong>
+            </div>
+
+            <div>
+              <span>Status</span>
+              <strong>{saved ? "Saved" : "Not saved yet"}</strong>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  );
+}
