@@ -149,3 +149,18 @@
   color: #1f6b24;
 }
 
+.warningBadge {
+  background: #fff5d8;
+  color: #8a5a00;
+}
+
+.feedbackCard {
+  padding: 32px;
+}
+
+.feedbackList {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
