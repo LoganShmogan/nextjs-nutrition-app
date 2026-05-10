@@ -45,3 +45,30 @@
   align-items: start;
 }
 
+.analysisCard,
+.supportCard {
+  border: 1px solid #dfe5dc;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(25, 42, 25, 0.08);
+}
+
+.analysisCard {
+  padding: 32px;
+}
+
+.supportCard {
+  padding: 28px;
+}
+
+.cardTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 1px solid #dfe5dc;
+  border-radius: 16px;
+  background: #eef4ec;
+}
