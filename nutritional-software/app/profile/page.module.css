@@ -57,6 +57,7 @@
 
 .profileFormCard {
   padding: 32px;
+  min-height: 875px;
 }
 
 .profilePreviewCard {
