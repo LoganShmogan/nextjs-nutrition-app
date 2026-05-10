@@ -16,5 +16,4 @@ type ProfileFormData =
     activityLevel: string;
     dietaryRestrictions: string;
     medicalConditions: string;
-
 }
