@@ -34,3 +34,17 @@ const summaryItems = [
   },
 ];
 
+export default function NutritionSummaryCard() {
+  return (
+    <section className={styles.summaryPage}>
+      <div className={styles.summaryHeader}>
+        <p className={styles.eyebrow}>Sprint 1 · Basic Version</p>
+        <h1>Nutrition Summary</h1>
+        <p>
+          View simple nutritional feedback using hardcoded values. This page is
+          frontend-only for Sprint 1.
+        </p>
+      </div>
+	  </section>
+  );
+}
