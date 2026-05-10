@@ -129,3 +129,8 @@
   font-size: 1rem;
 }
 
+.saveInfoBox ul {
+  padding-left: 20px;
+  color: #171717;
+  line-height: 1.6;
+}
