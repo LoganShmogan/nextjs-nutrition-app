@@ -209,6 +209,14 @@ export default function ProfileForm() {
             </p>
           </div>
 
+          <div className={styles.formGrid}>
+            <label>
+              Nutrition goal
+              <select
+                name="nutritionGoal"
+                value={formData.nutritionGoal}
+                onChange={handleChange}
+              >
 
             </label>
 
