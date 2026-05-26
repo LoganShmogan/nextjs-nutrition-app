@@ -295,7 +295,11 @@ export default function ProfileForm() {
               <textarea
                 name="additionalNotes"
                 value={formData.additionalNotes}
-
+                onChange={handleChange}
+                placeholder="Any extra notes relevant to the analysis"
+                rows={3}
+              />
+            </label>
           </div>
 
           <div className={styles.formActions}>
