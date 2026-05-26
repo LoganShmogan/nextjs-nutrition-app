@@ -22,5 +22,12 @@ export const DEFAULT_NUTRIENT_TARGETS: Record<
     lowBelowPercentage: 80,
     highAbovePercentage: 120,
   },
+  energyKj: {
+    label: "Energy",
+    unit: "kJ",
+    target: 8786,
+    lowBelowPercentage: 80,
+    highAbovePercentage: 120,
+  },
 
 };
