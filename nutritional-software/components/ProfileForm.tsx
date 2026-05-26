@@ -201,6 +201,12 @@ export default function ProfileForm() {
             </label>
           </div>
 
+          <div className={styles.sectionDivider}>
+            <h2>Health and Diet Details</h2>
+            <p>
+              These fields support safer and more personalised nutritional
+
+            </label>
 
             <label>
               Dietary preference
