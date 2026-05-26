@@ -1,65 +1,135 @@
-// Author: Logan & Marty
-// Area: Backend / API / Logic
+import type {
+  LoggedFood,
+  NutrientComparison,
+  NutritionAnalysisResult,
+  NutritionTotals,
+} from "@/types/nutrition";
+import { DEFAULT_NUTRIENT_TARGETS } from "@/lib/nutrition/thresholds";
 
-import type { Food, FoodNutrients } from "@/types/food";
-
-export type LoggedFood = {
-  food: Food;
-  amount: number; // grams
+const EMPTY_TOTALS: NutritionTotals = {
+  energyKcal: 0,
+  energyKj: 0,
+  protein: 0,
+  carbohydrate: 0,
+  fat: 0,
+  sugar: 0,
+  sodium: 0,
+  fibre: 0,
+  calcium: 0,
+  iron: 0,
+  vitaminC: 0,
 };
 
-export type NutritionTotals = {
-  energyKcal: number;
-  energyKj: number;
-  protein: number;
-  carbohydrate: number;
-  fat: number;
-  sugar: number;
-  sodium: number;
-  fibre: number;
-};
+function roundOne(value: number): number {
+  return Math.round(value * 10) / 10;
+}
 
-/**
- * Scale a per-100g nutrient value to the given gram amount.
- * Returns 0 if the value is null (treat missing data as 0 for totals).
- */
 function scaleNutrient(value: number | null, grams: number): number {
-  if (value === null) return 0;
+  if (value === null || Number.isNaN(value)) {
+    return 0;
+  }
+
   return (value * grams) / 100;
 }
 
-/**
- * Calculate total nutrient intake from a list of logged foods.
- * All nutrient values in the database are expressed per 100g.
- */
+function getNutrientStatus(
+  percentage: number,
+  lowBelowPercentage: number,
+  highAbovePercentage: number,
+) {
+  if (lowBelowPercentage > 0 && percentage < lowBelowPercentage) {
+    return "low";
+  }
+
+  if (percentage > highAbovePercentage) {
+    return "high";
+  }
+
+  return "ok";
+}
+
 export function calculateNutrition(loggedFoods: LoggedFood[]): NutritionTotals {
-  const totals: NutritionTotals = {
-    energyKcal: 0,
-    energyKj: 0,
-    protein: 0,
-    carbohydrate: 0,
-    fat: 0,
-    sugar: 0,
-    sodium: 0,
-    fibre: 0,
+  const totals: NutritionTotals = { ...EMPTY_TOTALS };
+
+  for (const loggedFood of loggedFoods) {
+    if (!loggedFood.food || loggedFood.amount <= 0) {
+      continue;
+    }
+
+    const nutrients = loggedFood.food.nutrients;
+
+    totals.energyKcal += scaleNutrient(nutrients.energyKcal, loggedFood.amount);
+    totals.energyKj += scaleNutrient(nutrients.energyKj, loggedFood.amount);
+    totals.protein += scaleNutrient(nutrients.protein, loggedFood.amount);
+    totals.carbohydrate += scaleNutrient(
+      nutrients.carbohydrate,
+      loggedFood.amount,
+    );
+    totals.fat += scaleNutrient(nutrients.fat, loggedFood.amount);
+    totals.sugar += scaleNutrient(nutrients.sugar, loggedFood.amount);
+    totals.sodium += scaleNutrient(nutrients.sodium, loggedFood.amount);
+    totals.fibre += scaleNutrient(nutrients.fibre, loggedFood.amount);
+    totals.calcium += scaleNutrient(nutrients.calcium, loggedFood.amount);
+    totals.iron += scaleNutrient(nutrients.iron, loggedFood.amount);
+    totals.vitaminC += scaleNutrient(nutrients.vitaminC, loggedFood.amount);
+  }
+
+  return {
+    energyKcal: roundOne(totals.energyKcal),
+    energyKj: roundOne(totals.energyKj),
+    protein: roundOne(totals.protein),
+    carbohydrate: roundOne(totals.carbohydrate),
+    fat: roundOne(totals.fat),
+    sugar: roundOne(totals.sugar),
+    sodium: roundOne(totals.sodium),
+    fibre: roundOne(totals.fibre),
+    calcium: roundOne(totals.calcium),
+    iron: roundOne(totals.iron),
+    vitaminC: roundOne(totals.vitaminC),
   };
+}
 
-  for (const { food, amount } of loggedFoods) {
-    const n: FoodNutrients = food.nutrients;
-    totals.energyKcal += scaleNutrient(n.energyKcal, amount);
-    totals.energyKj += scaleNutrient(n.energyKj, amount);
-    totals.protein += scaleNutrient(n.protein, amount);
-    totals.carbohydrate += scaleNutrient(n.carbohydrate, amount);
-    totals.fat += scaleNutrient(n.fat, amount);
-    totals.sugar += scaleNutrient(n.sugar, amount);
-    totals.sodium += scaleNutrient(n.sodium, amount);
-    totals.fibre += scaleNutrient(n.fibre, amount);
-  }
+export function compareNutritionToTargets(
+  totals: NutritionTotals,
+): NutrientComparison[] {
+  return Object.entries(DEFAULT_NUTRIENT_TARGETS).map(([nutrient, target]) => {
+    const nutrientKey = nutrient as keyof NutritionTotals;
+    const total = totals[nutrientKey];
+    const percentage = target.target > 0 ? (total / target.target) * 100 : 0;
 
-  // Round to 1 decimal place
-  for (const key of Object.keys(totals) as (keyof NutritionTotals)[]) {
-    totals[key] = Math.round(totals[key] * 10) / 10;
-  }
+    return {
+      nutrient: nutrientKey,
+      label: target.label,
+      unit: target.unit,
+      total,
+      target: target.target,
+      percentage: roundOne(percentage),
+      status: getNutrientStatus(
+        percentage,
+        target.lowBelowPercentage,
+        target.highAbovePercentage,
+      ),
+    };
+  });
+}
 
-  return totals;
+export function analyseNutrition(
+  loggedFoods: LoggedFood[],
+): NutritionAnalysisResult {
+  const totals = calculateNutrition(loggedFoods);
+  const comparisons = compareNutritionToTargets(totals);
+
+  return {
+    totals,
+    comparisons,
+    summary: {
+      totalFoods: loggedFoods.length,
+      totalAmount: roundOne(
+        loggedFoods.reduce((sum, food) => sum + food.amount, 0),
+      ),
+      lowCount: comparisons.filter((item) => item.status === "low").length,
+      okCount: comparisons.filter((item) => item.status === "ok").length,
+      highCount: comparisons.filter((item) => item.status === "high").length,
+    },
+  };
 }
