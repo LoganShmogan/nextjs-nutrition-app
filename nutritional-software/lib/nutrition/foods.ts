@@ -29,3 +29,32 @@ const NUTRIENT_COLUMN_NAMES = {
   vitaminC: "Vitamin C",
 } satisfies Record<keyof FoodNutrients, string>;
 
+function parseTildeFile(content: string): string[][] {
+  return content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => line.split("~"));
+}
+
+function toNumber(value: string | undefined): number | null {
+  if (value === undefined || value.trim() === "") {
+    return null;
+  }
+
+  const parsed = Number(value);
+
+  if (Number.isNaN(parsed)) {
+    return null;
+  }
+
+  return parsed;
+}
+
+function buildColumnIndexMap(headers: string[]) {
+  return headers.reduce<Record<string, number>>((map, header, index) => {
+    map[header] = index;
+    return map;
+  }, {});
+}
+
