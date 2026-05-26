@@ -57,7 +57,14 @@ export default function ProfileForm() {
       return;
     }
 
-entListener("resize", updateHeight);
+    const updateHeight = () => {
+      const previewHeight = previewCardRef.current?.offsetHeight ?? null;
+      setMatchedCardHeight(previewHeight);
+    };
+
+    updateHeight();
+
+    window.addEventListener("resize", updateHeight);
 
     return () => {
       window.removeEventListener("resize", updateHeight);
