@@ -158,3 +158,18 @@ async function loadFoodNutritionData(): Promise<Food[]> {
       ),
     };
 
+    foods.push({
+      id,
+      name:
+        nameRecord?.name ??
+        getValueByHeader(row, columnMap, "Food Name") ??
+        "Unknown food",
+      shortName: nameRecord?.shortName ?? "",
+      description: nameRecord?.description ?? "",
+      category: nameRecord?.category ?? "",
+      nutrients,
+    });
+  }
+
+  return foods;
+}
