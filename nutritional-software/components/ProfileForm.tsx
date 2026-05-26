@@ -205,6 +205,10 @@ export default function ProfileForm() {
             <h2>Health and Diet Details</h2>
             <p>
               These fields support safer and more personalised nutritional
+              analysis in later sprints.
+            </p>
+          </div>
+
 
             </label>
 
