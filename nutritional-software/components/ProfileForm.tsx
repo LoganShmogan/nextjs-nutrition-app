@@ -217,6 +217,15 @@ export default function ProfileForm() {
                 value={formData.nutritionGoal}
                 onChange={handleChange}
               >
+                <option value="">Select goal</option>
+                <option value="General health">General health</option>
+                <option value="Weight maintenance">Weight maintenance</option>
+                <option value="Weight gain">Weight gain</option>
+                <option value="Weight loss">Weight loss</option>
+                <option value="Sports performance">Sports performance</option>
+                <option value="Medical nutrition support">
+                  Medical nutrition support
+                </option>
 
             </label>
 
