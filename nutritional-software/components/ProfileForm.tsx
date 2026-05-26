@@ -367,6 +367,10 @@ export default function ProfileForm() {
                 <strong>{submittedProfile.activityLevel}</strong>
               </div>
 
+              <div>
+                <span>Nutrition goal</span>
+                <strong>{submittedProfile.nutritionGoal || "Not provided"}</strong>
+              </div>
 
               <div>
                 <span>Dietary restrictions</span>
