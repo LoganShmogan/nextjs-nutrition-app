@@ -100,3 +100,61 @@ async function loadFoodNames(): Promise<Map<string, RawFoodNameRecord>> {
   return nameRecords;
 }
 
+async function loadFoodNutritionData(): Promise<Food[]> {
+  const [nameRecords, dataContent] = await Promise.all([
+    loadFoodNames(),
+    readFile(DATA_FILE_PATH, "utf-8"),
+  ]);
+
+  const rows = parseTildeFile(dataContent);
+
+  const headers = rows[1];
+  const columnMap = buildColumnIndexMap(headers);
+
+  const foods: Food[] = [];
+
+  for (const row of rows.slice(3)) {
+    const id = getValueByHeader(row, columnMap, "FoodID");
+
+    if (!id) {
+      continue;
+    }
+
+    const nameRecord = nameRecords.get(id);
+
+    const nutrients: FoodNutrients = {
+      energyKcal: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.energyKcal),
+      ),
+      energyKj: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.energyKj),
+      ),
+      protein: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.protein),
+      ),
+      carbohydrate: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.carbohydrate),
+      ),
+      fat: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.fat),
+      ),
+      sugar: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.sugar),
+      ),
+      sodium: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.sodium),
+      ),
+      fibre: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.fibre),
+      ),
+      calcium: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.calcium),
+      ),
+      iron: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.iron),
+      ),
+      vitaminC: toNumber(
+        getValueByHeader(row, columnMap, NUTRIENT_COLUMN_NAMES.vitaminC),
+      ),
+    };
+
