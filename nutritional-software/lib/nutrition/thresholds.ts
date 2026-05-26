@@ -36,5 +36,12 @@ export const DEFAULT_NUTRIENT_TARGETS: Record<
     lowBelowPercentage: 80,
     highAbovePercentage: 130,
   },
+  carbohydrate: {
+    label: "Carbohydrate",
+    unit: "g",
+    target: 260,
+    lowBelowPercentage: 80,
+    highAbovePercentage: 130,
+  },
 
 };
