@@ -284,6 +284,9 @@ export default function ProfileForm() {
               <textarea
                 name="medications"
                 value={formData.medications}
+                onChange={handleChange}
+                placeholder="e.g. iron supplement, insulin, blood pressure medication"
+                rows={3}
               />
             </label>
 
