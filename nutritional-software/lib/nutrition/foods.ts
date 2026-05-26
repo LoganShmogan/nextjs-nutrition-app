@@ -58,3 +58,45 @@ function buildColumnIndexMap(headers: string[]) {
   }, {});
 }
 
+function getValueByHeader(
+  row: string[],
+  columnMap: Record<string, number>,
+  header: string,
+): string | undefined {
+  const columnIndex = columnMap[header];
+
+  if (columnIndex === undefined) {
+    return undefined;
+  }
+
+  return row[columnIndex];
+}
+
+async function loadFoodNames(): Promise<Map<string, RawFoodNameRecord>> {
+  const content = await readFile(NAME_FILE_PATH, "utf-8");
+  const rows = parseTildeFile(content);
+
+  const headers = rows[1];
+  const columnMap = buildColumnIndexMap(headers);
+
+  const nameRecords = new Map<string, RawFoodNameRecord>();
+
+  for (const row of rows.slice(2)) {
+    const id = getValueByHeader(row, columnMap, "FoodID");
+
+    if (!id) {
+      continue;
+    }
+
+    nameRecords.set(id, {
+      id,
+      name: getValueByHeader(row, columnMap, "Food Name") ?? "",
+      shortName: getValueByHeader(row, columnMap, "Short Food Name") ?? "",
+      description: getValueByHeader(row, columnMap, "Food Description") ?? "",
+      category: getValueByHeader(row, columnMap, "Food Item Generic Name") ?? "",
+    });
+  }
+
+  return nameRecords;
+}
+
