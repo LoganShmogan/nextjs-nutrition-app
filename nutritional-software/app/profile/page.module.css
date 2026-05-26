@@ -190,17 +190,20 @@
 .previewList strong {
   color: #171717;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 @media (prefers-color-scheme: dark) {
   .profileHeader h1,
   .formSectionTitle h2,
+  .sectionDivider h2,
   .profilePreviewCard h2 {
     color: #f2f5f1;
   }
 
   .profileHeader p,
   .formSectionTitle p,
+  .sectionDivider p,
   .mutedText {
     color: #b8c2b7;
   }
@@ -276,6 +279,7 @@
 
   .profilePreviewCard {
     position: static;
+    max-height: none;
   }
 
   .fullWidth {
