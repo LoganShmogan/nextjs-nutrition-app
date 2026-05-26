@@ -107,7 +107,16 @@ export default function ProfileForm() {
       </div>
 
       <div className={styles.profileLayout}>
-        <form className={styles.profileFormCard} onSubmit={handleSubmit}>
+        <form
+          className={styles.profileFormCard}
+          style={
+            matchedCardHeight
+              ? { minHeight: `${matchedCardHeight}px` }
+              : undefined
+          }
+          onSubmit={handleSubmit}
+        >
+
           <div className={styles.formSectionTitle}>
             <h2>Patient Information</h2>
             <p>Required fields are marked with an asterisk.</p>
@@ -341,7 +350,7 @@ export default function ProfileForm() {
           </div>
         </form>
 
-        <aside className={styles.profilePreviewCard}>
+        <aside ref={previewCardRef} className={styles.profilePreviewCard}>
           <h2>Profile Preview</h2>
 
           {!submittedProfile ? (
