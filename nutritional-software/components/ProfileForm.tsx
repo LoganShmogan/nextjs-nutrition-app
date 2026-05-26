@@ -373,6 +373,13 @@ export default function ProfileForm() {
               </div>
 
               <div>
+                <span>Dietary preference</span>
+                <strong>
+                  {submittedProfile.dietaryPreference || "Not provided"}
+                </strong>
+              </div>
+
+              <div>
                 <span>Dietary restrictions</span>
                 <strong>
                   {submittedProfile.dietaryRestrictions || "Not provided"}
