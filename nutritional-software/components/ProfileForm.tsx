@@ -385,10 +385,28 @@ export default function ProfileForm() {
                   {submittedProfile.dietaryRestrictions || "Not provided"}
                 </strong>
               </div>
+
+              <div>
+                <span>Allergies / intolerances</span>
+                <strong>{submittedProfile.allergies || "Not provided"}</strong>
+              </div>
+
               <div>
                 <span>Medical conditions</span>
                 <strong>
                   {submittedProfile.medicalConditions || "Not provided"}
+                </strong>
+              </div>
+
+              <div>
+                <span>Medications / supplements</span>
+                <strong>{submittedProfile.medications || "Not provided"}</strong>
+              </div>
+
+              <div>
+                <span>Additional notes</span>
+                <strong>
+                  {submittedProfile.additionalNotes || "Not provided"}
                 </strong>
               </div>
             </div>
