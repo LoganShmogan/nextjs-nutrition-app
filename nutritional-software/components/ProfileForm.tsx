@@ -290,6 +290,12 @@ export default function ProfileForm() {
               />
             </label>
 
+            <label className={styles.fullWidth}>
+              Additional notes
+              <textarea
+                name="additionalNotes"
+                value={formData.additionalNotes}
+
           </div>
 
           <div className={styles.formActions}>
