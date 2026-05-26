@@ -278,6 +278,15 @@ export default function ProfileForm() {
                 rows={4}
               />
             </label>
+
+            <label className={styles.fullWidth}>
+              Medications / supplements
+              <textarea
+                name="medications"
+                value={formData.medications}
+              />
+            </label>
+
           </div>
 
           <div className={styles.formActions}>
@@ -324,7 +333,7 @@ export default function ProfileForm() {
                 <span>Ethnicity</span>
                 <strong>{submittedProfile.ethnicity || "Not provided"}</strong>
               </div>
-
+              
               <div>
                 <span>Weight</span>
                 <strong>{submittedProfile.weight || "Not provided"}</strong>
