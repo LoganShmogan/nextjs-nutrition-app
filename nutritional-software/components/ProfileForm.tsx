@@ -51,6 +51,19 @@ export default function ProfileForm() {
   const previewCardRef = useRef<HTMLElement | null>(null);
   const [matchedCardHeight, setMatchedCardHeight] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (!submittedProfile || !previewCardRef.current) {
+      setMatchedCardHeight(null);
+      return;
+    }
+
+entListener("resize", updateHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, [submittedProfile]);
+
   function handleChange(
     event:
       | React.ChangeEvent<HTMLInputElement>
