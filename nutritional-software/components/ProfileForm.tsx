@@ -3,7 +3,7 @@
 // Author: Marty Orchard
 // Area: Frontend / UI
 
-import { useState, UseEffect, UseRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "@/app/profile/page.module.css";
 
 type ProfileFormData = {
@@ -46,6 +46,10 @@ export default function ProfileForm() {
   const [formData, setFormData] = useState<ProfileFormData>(initialFormData);
   const [submittedProfile, setSubmittedProfile] =
     useState<ProfileFormData | null>(null);
+
+  const formCardRef = useRef<HTMLFormElement | null>(null);
+  const previewCardRef = useRef<HTMLElement | null>(null);
+  const [matchedCardHeight, setMatchedCardHeight] = useState<number | null>(null);
 
   function handleChange(
     event:
