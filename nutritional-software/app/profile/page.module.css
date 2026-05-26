@@ -64,6 +64,7 @@
   position: sticky;
   top: 24px;
   max-height: calc(100vh - 48px);
+  overflow: auto;
   padding: 28px;
 }
 
@@ -72,6 +73,7 @@
 }
 
 .formSectionTitle h2,
+.sectionDivider h2,
 .profilePreviewCard h2 {
   margin-bottom: 8px;
   font-size: 1.4rem;
