@@ -64,7 +64,6 @@
 .profilePreviewCard {
   position: sticky;
   top: 24px;
-  max-height: calc(100vh - 48px);
   overflow: auto;
   padding: 28px;
 }
@@ -279,7 +278,6 @@
 
   .profilePreviewCard {
     position: static;
-    max-height: none;
   }
 
   .fullWidth {
