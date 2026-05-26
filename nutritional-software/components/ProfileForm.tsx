@@ -208,6 +208,7 @@ export default function ProfileForm() {
               These fields support safer and more personalised nutritional
               analysis in later sprints.
             </p>
+            <br />
           </div>
 
           <div className={styles.formGrid}>
