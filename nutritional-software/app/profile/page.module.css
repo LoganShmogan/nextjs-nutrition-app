@@ -58,6 +58,7 @@
 
 .profileFormCard {
   padding: 32px;
+  transition: min-height 0.2s ease;
 }
 
 .profilePreviewCard {
@@ -137,7 +138,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
   padding: 12px 20px;
   border-radius: 999px;
   cursor: pointer;
