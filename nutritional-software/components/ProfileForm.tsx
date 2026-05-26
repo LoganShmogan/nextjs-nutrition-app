@@ -346,7 +346,12 @@ export default function ProfileForm() {
                 <span>Ethnicity</span>
                 <strong>{submittedProfile.ethnicity || "Not provided"}</strong>
               </div>
-              
+
+              <div>
+                <span>Measurement system</span>
+                <strong>{submittedProfile.measurementSystem}</strong>
+              </div>
+
               <div>
                 <span>Weight</span>
                 <strong>{submittedProfile.weight || "Not provided"}</strong>
@@ -361,6 +366,7 @@ export default function ProfileForm() {
                 <span>Activity level</span>
                 <strong>{submittedProfile.activityLevel}</strong>
               </div>
+
 
               <div>
                 <span>Dietary restrictions</span>
