@@ -173,3 +173,44 @@ async function loadFoodNutritionData(): Promise<Food[]> {
 
   return foods;
 }
+
+export async function getAllFoods(): Promise<Food[]> {
+  if (!cachedFoods) {
+    cachedFoods = await loadFoodNutritionData();
+  }
+
+  return cachedFoods;
+}
+
+export async function findFoodById(foodId: string): Promise<Food | null> {
+  const foods = await getAllFoods();
+  return foods.find((food) => food.id === foodId) ?? null;
+}
+
+export async function searchFoods(
+  query: string,
+  limit = 20,
+): Promise<FoodSearchResult[]> {
+  const foods = await getAllFoods();
+  const cleanedQuery = query.trim().toLowerCase();
+
+  if (!cleanedQuery) {
+    return foods.slice(0, limit);
+  }
+
+  return foods
+    .filter((food) => {
+      const searchableText = [
+        food.id,
+        food.name,
+        food.shortName,
+        food.description,
+        food.category,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(cleanedQuery);
+    })
+    .slice(0, limit);
+}
