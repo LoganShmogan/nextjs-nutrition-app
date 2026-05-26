@@ -29,5 +29,12 @@ export const DEFAULT_NUTRIENT_TARGETS: Record<
     lowBelowPercentage: 80,
     highAbovePercentage: 120,
   },
+  protein: {
+    label: "Protein",
+    unit: "g",
+    target: 70,
+    lowBelowPercentage: 80,
+    highAbovePercentage: 130,
+  },
 
 };
