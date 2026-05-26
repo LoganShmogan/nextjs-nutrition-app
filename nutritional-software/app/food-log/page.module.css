@@ -1,4 +1,6 @@
 /* app/food-log/page.module.css */
+/* Author: Logan & Marty */
+/* Area: Frontend / UI */
 
 .page {
 	min-height: 100vh;
@@ -38,6 +40,7 @@
 	border-radius: 16px;
 	padding: 24px;
 	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+	margin-bottom: 24px;
 }
 
 .card h2 {
@@ -54,10 +57,17 @@
 	font-size: 15px;
 }
 
+.searchInput:focus {
+	outline: 3px solid rgba(34, 197, 94, 0.2);
+	border-color: #22c55e;
+}
+
 .foodList {
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
+	gap: 10px;
+	max-height: 480px;
+	overflow-y: auto;
 }
 
 .foodItem {
@@ -65,7 +75,7 @@
 	border: 1px solid #e5e7eb;
 	background: #fafafa;
 	border-radius: 12px;
-	padding: 16px;
+	padding: 14px 16px;
 	text-align: left;
 	cursor: pointer;
 	transition: 0.2s;
@@ -76,14 +86,55 @@
 	border-color: #22c55e;
 }
 
+.foodItemSelected {
+	background: #f0fdf4;
+	border-color: #16a34a;
+	border-width: 2px;
+}
+
 .foodItem h3 {
 	margin-bottom: 4px;
 	color: #111827;
+	font-size: 14px;
 }
 
 .foodItem p {
 	color: #6b7280;
+	font-size: 13px;
+}
+
+.emptyState {
+	padding: 32px 0;
+	color: #6b7280;
+	text-align: center;
 	font-size: 14px;
+}
+
+.notFoundState {
+	padding: 20px;
+	border-radius: 12px;
+	background: #fef9f0;
+	border: 1px solid #fcd34d;
+}
+
+.notFoundState strong {
+	display: block;
+	margin-bottom: 8px;
+	color: #92400e;
+	font-size: 14px;
+}
+
+.notFoundState p {
+	color: #78350f;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.notFoundState code {
+	background: rgba(0,0,0,0.06);
+	padding: 2px 5px;
+	border-radius: 4px;
+	font-size: 12px;
 }
 
 .selectedFood {
@@ -91,36 +142,53 @@
 }
 
 .selectedFood h3 {
+	margin-bottom: 4px;
+	font-size: 18px;
+	color: #111827;
+}
+
+.selectedFoodId {
+	color: #9ca3af;
+	font-size: 12px;
 	margin-bottom: 16px;
 }
 
 .nutrients {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 12px;
+	gap: 10px;
+	margin-bottom: 8px;
 }
 
 .nutrients div {
 	background: #f9fafb;
-	padding: 14px;
+	padding: 12px 14px;
 	border-radius: 10px;
 }
 
 .nutrients span {
 	display: block;
-	font-size: 13px;
+	font-size: 12px;
 	color: #6b7280;
-	margin-bottom: 6px;
+	margin-bottom: 4px;
 }
 
 .nutrients strong {
 	color: #111827;
+	font-size: 15px;
+}
+
+.perAmountNote {
+	font-size: 12px;
+	color: #9ca3af;
+	text-align: right;
+	margin-bottom: 4px;
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
-	gap: 18px;
+	gap: 16px;
 }
 
 .formRow {
@@ -138,6 +206,7 @@
 .formGroup label {
 	font-weight: 600;
 	color: #374151;
+	font-size: 14px;
 }
 
 .formGroup input,
@@ -169,6 +238,7 @@
 	font-weight: 600;
 	cursor: pointer;
 	transition: 0.2s;
+	font-size: 15px;
 }
 
 .primaryButton {
@@ -189,18 +259,14 @@
 	background: #1d4ed8;
 }
 
-.emptyState {
-	padding: 40px 0;
-	color: #6b7280;
-	text-align: center;
-}
-
 .sectionHeader {
 	margin-bottom: 24px;
 }
 
 .sectionHeader p {
 	color: #6b7280;
+	font-size: 14px;
+	margin-top: 4px;
 }
 
 .customFoodForm {
@@ -209,13 +275,52 @@
 	gap: 20px;
 }
 
+/* Logged items */
+.logList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.logItem {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 16px;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	background: #fafafa;
+}
+
+.logItem div {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.logItem strong {
+	color: #111827;
+	font-size: 14px;
+}
+
+.logItem span {
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.logKcal {
+	font-weight: 700;
+	color: #16a34a;
+	font-size: 14px;
+}
+
 @media (max-width: 1000px) {
 	.grid {
 		grid-template-columns: 1fr;
 	}
 
 	.formRow {
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr 1fr;
 	}
 
 	.portionRow {
@@ -224,5 +329,11 @@
 
 	.portionRow select {
 		width: 100%;
+	}
+}
+
+@media (max-width: 600px) {
+	.formRow {
+		grid-template-columns: 1fr;
 	}
 }
