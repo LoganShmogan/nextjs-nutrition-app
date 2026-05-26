@@ -1,31 +1,29 @@
-// Author: Logan & Marty
-// Area: Backend / API / Logic / Frontend
+export type NutrientValue = number | null;
 
 export type FoodNutrients = {
-  energyKcal: number | null;
-  energyKj: number | null;
-  protein: number | null;
-  carbohydrate: number | null;
-  fat: number | null;
-  sugar: number | null;
-  sodium: number | null;
-  fibre: number | null;
+  energyKcal: NutrientValue;
+  energyKj: NutrientValue;
+  protein: NutrientValue;
+  carbohydrate: NutrientValue;
+  fat: NutrientValue;
+  sugar: NutrientValue;
+  sodium: NutrientValue;
+  fibre: NutrientValue;
+  calcium?: NutrientValue;
+  iron?: NutrientValue;
+  vitaminC?: NutrientValue;
 };
 
 export type Food = {
   id: string;
   name: string;
   shortName: string;
-  chapter: string;
+  description: string;
+  category: string;
   nutrients: FoodNutrients;
 };
 
-export type FoodSearchResult = {
-  foods: Food[];
-  total: number;
-  query: string;
-};
-
-export type FoodSearchError = {
-  error: string;
-};
+export type FoodSearchResult = Pick<
+  Food,
+  "id" | "name" | "shortName" | "description" | "category" | "nutrients"
+>;

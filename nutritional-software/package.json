@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "parse-foods": "node scripts/parse-foodfiles.mjs"
   },
   "dependencies": {
     "next": "^16.2.6",
     "postcss": "^8.5.14",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "vitest": "^4.1.7"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
