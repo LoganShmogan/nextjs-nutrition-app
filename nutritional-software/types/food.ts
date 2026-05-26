@@ -1,6 +1,3 @@
-// Author: Logan & Marty
-// Area: Backend / API / Logic / Frontend
-
 export type NutrientValue = number | null;
 
 export type FoodNutrients = {
@@ -12,9 +9,9 @@ export type FoodNutrients = {
   sugar: NutrientValue;
   sodium: NutrientValue;
   fibre: NutrientValue;
-  calcium: NutrientValue;
-  iron: NutrientValue;
-  vitaminC: NutrientValue;
+  calcium?: NutrientValue;
+  iron?: NutrientValue;
+  vitaminC?: NutrientValue;
 };
 
 export type Food = {
