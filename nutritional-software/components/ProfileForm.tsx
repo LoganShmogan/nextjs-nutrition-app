@@ -226,7 +226,7 @@ export default function ProfileForm() {
                 <option value="Medical nutrition support">
                   Medical nutrition support
                 </option>
-
+              </select>
             </label>
 
             <label>
