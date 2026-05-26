@@ -3,7 +3,7 @@
 // Author: Marty Orchard
 // Area: Frontend / UI
 
-import { useState } from "react";
+import { useState, UseEffect, UseRef } from "react";
 import styles from "@/app/profile/page.module.css";
 
 type ProfileFormData = {
