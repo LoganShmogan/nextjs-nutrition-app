@@ -125,3 +125,19 @@ const testProfile: ProfileData = {
   measurementSystem: "Metric",
 };
 
+describe("profile based RDI analysis", () => {
+  it("uses profile based TDEE as the energy target", () => {
+    const totals = calculateNutrition([
+      {
+        food: bread,
+        amount: 100,
+      },
+    ]);
+
+    const comparisons = compareNutritionToTargets(totals, testProfile);
+    const energy = comparisons.find((item) => item.nutrient === "energyKcal");
+
+    expect(energy).toBeDefined();
+    expect(energy?.target).toBe(2289);
+    expect(energy?.basis).toContain("Profile-based TDEE");
+  });
