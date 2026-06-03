@@ -26,3 +26,9 @@ describe("calculateEnergyExpenditure", () => {
     expect(result.bmiCategory).toBe("Healthy weight");
   });
 
+  it("calculates BMR and TDEE for a metric male profile", () => {
+    const result = calculateEnergyExpenditure({
+      ...baseProfile,
+      gender: "Male",
+    });
+
