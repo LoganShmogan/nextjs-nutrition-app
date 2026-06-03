@@ -378,3 +378,13 @@
     color: #f2f5f1;
   }
 
+  .demoPanel p,
+  .feedbackList small {
+    color: #b8c2b7;
+  }
+
+  .primaryButton {
+    background: #8fcf91;
+    color: #102112;
+  }
+
