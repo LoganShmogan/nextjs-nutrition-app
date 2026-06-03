@@ -40,3 +40,14 @@ function convertWeightToKg(
   return weight;
 }
 
+function convertHeightToCm(
+  height: number,
+  measurementSystem: ProfileData["measurementSystem"],
+): number {
+  if (measurementSystem === "Imperial") {
+    return height * 30.48;
+  }
+
+  return height;
+}
+
