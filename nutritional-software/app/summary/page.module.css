@@ -318,3 +318,19 @@
   opacity: 0.7;
 }
 
+.dangerBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #ffe2e2;
+  color: #9f1d1d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
