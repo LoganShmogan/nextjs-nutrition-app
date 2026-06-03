@@ -9,3 +9,12 @@ import type {
   MeasurementSystem,
   ProfileData,
 } from "@/types/profile";
+
+export const runtime = "nodejs";
+
+const VALID_GENDERS: Gender[] = [
+  "Female",
+  "Male",
+  "Other",
+  "Prefer not to say",
+];
