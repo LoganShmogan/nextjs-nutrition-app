@@ -51,3 +51,18 @@ function convertHeightToCm(
   return height;
 }
 
+function getBmiCategory(bmi: number): string {
+  if (bmi < 18.5) {
+    return "Underweight";
+  }
+
+  if (bmi < 25) {
+    return "Healthy weight";
+  }
+
+  if (bmi < 30) {
+    return "Overweight";
+  }
+
+  return "Obese range";
+}
