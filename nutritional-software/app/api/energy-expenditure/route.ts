@@ -69,3 +69,11 @@ function validateProfile(body: EnergyExpenditureRequestBody): string | null {
   return null;
 }
 
+export async function POST(request: NextRequest) {
+  const body = (await request.json()) as EnergyExpenditureRequestBody;
+  const validationError = validateProfile(body);
+
+  if (validationError) {
+    return NextResponse.json({ error: validationError }, { status: 400 });
+  }
+
