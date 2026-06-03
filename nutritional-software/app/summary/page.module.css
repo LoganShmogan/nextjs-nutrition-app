@@ -298,3 +298,14 @@
   line-height: 1.6;
 }
 
+.primaryButton {
+  flex-shrink: 0;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 999px;
+  background: #2f7d32;
+  color: #ffffff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
