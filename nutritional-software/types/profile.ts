@@ -13,3 +13,13 @@ export type ActivityLevel =
   | "Very active";
 
 export type MeasurementSystem = "Metric" | "Imperial";
+
+export type ProfileData = {
+  patientName: string;
+  age: number;
+  gender: Gender;
+  ethnicity?: string;
+  weight: number;
+  height: number;
+  activityLevel: ActivityLevel;
+};
