@@ -2,8 +2,8 @@
 // Area: Backend / API / Logic / Testing
 
 import { NextRequest, NextResponse } from "next/server";
-import { findFoodById, searchFoods } from "@/lib/nutrition/foods";
 import { analyseNutrition } from "@/lib/nutrition/calculateNutrition";
+import { findFoodById, searchFoods } from "@/lib/nutrition/foods";
 import type { LoggedFood } from "@/types/nutrition";
 
 export const runtime = "nodejs";
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const analysis = analyseNutrition(loggedFoods);
+  const analysis = analyseNutrition(loggedFoods, body.profile);
 
   return NextResponse.json({
     foods: loggedFoods,
