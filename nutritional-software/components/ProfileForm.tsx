@@ -118,6 +118,21 @@ export default function ProfileForm() {
         }),
       });
 
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Energy expenditure could not be calculated.");
+      }
+
+      setEnergyExpenditure(result.energyExpenditure);
+    } catch (error) {
+      setEnergyError(
+        error instanceof Error
+          ? error.message
+          : "Energy expenditure could not be calculated.",
+      );
+    }
+  }
 
   function handleReset() {
     setFormData(initialFormData);
