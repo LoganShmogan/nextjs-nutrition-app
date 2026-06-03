@@ -58,7 +58,18 @@ function getComparisonMessage(
   status: NutrientStatus,
   percentage: number,
 ): string {
+  if (status === "low") {
+    return `${label} intake is below the target at ${roundOne(percentage)}%.`;
+  }
 
+  if (status === "high") {
+    return `${label} intake is above the target at ${roundOne(percentage)}%.`;
+  }
+
+  return `${label} intake is within the target range at ${roundOne(
+    percentage,
+  )}%.`;
+}
 
 export function calculateNutrition(loggedFoods: LoggedFood[]): NutritionTotals {
   const totals: NutritionTotals = { ...EMPTY_TOTALS };
