@@ -18,3 +18,11 @@ const VALID_GENDERS: Gender[] = [
   "Other",
   "Prefer not to say",
 ];
+
+const VALID_ACTIVITY_LEVELS: ActivityLevel[] = [
+  "Sedentary",
+  "Lightly active",
+  "Active",
+  "Very active",
+];
+
