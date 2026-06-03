@@ -3,7 +3,7 @@
 // Author: Marty Orchard
 // Area: Frontend / UI
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "@/app/profile/page.module.css";
 
 type ProfileFormData = {
@@ -22,6 +22,17 @@ type ProfileFormData = {
   medicalConditions: string;
   medications: string;
   additionalNotes: string;
+};
+
+type EnergyExpenditureResult = {
+  bmrKcal: number;
+  tdeeKcal: number;
+  activityMultiplier: number;
+  activityLevel: string;
+  formula: string;
+  bmi: number;
+  bmiCategory: string;
+  notes: string[];
 };
 
 const initialFormData: ProfileFormData = {
@@ -46,8 +57,10 @@ export default function ProfileForm() {
   const [formData, setFormData] = useState<ProfileFormData>(initialFormData);
   const [submittedProfile, setSubmittedProfile] =
     useState<ProfileFormData | null>(null);
+  const [energyExpenditure, setEnergyExpenditure] =
+    useState<EnergyExpenditureResult | null>(null);
+  const [energyError, setEnergyError] = useState<string | null>(null);
 
-  const formCardRef = useRef<HTMLFormElement | null>(null);
   const previewCardRef = useRef<HTMLElement | null>(null);
   const [matchedCardHeight, setMatchedCardHeight] = useState<number | null>(null);
 
@@ -63,13 +76,12 @@ export default function ProfileForm() {
     };
 
     updateHeight();
-
     window.addEventListener("resize", updateHeight);
 
     return () => {
       window.removeEventListener("resize", updateHeight);
     };
-  }, [submittedProfile]);
+  }, [submittedProfile, energyExpenditure]);
 
   function handleChange(
     event:
@@ -85,24 +97,30 @@ export default function ProfileForm() {
     }));
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     setSubmittedProfile(formData);
-  }
+    setEnergyExpenditure(null);
+    setEnergyError(null);
+
+   
 
   function handleReset() {
     setFormData(initialFormData);
     setSubmittedProfile(null);
+    setEnergyExpenditure(null);
+    setEnergyError(null);
   }
 
   return (
     <section className={styles.profilePage}>
       <div className={styles.profileHeader}>
-        <p className={styles.eyebrow}>Sprint 2 · Expanded Profile</p>
+        <p className={styles.eyebrow}>Sprint 3 · Energy Expenditure</p>
         <h1>User Profile Setup</h1>
         <p>
-          Enter expanded patient information so the nutrition app can later
-          provide more personalised dietary recommendations.
+          Enter patient information so the nutrition app can estimate BMR, TDEE,
+          BMI, and activity-adjusted energy needs.
         </p>
       </div>
 
@@ -116,7 +134,6 @@ export default function ProfileForm() {
           }
           onSubmit={handleSubmit}
         >
-
           <div className={styles.formSectionTitle}>
             <h2>Patient Information</h2>
             <p>Required fields are marked with an asterisk.</p>
@@ -337,7 +354,7 @@ export default function ProfileForm() {
 
           <div className={styles.formActions}>
             <button className={styles.primaryButton} type="submit">
-              Save Expanded Profile
+              Save Profile & Calculate Energy Needs
             </button>
 
             <button
@@ -355,94 +372,92 @@ export default function ProfileForm() {
 
           {!submittedProfile ? (
             <p className={styles.mutedText}>
-              Submit the form to preview the captured profile details. This is
-              frontend-only for Sprint 2.
+              Submit the form to preview the captured profile details and
+              calculate estimated energy expenditure.
             </p>
           ) : (
-            <div className={styles.previewList}>
-              <div>
-                <span>Name</span>
-                <strong>{submittedProfile.patientName}</strong>
-              </div>
+            <>
+              {energyError && (
+                <p className={styles.errorText}>{energyError}</p>
+              )}
 
-              <div>
-                <span>Age</span>
-                <strong>{submittedProfile.age}</strong>
-              </div>
+              {energyExpenditure && (
+                <div className={styles.energyCard}>
+                  <p className={styles.energyEyebrow}>Estimated Energy Needs</p>
 
-              <div>
-                <span>Gender</span>
-                <strong>{submittedProfile.gender}</strong>
-              </div>
+                  <div className={styles.energyGrid}>
+                    <div>
+                      <span>BMR</span>
+                      <strong>{energyExpenditure.bmrKcal} kcal/day</strong>
+                    </div>
 
-              <div>
-                <span>Ethnicity</span>
-                <strong>{submittedProfile.ethnicity || "Not provided"}</strong>
-              </div>
+                    <div>
+                      <span>TDEE</span>
+                      <strong>{energyExpenditure.tdeeKcal} kcal/day</strong>
+                    </div>
 
-              <div>
-                <span>Measurement system</span>
-                <strong>{submittedProfile.measurementSystem}</strong>
-              </div>
+                    <div>
+                      <span>BMI</span>
+                      <strong>
+                        {energyExpenditure.bmi} ·{" "}
+                        {energyExpenditure.bmiCategory}
+                      </strong>
+                    </div>
 
-              <div>
-                <span>Weight</span>
-                <strong>{submittedProfile.weight || "Not provided"}</strong>
-              </div>
+                    <div>
+                      <span>Activity multiplier</span>
+                      <strong>{energyExpenditure.activityMultiplier}</strong>
+                    </div>
+                  </div>
 
-              <div>
-                <span>Height</span>
-                <strong>{submittedProfile.height || "Not provided"}</strong>
-              </div>
+                  <p className={styles.formulaText}>
+                    {energyExpenditure.formula}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <span>Activity level</span>
-                <strong>{submittedProfile.activityLevel}</strong>
-              </div>
+              <div className={styles.previewList}>
+                <div>
+                  <span>Name</span>
+                  <strong>{submittedProfile.patientName}</strong>
+                </div>
 
-              <div>
-                <span>Nutrition goal</span>
-                <strong>{submittedProfile.nutritionGoal || "Not provided"}</strong>
-              </div>
+                <div>
+                  <span>Age</span>
+                  <strong>{submittedProfile.age}</strong>
+                </div>
 
-              <div>
-                <span>Dietary preference</span>
-                <strong>
-                  {submittedProfile.dietaryPreference || "Not provided"}
-                </strong>
-              </div>
+                <div>
+                  <span>Gender</span>
+                  <strong>{submittedProfile.gender}</strong>
+                </div>
 
-              <div>
-                <span>Dietary restrictions</span>
-                <strong>
-                  {submittedProfile.dietaryRestrictions || "Not provided"}
-                </strong>
-              </div>
+                <div>
+                  <span>Measurement system</span>
+                  <strong>{submittedProfile.measurementSystem}</strong>
+                </div>
 
-              <div>
-                <span>Allergies / intolerances</span>
-                <strong>{submittedProfile.allergies || "Not provided"}</strong>
-              </div>
+                <div>
+                  <span>Weight</span>
+                  <strong>{submittedProfile.weight}</strong>
+                </div>
 
-              <div>
-                <span>Medical conditions</span>
-                <strong>
-                  {submittedProfile.medicalConditions || "Not provided"}
-                </strong>
-              </div>
+                <div>
+                  <span>Height</span>
+                  <strong>{submittedProfile.height}</strong>
+                </div>
 
-              <div>
-                <span>Medications / supplements</span>
-                <strong>{submittedProfile.medications || "Not provided"}</strong>
-              </div>
+                <div>
+                  <span>Activity level</span>
+                  <strong>{submittedProfile.activityLevel}</strong>
+                </div>
 
-              <div>
-                <span>Additional notes</span>
-                <strong>
-                  {submittedProfile.additionalNotes || "Not provided"}
-                </strong>
+                <div>
+                  <span>Nutrition goal</span>
+                  <strong>{submittedProfile.nutritionGoal || "Not provided"}</strong>
+                </div>
               </div>
-            </div>
+            </>
           )}
         </aside>
       </div>
