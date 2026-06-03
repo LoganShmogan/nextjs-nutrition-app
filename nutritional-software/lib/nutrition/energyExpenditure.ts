@@ -25,3 +25,18 @@ function roundWhole(value: number): number {
   return Math.round(value);
 }
 
+function roundOne(value: number): number {
+  return Math.round(value * 10) / 10;
+}
+
+function convertWeightToKg(
+  weight: number,
+  measurementSystem: ProfileData["measurementSystem"],
+): number {
+  if (measurementSystem === "Imperial") {
+    return weight * 0.45359237;
+  }
+
+  return weight;
+}
+
