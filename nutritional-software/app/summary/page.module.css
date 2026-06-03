@@ -368,3 +368,13 @@
   line-height: 1.5;
 }
 
+@media (prefers-color-scheme: dark) {
+  .demoPanel {
+    border-color: #445047;
+    background: #222923;
+  }
+
+  .demoPanel h2 {
+    color: #f2f5f1;
+  }
+
