@@ -112,3 +112,16 @@ describe("calculateNutrition", () => {
     expect(result.summary.totalAmount).toBe(100);
   });
 });
+
+import type { ProfileData } from "@/types/profile";
+
+const testProfile: ProfileData = {
+  patientName: "Alex Taylor",
+  age: 25,
+  gender: "Female",
+  weight: 70,
+  height: 170,
+  activityLevel: "Active",
+  measurementSystem: "Metric",
+};
+
