@@ -363,3 +363,8 @@
   font-weight: 800;
 }
 
+.feedbackList small {
+  color: #5f6b5f;
+  line-height: 1.5;
+}
+
