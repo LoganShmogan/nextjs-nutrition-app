@@ -59,3 +59,13 @@ function validateProfile(body: EnergyExpenditureRequestBody): string | null {
     return "Activity level is required.";
   }
 
+  if (
+    !body.measurementSystem ||
+    !VALID_MEASUREMENT_SYSTEMS.includes(body.measurementSystem)
+  ) {
+    return "Measurement system must be Metric or Imperial.";
+  }
+
+  return null;
+}
+
