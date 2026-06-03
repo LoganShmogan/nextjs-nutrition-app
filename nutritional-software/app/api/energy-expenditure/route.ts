@@ -77,3 +77,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: validationError }, { status: 400 });
   }
 
+  const profile = body as ProfileData;
+  const energyExpenditure = calculateEnergyExpenditure(profile);
+
+  return NextResponse.json({
+    profile,
+    energyExpenditure,
+  });
+}
