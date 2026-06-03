@@ -53,6 +53,13 @@ function getNutrientStatus(
   return "ok";
 }
 
+function getComparisonMessage(
+  label: string,
+  status: NutrientStatus,
+  percentage: number,
+): string {
+
+
 export function calculateNutrition(loggedFoods: LoggedFood[]): NutritionTotals {
   const totals: NutritionTotals = { ...EMPTY_TOTALS };
 
