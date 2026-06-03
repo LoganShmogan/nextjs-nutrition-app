@@ -334,3 +334,11 @@
   text-align: center;
 }
 
+.progressTrack {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8eee7;
+}
+
