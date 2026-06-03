@@ -276,3 +276,15 @@
     padding: 22px;
   }
 }
+
+.demoPanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px;
+  border: 1px solid #dfe5dc;
+  border-radius: 24px;
+  background: #fbfdfb;
+}
+
