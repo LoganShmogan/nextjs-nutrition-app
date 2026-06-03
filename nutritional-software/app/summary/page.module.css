@@ -388,3 +388,12 @@
     color: #102112;
   }
 
+  .primaryButton:hover {
+    background: #a4e7a5;
+  }
+
+  .dangerBadge {
+    background: rgba(255, 118, 118, 0.16);
+    color: #ffb4b4;
+  }
+
