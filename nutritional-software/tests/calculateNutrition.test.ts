@@ -158,3 +158,8 @@ describe("profile based RDI analysis", () => {
     expect(protein?.basis).toContain("0.8 g protein per kg");
   });
 
+  it("returns messages for low, ok, and high nutrient statuses", () => {
+    const result = analyseNutrition(
+      [
+        {
+          food: bread,
