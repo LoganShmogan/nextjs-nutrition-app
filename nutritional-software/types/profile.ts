@@ -22,4 +22,12 @@ export type ProfileData = {
   weight: number;
   height: number;
   activityLevel: ActivityLevel;
+  measurementSystem: MeasurementSystem;
+  nutritionGoal?: string;
+  dietaryPreference?: string;
+  dietaryRestrictions?: string;
+  allergies?: string;
+  medicalConditions?: string;
+  medications?: string;
+  additionalNotes?: string;
 };
