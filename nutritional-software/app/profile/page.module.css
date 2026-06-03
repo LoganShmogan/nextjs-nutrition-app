@@ -339,3 +339,14 @@
   background: #ffffff;
 }
 
+.energyGrid span {
+  color: #5f6b5f;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.energyGrid strong {
+  color: #171717;
+  font-size: 1rem;
+  line-height: 1.3;
+}
