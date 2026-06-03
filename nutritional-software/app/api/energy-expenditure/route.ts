@@ -47,3 +47,15 @@ function validateProfile(body: EnergyExpenditureRequestBody): string | null {
     return "Gender is required.";
   }
 
+  if (!isPositiveNumber(body.weight)) {
+    return "Weight must be a positive number.";
+  }
+
+  if (!isPositiveNumber(body.height)) {
+    return "Height must be a positive number.";
+  }
+
+  if (!body.activityLevel || !VALID_ACTIVITY_LEVELS.includes(body.activityLevel)) {
+    return "Activity level is required.";
+  }
+
