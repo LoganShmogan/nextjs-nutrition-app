@@ -50,3 +50,13 @@ describe("calculateEnergyExpenditure", () => {
     expect(result.bmiCategory).toBe("Healthy weight");
   });
 
+  it("averages male and female BMR equations when gender is not specific", () => {
+    const result = calculateEnergyExpenditure({
+      ...baseProfile,
+      gender: "Prefer not to say",
+    });
+
+    expect(result.bmrKcal).toBe(1534);
+    expect(result.notes.length).toBeGreaterThan(0);
+  });
+});
