@@ -304,3 +304,29 @@
     width: 100%;
   }
 }
+
+.energyCard {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid #b9d8b7;
+  border-radius: 20px;
+  background: #eef8ed;
+}
+
+.energyEyebrow {
+  margin: 0;
+  color: #2f7d32;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.energyGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
