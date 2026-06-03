@@ -122,6 +122,10 @@ export function compareNutritionToTargets(
     const nutrientKey = nutrient as keyof NutritionTotals;
     const total = totals[nutrientKey];
     const percentage = target.target > 0 ? (total / target.target) * 100 : 0;
+      percentage,
+      target.lowBelowPercentage,
+      target.highAbovePercentage,
+    );
 
     return {
       nutrient: nutrientKey,
