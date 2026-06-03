@@ -37,3 +37,16 @@ describe("calculateEnergyExpenditure", () => {
     expect(result.formula).toBe("Mifflin-St Jeor male equation");
   });
 
+  it("converts imperial height and weight before calculating", () => {
+    const result = calculateEnergyExpenditure({
+      ...baseProfile,
+      weight: 154.3,
+      height: 5.58,
+      measurementSystem: "Imperial",
+    });
+
+    expect(result.bmrKcal).toBeGreaterThan(1440);
+    expect(result.bmrKcal).toBeLessThan(1465);
+    expect(result.bmiCategory).toBe("Healthy weight");
+  });
+
