@@ -26,3 +26,11 @@ const VALID_ACTIVITY_LEVELS: ActivityLevel[] = [
   "Very active",
 ];
 
+const VALID_MEASUREMENT_SYSTEMS: MeasurementSystem[] = ["Metric", "Imperial"];
+
+type EnergyExpenditureRequestBody = Partial<ProfileData>;
+
+function isPositiveNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value) && value > 0;
+}
+
