@@ -122,6 +122,7 @@ export function compareNutritionToTargets(
     const nutrientKey = nutrient as keyof NutritionTotals;
     const total = totals[nutrientKey];
     const percentage = target.target > 0 ? (total / target.target) * 100 : 0;
+    const status = getNutrientStatus(
       percentage,
       target.lowBelowPercentage,
       target.highAbovePercentage,
@@ -143,6 +144,7 @@ export function compareNutritionToTargets(
 
 export function analyseNutrition(
   loggedFoods: LoggedFood[],
+  profile?: ProfileData,
 ): NutritionAnalysisResult {
   const totals = calculateNutrition(loggedFoods);
   const comparisons = compareNutritionToTargets(totals, profile);
