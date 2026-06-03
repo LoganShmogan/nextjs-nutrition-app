@@ -36,6 +36,8 @@ export type NutrientComparison = {
   target: number;
   percentage: number;
   status: NutrientStatus;
+  basis: string;
+  message: string;
 };
 
 export type NutritionAnalysisResult = {
