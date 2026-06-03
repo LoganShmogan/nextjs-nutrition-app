@@ -141,3 +141,12 @@ describe("profile based RDI analysis", () => {
     expect(energy?.target).toBe(2289);
     expect(energy?.basis).toContain("Profile-based TDEE");
   });
+
+  it("uses body weight to calculate profile based protein target", () => {
+    const totals = calculateNutrition([
+      {
+        food: bread,
+        amount: 100,
+      },
+    ]);
+
