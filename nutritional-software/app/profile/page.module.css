@@ -358,3 +358,48 @@
   line-height: 1.5;
 }
 
+.errorText {
+  margin: 16px 0;
+  padding: 12px 14px;
+  border: 1px solid #f1b4b4;
+  border-radius: 14px;
+  background: #fff1f1;
+  color: #9f1d1d;
+  font-weight: 800;
+}
+
+@media (prefers-color-scheme: dark) {
+  .energyCard {
+    border-color: #5d7f5d;
+    background: #263528;
+  }
+
+  .energyEyebrow {
+    color: #8fcf91;
+  }
+
+  .energyGrid div {
+    background: #222923;
+  }
+
+  .energyGrid span,
+  .formulaText {
+    color: #b8c2b7;
+  }
+
+  .energyGrid strong {
+    color: #f2f5f1;
+  }
+
+  .errorText {
+    border-color: #7d3939;
+    background: #3a2222;
+    color: #ffb4b4;
+  }
+}
+
+@media (max-width: 520px) {
+  .energyGrid {
+    grid-template-columns: 1fr;
+  }
+}
