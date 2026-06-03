@@ -150,3 +150,7 @@ describe("profile based RDI analysis", () => {
       },
     ]);
 
+    const comparisons = compareNutritionToTargets(totals, testProfile);
+    const protein = comparisons.find((item) => item.nutrient === "protein");
+
+    expect(protein).toBeDefined();
