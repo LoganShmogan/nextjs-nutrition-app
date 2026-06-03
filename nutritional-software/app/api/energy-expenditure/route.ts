@@ -34,3 +34,16 @@ function isPositiveNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value) && value > 0;
 }
 
+function validateProfile(body: EnergyExpenditureRequestBody): string | null {
+  if (!body.patientName || typeof body.patientName !== "string") {
+    return "Patient name is required.";
+  }
+
+  if (!isPositiveNumber(body.age) || body.age > 120) {
+    return "Age must be a positive number up to 120.";
+  }
+
+  if (!body.gender || !VALID_GENDERS.includes(body.gender)) {
+    return "Gender is required.";
+  }
+
