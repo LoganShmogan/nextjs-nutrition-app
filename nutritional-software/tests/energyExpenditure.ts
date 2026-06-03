@@ -32,3 +32,8 @@ describe("calculateEnergyExpenditure", () => {
       gender: "Male",
     });
 
+    expect(result.bmrKcal).toBe(1617);
+    expect(result.tdeeKcal).toBe(2506);
+    expect(result.formula).toBe("Mifflin-St Jeor male equation");
+  });
+
