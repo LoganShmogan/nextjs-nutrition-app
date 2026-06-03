@@ -1,2 +1,2 @@
-// Author: Logan 
-// Area: Backend / API / Logic / Testing
+// Author: Logan & Marty
+// Area: Profile / Nutrition Logic / Testing 
