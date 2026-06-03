@@ -154,3 +154,7 @@ describe("profile based RDI analysis", () => {
     const protein = comparisons.find((item) => item.nutrient === "protein");
 
     expect(protein).toBeDefined();
+    expect(protein?.target).toBe(56);
+    expect(protein?.basis).toContain("0.8 g protein per kg");
+  });
+
