@@ -342,3 +342,9 @@
   background: #e8eee7;
 }
 
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: #2f7d32;
+}
+
