@@ -112,3 +112,67 @@ describe("calculateNutrition", () => {
     expect(result.summary.totalAmount).toBe(100);
   });
 });
+
+import type { ProfileData } from "@/types/profile";
+
+const testProfile: ProfileData = {
+  patientName: "Alex Taylor",
+  age: 25,
+  gender: "Female",
+  weight: 70,
+  height: 170,
+  activityLevel: "Active",
+  measurementSystem: "Metric",
+};
+
+describe("profile based RDI analysis", () => {
+  it("uses profile based TDEE as the energy target", () => {
+    const totals = calculateNutrition([
+      {
+        food: bread,
+        amount: 100,
+      },
+    ]);
+
+    const comparisons = compareNutritionToTargets(totals, testProfile);
+    const energy = comparisons.find((item) => item.nutrient === "energyKcal");
+
+    expect(energy).toBeDefined();
+    expect(energy?.target).toBe(2289);
+    expect(energy?.basis).toContain("Profile-based TDEE");
+  });
+
+  it("uses body weight to calculate profile based protein target", () => {
+    const totals = calculateNutrition([
+      {
+        food: bread,
+        amount: 100,
+      },
+    ]);
+
+    const comparisons = compareNutritionToTargets(totals, testProfile);
+    const protein = comparisons.find((item) => item.nutrient === "protein");
+
+    expect(protein).toBeDefined();
+    expect(protein?.target).toBe(56);
+    expect(protein?.basis).toContain("0.8 g protein per kg");
+  });
+
+  it("returns messages for low, ok, and high nutrient statuses", () => {
+    const result = analyseNutrition(
+      [
+        {
+          food: bread,
+          amount: 100,
+        },
+      ],
+      testProfile,
+    );
+
+    expect(result.comparisons.length).toBeGreaterThan(0);
+    expect(result.comparisons[0].message.length).toBeGreaterThan(0);
+    expect(result.summary.lowCount + result.summary.okCount + result.summary.highCount).toBe(
+      result.comparisons.length,
+    );
+  });
+});

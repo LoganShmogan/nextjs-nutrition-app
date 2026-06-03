@@ -1,10 +1,15 @@
+// Author: Marty & Logan
+// Area: Backend / API / Logic / Testing
+
+import { getProfileBasedNutrientTargets } from "@/lib/nutrition/thresholds";
 import type {
   LoggedFood,
   NutrientComparison,
+  NutrientStatus,
   NutritionAnalysisResult,
   NutritionTotals,
 } from "@/types/nutrition";
-import { DEFAULT_NUTRIENT_TARGETS } from "@/lib/nutrition/thresholds";
+import type { ProfileData } from "@/types/profile";
 
 const EMPTY_TOTALS: NutritionTotals = {
   energyKcal: 0,
@@ -24,8 +29,8 @@ function roundOne(value: number): number {
   return Math.round(value * 10) / 10;
 }
 
-function scaleNutrient(value: number | null, grams: number): number {
-  if (value === null || Number.isNaN(value)) {
+function scaleNutrient(value: number | null | undefined, grams: number): number {
+  if (value === null || value === undefined || Number.isNaN(value)) {
     return 0;
   }
 
@@ -36,7 +41,7 @@ function getNutrientStatus(
   percentage: number,
   lowBelowPercentage: number,
   highAbovePercentage: number,
-) {
+): NutrientStatus {
   if (lowBelowPercentage > 0 && percentage < lowBelowPercentage) {
     return "low";
   }
@@ -46,6 +51,24 @@ function getNutrientStatus(
   }
 
   return "ok";
+}
+
+function getComparisonMessage(
+  label: string,
+  status: NutrientStatus,
+  percentage: number,
+): string {
+  if (status === "low") {
+    return `${label} intake is below the target at ${roundOne(percentage)}%.`;
+  }
+
+  if (status === "high") {
+    return `${label} intake is above the target at ${roundOne(percentage)}%.`;
+  }
+
+  return `${label} intake is within the target range at ${roundOne(
+    percentage,
+  )}%.`;
 }
 
 export function calculateNutrition(loggedFoods: LoggedFood[]): NutritionTotals {
@@ -91,11 +114,19 @@ export function calculateNutrition(loggedFoods: LoggedFood[]): NutritionTotals {
 
 export function compareNutritionToTargets(
   totals: NutritionTotals,
+  profile?: ProfileData,
 ): NutrientComparison[] {
-  return Object.entries(DEFAULT_NUTRIENT_TARGETS).map(([nutrient, target]) => {
+  const targets = getProfileBasedNutrientTargets(profile);
+
+  return Object.entries(targets).map(([nutrient, target]) => {
     const nutrientKey = nutrient as keyof NutritionTotals;
     const total = totals[nutrientKey];
     const percentage = target.target > 0 ? (total / target.target) * 100 : 0;
+    const status = getNutrientStatus(
+      percentage,
+      target.lowBelowPercentage,
+      target.highAbovePercentage,
+    );
 
     return {
       nutrient: nutrientKey,
@@ -104,20 +135,19 @@ export function compareNutritionToTargets(
       total,
       target: target.target,
       percentage: roundOne(percentage),
-      status: getNutrientStatus(
-        percentage,
-        target.lowBelowPercentage,
-        target.highAbovePercentage,
-      ),
+      status,
+      basis: target.basis,
+      message: getComparisonMessage(target.label, status, percentage),
     };
   });
 }
 
 export function analyseNutrition(
   loggedFoods: LoggedFood[],
+  profile?: ProfileData,
 ): NutritionAnalysisResult {
   const totals = calculateNutrition(loggedFoods);
-  const comparisons = compareNutritionToTargets(totals);
+  const comparisons = compareNutritionToTargets(totals, profile);
 
   return {
     totals,
