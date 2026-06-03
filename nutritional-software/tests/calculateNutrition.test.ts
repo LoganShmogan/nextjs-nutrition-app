@@ -163,3 +163,16 @@ describe("profile based RDI analysis", () => {
       [
         {
           food: bread,
+          amount: 100,
+        },
+      ],
+      testProfile,
+    );
+
+    expect(result.comparisons.length).toBeGreaterThan(0);
+    expect(result.comparisons[0].message.length).toBeGreaterThan(0);
+    expect(result.summary.lowCount + result.summary.okCount + result.summary.highCount).toBe(
+      result.comparisons.length,
+    );
+  });
+});
