@@ -75,3 +75,19 @@ function calculateBmr(
 ): { bmr: number; formula: string; notes: string[] } {
   const notes: string[] = [];
 
+  if (gender === "Male") {
+    return {
+      bmr: 10 * weightKg + 6.25 * heightCm - 5 * age + 5,
+      formula: "Mifflin-St Jeor male equation",
+      notes,
+    };
+  }
+
+  if (gender === "Female") {
+    return {
+      bmr: 10 * weightKg + 6.25 * heightCm - 5 * age - 161,
+      formula: "Mifflin-St Jeor female equation",
+      notes,
+    };
+  }
+
