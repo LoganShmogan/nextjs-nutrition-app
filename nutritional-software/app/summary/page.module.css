@@ -348,3 +348,8 @@
   background: #2f7d32;
 }
 
+.percentageText {
+  margin-top: -6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
