@@ -104,7 +104,20 @@ export default function ProfileForm() {
     setEnergyExpenditure(null);
     setEnergyError(null);
 
-   
+    try {
+      const response = await fetch("/api/energy-expenditure", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          age: Number(formData.age),
+          weight: Number(formData.weight),
+          height: Number(formData.height),
+        }),
+      });
+
 
   function handleReset() {
     setFormData(initialFormData);
