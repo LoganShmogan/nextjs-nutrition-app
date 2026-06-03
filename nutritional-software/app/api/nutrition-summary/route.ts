@@ -5,10 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { analyseNutrition } from "@/lib/nutrition/calculateNutrition";
 import { findFoodById, searchFoods } from "@/lib/nutrition/foods";
 import type { LoggedFood } from "@/types/nutrition";
+import type { ProfileData } from "@/types/profile";
 
 export const runtime = "nodejs";
 
 type NutritionRequestBody = {
+  profile?: ProfileData;
   foods?: {
     foodId: string;
     amount: number;
@@ -82,6 +84,7 @@ export async function POST(request: NextRequest) {
   const analysis = analyseNutrition(loggedFoods, body.profile);
 
   return NextResponse.json({
+    profile: body.profile ?? null,
     foods: loggedFoods,
     analysis,
   });
