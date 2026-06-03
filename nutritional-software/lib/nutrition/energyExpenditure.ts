@@ -91,3 +91,35 @@ function calculateBmr(
     };
   }
 
+  notes.push(
+    "Gender-specific BMR equation was not selected, so the male and female Mifflin-St Jeor results were averaged.",
+  );
+
+  const maleBmr = 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+  const femaleBmr = 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+
+  return {
+    bmr: (maleBmr + femaleBmr) / 2,
+    formula: "Average of Mifflin-St Jeor male and female equations",
+    notes,
+  };
+}
+
+export function calculateEnergyExpenditure(
+  profile: ProfileData,
+): EnergyExpenditureResult {
+  const weightKg = convertWeightToKg(profile.weight, profile.measurementSystem);
+  const heightCm = convertHeightToCm(profile.height, profile.measurementSystem);
+  const heightM = heightCm / 100;
+  const activityMultiplier = ACTIVITY_MULTIPLIERS[profile.activityLevel];
+
+  const bmrResult = calculateBmr(
+    profile.gender,
+    profile.age,
+    weightKg,
+    heightCm,
+  );
+
+  const bmi = weightKg / (heightM * heightM);
+  const tdeeKcal = bmrResult.bmr * activityMultiplier;
+
