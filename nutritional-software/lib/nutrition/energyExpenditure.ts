@@ -66,3 +66,12 @@ function getBmiCategory(bmi: number): string {
 
   return "Obese range";
 }
+
+function calculateBmr(
+  gender: Gender,
+  age: number,
+  weightKg: number,
+  heightCm: number,
+): { bmr: number; formula: string; notes: string[] } {
+  const notes: string[] = [];
+
