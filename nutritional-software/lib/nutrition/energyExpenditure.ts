@@ -123,3 +123,14 @@ export function calculateEnergyExpenditure(
   const bmi = weightKg / (heightM * heightM);
   const tdeeKcal = bmrResult.bmr * activityMultiplier;
 
+  return {
+    bmrKcal: roundWhole(bmrResult.bmr),
+    tdeeKcal: roundWhole(tdeeKcal),
+    activityMultiplier,
+    activityLevel: profile.activityLevel,
+    formula: bmrResult.formula,
+    bmi: roundOne(bmi),
+    bmiCategory: getBmiCategory(bmi),
+    notes: bmrResult.notes,
+  };
+}
