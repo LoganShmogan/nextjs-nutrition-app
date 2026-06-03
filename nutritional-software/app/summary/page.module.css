@@ -397,3 +397,18 @@
     color: #ffb4b4;
   }
 
+  .progressTrack {
+    background: #38433b;
+  }
+
+  .progressFill {
+    background: #8fcf91;
+  }
+
+  .errorText {
+    border-color: #7d3939;
+    background: #3a2222;
+    color: #ffb4b4;
+  }
+}
+
