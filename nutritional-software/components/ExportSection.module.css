@@ -1,0 +1,117 @@
+/* Author: Logan */
+
+.section {
+  width: 100%;
+  border-top: 1px solid #ddd;
+  padding-top: 28px;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.sub {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.presets {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.presetBtn {
+  padding: 6px 14px;
+  border: 1px solid #bbb;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  color: #222;
+}
+
+.presetBtn:hover {
+  background: #f0f0f0;
+}
+
+.presetActive {
+  border-color: #111;
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+.customRow {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #333;
+}
+
+.customRow label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.customRow input {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}
+
+.rangeLabel {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 16px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exportItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.exportBtn {
+  min-width: 200px;
+  padding: 9px 16px;
+  border: 1px solid #999;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #111;
+  text-align: left;
+}
+
+.exportBtn:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+.exportBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnDesc {
+  font-size: 12px;
+  color: #888;
+}
+
+.message {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #555;
+}

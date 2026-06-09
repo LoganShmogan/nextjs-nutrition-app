@@ -14,6 +14,8 @@
   "dependencies": {
     "better-sqlite3": "^12.10.0",
     "chart.js": "^4.5.1",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
     "next": "^16.2.6",
     "postcss": "^8.5.14",
     "react": "^19.2.6",
