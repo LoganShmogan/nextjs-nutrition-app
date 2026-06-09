@@ -1,5 +1,4 @@
 // Author: Logan
-// Area: Backend / API / Testing
 
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
@@ -63,11 +62,8 @@ function shuffled<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-// Seed 14 days of data ending yesterday
 export async function POST() {
   const db = getDb();
-
-  // Clear existing seed data first
   db.prepare("DELETE FROM food_logs WHERE food_id = ?").run(SEED_FOOD_ID);
 
   const today = new Date();
@@ -137,7 +133,6 @@ export async function POST() {
   return NextResponse.json({ ok: true, inserted: count });
 }
 
-// Remove all seed data
 export async function DELETE() {
   const db = getDb();
   const result = db.prepare("DELETE FROM food_logs WHERE food_id = ?").run(SEED_FOOD_ID);

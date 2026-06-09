@@ -1,5 +1,4 @@
 // Author: Logan
-// Area: Backend / Database
 
 import Database from "better-sqlite3";
 import path from "node:path";

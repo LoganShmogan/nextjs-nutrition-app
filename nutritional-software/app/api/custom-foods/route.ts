@@ -1,5 +1,4 @@
 // Author: Logan
-// Area: Backend / API
 
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";

@@ -3,7 +3,6 @@ import path from "node:path";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  // Explicitly set root so Turbopack doesn't pick up a parent package-lock.json as the workspace root
   turbopack: {
     root: path.resolve(__dirname),
   },

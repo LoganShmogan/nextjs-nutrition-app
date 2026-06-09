@@ -1,13 +1,11 @@
 // Author: Logan
-// Area: Backend / API
 
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-// GET /api/visualisation?start=YYYY-MM-DD&end=YYYY-MM-DD
-// Returns per-day aggregates and per-day meal breakdowns for charts
+// Returns daily nutrient totals and per-meal breakdowns for a date range.
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const start = searchParams.get("start");

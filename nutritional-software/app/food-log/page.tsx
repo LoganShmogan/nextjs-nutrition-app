@@ -1,5 +1,4 @@
 // Author: Logan & Marty
-// Area: Frontend / UI + Backend / API
 
 "use client";
 
@@ -79,7 +78,7 @@ export default function FoodLogPage() {
   const [saving, setSaving] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Custom food form state
+
   const [customName, setCustomName] = useState("");
   const [customKcal, setCustomKcal] = useState("");
   const [customProtein, setCustomProtein] = useState("");
@@ -90,7 +89,7 @@ export default function FoodLogPage() {
   const [customSugar, setCustomSugar] = useState("");
   const [customSaving, setCustomSaving] = useState(false);
 
-  // Load today's logs and custom foods on mount
+
   useEffect(() => {
     fetch(`/api/food-log?date=${today()}`)
       .then((r) => r.json())
@@ -101,7 +100,7 @@ export default function FoodLogPage() {
       .then((data) => setCustomFoods(data.foods ?? []));
   }, []);
 
-  // Debounced food search
+
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 

@@ -1,5 +1,4 @@
 // Author: Logan
-// Area: Frontend / UI + Backend / API
 
 "use client";
 
@@ -188,7 +187,6 @@ export default function VisualisationPage() {
 
   const selectedData = selectedDate ? getDayData(selectedDate) : null;
 
-  // ── Weekly Calories Bar Chart ────────────────────────────────────────
   const weeklyCaloriesData = {
     labels: weekDates.map((d) => {
       const date = new Date(d + "T00:00:00");
@@ -210,7 +208,6 @@ export default function VisualisationPage() {
     ],
   };
 
-  // ── Weekly Macros Line Chart ─────────────────────────────────────────
   const weeklyMacrosData = {
     labels: weekDates.map((d) => {
       const date = new Date(d + "T00:00:00");
@@ -250,7 +247,6 @@ export default function VisualisationPage() {
     ],
   };
 
-  // ── Daily Macros Doughnut ────────────────────────────────────────────
   const dailyMacrosDoughnut = selectedData
     ? {
         labels: ["Protein", "Carbohydrates", "Fat"],
@@ -269,7 +265,6 @@ export default function VisualisationPage() {
       }
     : null;
 
-  // ── Daily Nutrients vs RDI Bar Chart ────────────────────────────────
   const rdiKeys: (keyof typeof RDI)[] = [
     "energy_kcal", "protein", "carbohydrate", "fat",
     "sugar", "sodium", "fibre", "calcium", "iron", "vitamin_c",
@@ -311,7 +306,6 @@ export default function VisualisationPage() {
       }
     : null;
 
-  // ── Daily Meals Bar Chart ────────────────────────────────────────────
   const dailyMealsData = selectedData
     ? {
         labels: MEALS,
@@ -586,7 +580,6 @@ export default function VisualisationPage() {
                                 label: (ctx: any) => ` ${ctx.raw}% of daily target`,
                               },
                             },
-                            // Draw 100% reference line via inline plugin below
                           },
                         }}
                         plugins={[
