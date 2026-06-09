@@ -4,7 +4,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 import { readFileSync, existsSync } from "fs";
-import type { Food, FoodSearchResult, FoodSearchError } from "@/types/food";
+import type { Food, FoodSearchResult } from "@/types/food";
 
 // ─── In-memory cache so we only read the file once per server lifecycle ───────
 let foodCache: Food[] | null = null;
@@ -30,7 +30,7 @@ function getFoods(): Food[] {
 // ─── GET /api/foods/search?q=chicken&limit=20 ──────────────────────────────────
 export async function GET(
   request: NextRequest
-): Promise<NextResponse<FoodSearchResult | FoodSearchError>> {
+): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q")?.trim() ?? "";
   const limit = Math.min(parseInt(searchParams.get("limit") ?? "30"), 100);
