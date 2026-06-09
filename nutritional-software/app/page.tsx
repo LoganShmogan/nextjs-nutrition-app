@@ -1,7 +1,6 @@
 // Author: Marty
 // Area: Frontend / UI
 
-import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 
@@ -24,6 +23,9 @@ export default function Home() {
 					</Link>
 					<Link href="/analysis">
 						<u>Analysis</u>
+					</Link>
+					<Link href="/visualisation">
+						<u>Visualisation</u>
 					</Link>
 				</div>
 			</main>

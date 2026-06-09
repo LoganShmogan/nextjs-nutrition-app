@@ -8,12 +8,31 @@ import styles from "./page.module.css";
 import type { Food } from "@/types/food";
 
 type LoggedFood = {
-  food: Food;
+  id?: number;
+  food_id: string | null;
+  food_name: string;
   amount: number;
   unit: string;
   date: string;
   time: string;
   meal: string;
+  energy_kcal: number | null;
+  protein: number | null;
+  carbohydrate: number | null;
+  fat: number | null;
+};
+
+type CustomFoodRow = {
+  id: number;
+  name: string;
+  energy_kcal: number | null;
+  energy_kj: number | null;
+  protein: number | null;
+  carbohydrate: number | null;
+  fat: number | null;
+  sugar: number | null;
+  sodium: number | null;
+  fibre: number | null;
 };
 
 type SearchState =
@@ -36,10 +55,14 @@ function nowTime() {
   return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }
 
-// Scale a nutrient value from per-100g to the given amount
 function scale(val: number | null, amount: number): string {
   if (val === null) return "—";
   return ((val * amount) / 100).toFixed(1);
+}
+
+function scaleNutrient(val: number | null, amount: number): number | null {
+  if (val === null) return null;
+  return (val * amount) / 100;
 }
 
 export default function FoodLogPage() {
@@ -52,9 +75,33 @@ export default function FoodLogPage() {
   const [time, setTime] = useState(nowTime());
   const [meal, setMeal] = useState(MEAL_TAGS[0]);
   const [log, setLog] = useState<LoggedFood[]>([]);
+  const [customFoods, setCustomFoods] = useState<CustomFoodRow[]>([]);
+  const [saving, setSaving] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Debounced search
+  // Custom food form state
+  const [customName, setCustomName] = useState("");
+  const [customKcal, setCustomKcal] = useState("");
+  const [customProtein, setCustomProtein] = useState("");
+  const [customCarbs, setCustomCarbs] = useState("");
+  const [customFat, setCustomFat] = useState("");
+  const [customFibre, setCustomFibre] = useState("");
+  const [customSodium, setCustomSodium] = useState("");
+  const [customSugar, setCustomSugar] = useState("");
+  const [customSaving, setCustomSaving] = useState(false);
+
+  // Load today's logs and custom foods on mount
+  useEffect(() => {
+    fetch(`/api/food-log?date=${today()}`)
+      .then((r) => r.json())
+      .then((data) => setLog(data.logs ?? []));
+
+    fetch("/api/custom-foods")
+      .then((r) => r.json())
+      .then((data) => setCustomFoods(data.foods ?? []));
+  }, []);
+
+  // Debounced food search
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
@@ -83,10 +130,34 @@ export default function FoodLogPage() {
 
         const data = await res.json();
 
-        if (data.foods.length === 0) {
+        // Merge custom foods matching the search
+        const q = search.trim().toLowerCase();
+        const matchedCustom: Food[] = customFoods
+          .filter((cf) => cf.name.toLowerCase().includes(q))
+          .map((cf) => ({
+            id: `custom-${cf.id}`,
+            name: cf.name,
+            shortName: cf.name,
+            description: "Custom food",
+            category: "Custom",
+            nutrients: {
+              energyKcal: cf.energy_kcal,
+              energyKj: cf.energy_kj,
+              protein: cf.protein,
+              carbohydrate: cf.carbohydrate,
+              fat: cf.fat,
+              sugar: cf.sugar,
+              sodium: cf.sodium,
+              fibre: cf.fibre,
+            },
+          }));
+
+        const combined = [...matchedCustom, ...data.foods];
+
+        if (combined.length === 0) {
           setSearchState({ status: "not-found", query: search.trim() });
         } else {
-          setSearchState({ status: "results", foods: data.foods });
+          setSearchState({ status: "results", foods: combined });
         }
       } catch {
         setSearchState({ status: "error", message: "Could not connect to food database." });
@@ -96,27 +167,105 @@ export default function FoodLogPage() {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [search]);
+  }, [search, customFoods]);
 
   function handleSelectFood(food: Food) {
     setSelectedFood(food);
     setAmount("100");
   }
 
-  function handleAddToLog(e: React.FormEvent) {
+  async function handleAddToLog(e: React.FormEvent) {
     e.preventDefault();
     if (!selectedFood) return;
-    setLog((prev) => [
-      ...prev,
-      { food: selectedFood, amount: parseFloat(amount) || 100, unit, date, time, meal },
-    ]);
+
+    const parsedAmount = parseFloat(amount) || 100;
+
+    const entry = {
+      food_id: selectedFood.id.startsWith("custom-") ? null : selectedFood.id,
+      food_name: selectedFood.shortName,
+      amount: parsedAmount,
+      unit,
+      meal,
+      date,
+      time,
+      energy_kcal: scaleNutrient(selectedFood.nutrients.energyKcal, parsedAmount),
+      energy_kj: scaleNutrient(selectedFood.nutrients.energyKj, parsedAmount),
+      protein: scaleNutrient(selectedFood.nutrients.protein, parsedAmount),
+      carbohydrate: scaleNutrient(selectedFood.nutrients.carbohydrate, parsedAmount),
+      fat: scaleNutrient(selectedFood.nutrients.fat, parsedAmount),
+      sugar: scaleNutrient(selectedFood.nutrients.sugar, parsedAmount),
+      sodium: scaleNutrient(selectedFood.nutrients.sodium, parsedAmount),
+      fibre: scaleNutrient(selectedFood.nutrients.fibre, parsedAmount),
+      calcium: scaleNutrient(selectedFood.nutrients.calcium ?? null, parsedAmount),
+      iron: scaleNutrient(selectedFood.nutrients.iron ?? null, parsedAmount),
+      vitamin_c: scaleNutrient(selectedFood.nutrients.vitaminC ?? null, parsedAmount),
+    };
+
+    setSaving(true);
+    try {
+      const res = await fetch("/api/food-log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entry),
+      });
+      const data = await res.json();
+      setLog((prev) => [...prev, { ...entry, id: data.id }]);
+    } finally {
+      setSaving(false);
+    }
+
     setSelectedFood(null);
     setSearch("");
     setSearchState({ status: "idle" });
     setAmount("100");
   }
 
+  async function handleRemoveLog(id: number | undefined) {
+    if (!id) return;
+    await fetch(`/api/food-log?id=${id}`, { method: "DELETE" });
+    setLog((prev) => prev.filter((e) => e.id !== id));
+  }
+
+  async function handleSaveCustomFood(e: React.FormEvent) {
+    e.preventDefault();
+    if (!customName.trim()) return;
+
+    const payload = {
+      name: customName.trim(),
+      energy_kcal: customKcal ? parseFloat(customKcal) : null,
+      energy_kj: customKcal ? parseFloat(customKcal) * 4.184 : null,
+      protein: customProtein ? parseFloat(customProtein) : null,
+      carbohydrate: customCarbs ? parseFloat(customCarbs) : null,
+      fat: customFat ? parseFloat(customFat) : null,
+      fibre: customFibre ? parseFloat(customFibre) : null,
+      sodium: customSodium ? parseFloat(customSodium) : null,
+      sugar: customSugar ? parseFloat(customSugar) : null,
+    };
+
+    setCustomSaving(true);
+    try {
+      const res = await fetch("/api/custom-foods", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      setCustomFoods((prev) => [...prev, { id: data.id, ...payload } as CustomFoodRow]);
+      setCustomName("");
+      setCustomKcal("");
+      setCustomProtein("");
+      setCustomCarbs("");
+      setCustomFat("");
+      setCustomFibre("");
+      setCustomSodium("");
+      setCustomSugar("");
+    } finally {
+      setCustomSaving(false);
+    }
+  }
+
   const scaledAmount = parseFloat(amount) || 100;
+  const todayLogs = log.filter((e) => e.date === today());
 
   return (
     <main className={styles.page}>
@@ -140,7 +289,6 @@ export default function FoodLogPage() {
               autoComplete="off"
             />
 
-            {/* Search results */}
             <div className={styles.foodList}>
               {searchState.status === "idle" && (
                 <p className={styles.emptyState}>
@@ -194,6 +342,7 @@ export default function FoodLogPage() {
                         ? `${food.nutrients.protein}g protein`
                         : "—"}{" "}
                       · per 100g
+                      {food.category === "Custom" ? " · Custom" : ""}
                     </p>
                   </button>
                 ))}
@@ -208,9 +357,11 @@ export default function FoodLogPage() {
               <>
                 <div className={styles.selectedFood}>
                   <h3>{selectedFood.shortName}</h3>
-                  <p className={styles.selectedFoodId}>
-                    NZ FOODfiles ID: {selectedFood.id}
-                  </p>
+                  {!selectedFood.id.startsWith("custom-") && (
+                    <p className={styles.selectedFoodId}>
+                      NZ FOODfiles ID: {selectedFood.id}
+                    </p>
+                  )}
 
                   <div className={styles.nutrients}>
                     <div>
@@ -297,8 +448,8 @@ export default function FoodLogPage() {
                     </select>
                   </div>
 
-                  <button type="submit" className={styles.primaryButton}>
-                    Add to Food Log
+                  <button type="submit" className={styles.primaryButton} disabled={saving}>
+                    {saving ? "Saving…" : "Add to Food Log"}
                   </button>
                 </form>
               </>
@@ -310,20 +461,32 @@ export default function FoodLogPage() {
           </section>
         </div>
 
-        {/* ── Logged items summary ─────────────────────────────────────── */}
-        {log.length > 0 && (
+        {/* ── Today's Log ──────────────────────────────────────────────── */}
+        {todayLogs.length > 0 && (
           <section className={styles.card}>
             <h2>Today&apos;s Log</h2>
             <div className={styles.logList}>
-              {log.map((entry, i) => (
-                <div key={i} className={styles.logItem}>
+              {todayLogs.map((entry) => (
+                <div key={entry.id} className={styles.logItem}>
                   <div>
-                    <strong>{entry.food.shortName}</strong>
-                    <span>{entry.amount}{entry.unit.split(" ")[0]} · {entry.meal} · {entry.time}</span>
+                    <strong>{entry.food_name}</strong>
+                    <span>
+                      {entry.amount}{entry.unit.split(" ")[0]} · {entry.meal} · {entry.time}
+                    </span>
                   </div>
-                  <span className={styles.logKcal}>
-                    {scale(entry.food.nutrients.energyKcal, entry.amount)} kcal
-                  </span>
+                  <div className={styles.logRight}>
+                    <span className={styles.logKcal}>
+                      {entry.energy_kcal !== null ? `${entry.energy_kcal?.toFixed(0)} kcal` : "—"}
+                    </span>
+                    <button
+                      type="button"
+                      className={styles.removeButton}
+                      onClick={() => handleRemoveLog(entry.id)}
+                      aria-label="Remove entry"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -336,54 +499,126 @@ export default function FoodLogPage() {
             <h2>Add Custom Food / Recipe</h2>
             <p>
               Manually enter nutrient information if a food cannot be found in
-              the database.
+              the database. Custom foods will appear in search results.
             </p>
           </div>
 
-          <form className={styles.customFoodForm}>
+          <form className={styles.customFoodForm} onSubmit={handleSaveCustomFood}>
             <div className={styles.formGroup}>
               <label>Food / Recipe Name</label>
-              <input type="text" placeholder="e.g. Homemade Protein Shake" />
+              <input
+                type="text"
+                placeholder="e.g. Homemade Protein Shake"
+                value={customName}
+                onChange={(e) => setCustomName(e.target.value)}
+                required
+              />
             </div>
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label>Calories (kcal)</label>
-                <input type="number" placeholder="0" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={customKcal}
+                  onChange={(e) => setCustomKcal(e.target.value)}
+                />
               </div>
               <div className={styles.formGroup}>
                 <label>Protein (g)</label>
-                <input type="number" placeholder="0" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={customProtein}
+                  onChange={(e) => setCustomProtein(e.target.value)}
+                />
               </div>
               <div className={styles.formGroup}>
                 <label>Carbs (g)</label>
-                <input type="number" placeholder="0" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={customCarbs}
+                  onChange={(e) => setCustomCarbs(e.target.value)}
+                />
               </div>
               <div className={styles.formGroup}>
                 <label>Fat (g)</label>
-                <input type="number" placeholder="0" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={customFat}
+                  onChange={(e) => setCustomFat(e.target.value)}
+                />
               </div>
             </div>
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label>Fibre (g)</label>
-                <input type="number" placeholder="0" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={customFibre}
+                  onChange={(e) => setCustomFibre(e.target.value)}
+                />
               </div>
               <div className={styles.formGroup}>
                 <label>Sodium (mg)</label>
-                <input type="number" placeholder="0" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={customSodium}
+                  onChange={(e) => setCustomSodium(e.target.value)}
+                />
               </div>
               <div className={styles.formGroup}>
                 <label>Sugar (g)</label>
-                <input type="number" placeholder="0" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={customSugar}
+                  onChange={(e) => setCustomSugar(e.target.value)}
+                />
               </div>
             </div>
 
-            <button type="submit" className={styles.secondaryButton}>
-              Save Custom Food
+            <button
+              type="submit"
+              className={styles.secondaryButton}
+              disabled={customSaving}
+            >
+              {customSaving ? "Saving…" : "Save Custom Food"}
             </button>
           </form>
+
+          {customFoods.length > 0 && (
+            <div className={styles.customFoodList}>
+              <h3>Saved Custom Foods</h3>
+              {customFoods.map((cf) => (
+                <div key={cf.id} className={styles.logItem}>
+                  <div>
+                    <strong>{cf.name}</strong>
+                    <span>
+                      {cf.energy_kcal != null ? `${cf.energy_kcal} kcal` : "—"} per 100g
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.removeButton}
+                    onClick={async () => {
+                      await fetch(`/api/custom-foods?id=${cf.id}`, { method: "DELETE" });
+                      setCustomFoods((prev) => prev.filter((f) => f.id !== cf.id));
+                    }}
+                    aria-label="Remove custom food"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </main>
