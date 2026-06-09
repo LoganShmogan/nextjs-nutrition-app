@@ -1,0 +1,313 @@
+/* Author: Logan */
+
+.page {
+	min-height: 100vh;
+	background: #f9f9f9;
+	padding: 32px 20px;
+}
+
+.container {
+	max-width: 1400px;
+	margin: 0 auto;
+}
+
+.header {
+	margin-bottom: 24px;
+}
+
+.header h1 {
+	font-size: 28px;
+	margin-bottom: 4px;
+	color: #111;
+	font-weight: 700;
+}
+
+.header p {
+	color: #555;
+	font-size: 14px;
+}
+
+/* ── Seed bar ───────────────────────────────────────────────────────── */
+.seedBar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 14px;
+	border: 1px solid #ddd;
+	background: #fff;
+	margin-bottom: 20px;
+}
+
+.seedLabel {
+	font-size: 13px;
+	color: #555;
+	font-weight: 600;
+}
+
+.seedBtn {
+	background: #fff;
+	border: 1px solid #999;
+	padding: 6px 14px;
+	font-size: 13px;
+	cursor: pointer;
+	color: #222;
+}
+
+.seedBtn:hover:not(:disabled) {
+	background: #f0f0f0;
+}
+
+.seedBtn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.seedBtnDanger {
+	background: #fff;
+	border: 1px solid #999;
+	padding: 6px 14px;
+	font-size: 13px;
+	cursor: pointer;
+	color: #b00;
+}
+
+.seedBtnDanger:hover:not(:disabled) {
+	background: #fff0f0;
+}
+
+.seedBtnDanger:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.seedMsg {
+	font-size: 13px;
+	color: #555;
+}
+
+/* ── Week navigator ─────────────────────────────────────────────────── */
+.weekNav {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	background: #fff;
+	border: 1px solid #ddd;
+	padding: 12px 16px;
+	margin-bottom: 16px;
+}
+
+.navBtn {
+	background: #fff;
+	border: 1px solid #bbb;
+	padding: 6px 16px;
+	font-size: 13px;
+	cursor: pointer;
+	color: #222;
+}
+
+.navBtn:hover:not(:disabled) {
+	background: #f0f0f0;
+}
+
+.navBtn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.weekLabel {
+	flex: 1;
+	text-align: center;
+	font-weight: 700;
+	font-size: 15px;
+	color: #111;
+}
+
+/* ── Day selector ───────────────────────────────────────────────────── */
+.dayGrid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 8px;
+	margin-bottom: 28px;
+}
+
+.dayBtn {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3px;
+	background: #fff;
+	border: 1px solid #ddd;
+	padding: 12px 6px;
+	cursor: pointer;
+}
+
+.dayBtn:hover {
+	background: #f5f5f5;
+}
+
+.dayBtnActive {
+	border-color: #333;
+	background: #f0f0f0;
+}
+
+.dayBtnToday .dayDate {
+	font-weight: 900;
+	text-decoration: underline;
+}
+
+.dayName {
+	font-size: 11px;
+	font-weight: 600;
+	color: #777;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.dayDate {
+	font-size: 20px;
+	font-weight: 700;
+	color: #111;
+}
+
+.dayKcal {
+	font-size: 11px;
+	color: #333;
+	font-weight: 600;
+}
+
+.dayEmpty {
+	font-size: 11px;
+	color: #bbb;
+}
+
+/* ── Section title ──────────────────────────────────────────────────── */
+.sectionTitle {
+	font-size: 16px;
+	font-weight: 700;
+	color: #111;
+	margin-bottom: 14px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #ddd;
+}
+
+/* ── Charts layout ──────────────────────────────────────────────────── */
+.chartsRow {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.chartCard {
+	background: #fff;
+	border: 1px solid #ddd;
+	padding: 20px;
+}
+
+.chartCardWide {
+	background: #fff;
+	border: 1px solid #ddd;
+	padding: 20px;
+	margin-bottom: 16px;
+}
+
+.chartCard h2,
+.chartCardWide h2 {
+	font-size: 14px;
+	font-weight: 700;
+	color: #111;
+	margin-bottom: 14px;
+}
+
+.chartWrap {
+	height: 260px;
+	position: relative;
+}
+
+.chartWrapSm {
+	height: 220px;
+	position: relative;
+}
+
+.chartHint {
+	font-size: 11px;
+	color: #aaa;
+	margin-top: 8px;
+	text-align: center;
+}
+
+/* ── Stats row ──────────────────────────────────────────────────────── */
+.statsRow {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.statCard {
+	background: #fff;
+	border: 1px solid #ddd;
+	border-top: 3px solid transparent;
+	padding: 14px;
+	text-align: center;
+}
+
+.statLabel {
+	display: block;
+	font-size: 11px;
+	color: #777;
+	margin-bottom: 4px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.statValue {
+	display: block;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+/* ── Misc ───────────────────────────────────────────────────────────── */
+.loading {
+	text-align: center;
+	color: #777;
+	padding: 32px 0;
+	font-size: 14px;
+}
+
+.noDataMsg {
+	text-align: center;
+	color: #aaa;
+	padding: 32px;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	margin-bottom: 16px;
+}
+
+@media (max-width: 1100px) {
+	.statsRow {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 800px) {
+	.dayGrid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.chartsRow {
+		grid-template-columns: 1fr;
+	}
+
+	.statsRow {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 500px) {
+	.dayGrid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
