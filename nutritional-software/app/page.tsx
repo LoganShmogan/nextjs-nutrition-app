@@ -3,6 +3,7 @@
 
 import styles from "./page.module.css";
 import Link from "next/link";
+import ExportSection from "@/components/ExportSection";
 
 export default function Home() {
 	return (
@@ -28,6 +29,7 @@ export default function Home() {
 						<u>Visualisation</u>
 					</Link>
 				</div>
+				<ExportSection />
 			</main>
 		</div>
 	);
