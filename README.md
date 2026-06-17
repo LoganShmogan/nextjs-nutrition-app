@@ -1,4 +1,3 @@
-<!--
 Authors: Marty Orchard & Logan Young
 Area: Project documentation
 
