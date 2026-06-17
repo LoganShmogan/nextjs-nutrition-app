@@ -1,0 +1,9 @@
+node_modules
+.next
+data/nutrition.db
+data/nutrition.db-shm
+data/nutrition.db-wal
+.git
+coverage
+npm-debug.log*
+yarn-debug.log*
