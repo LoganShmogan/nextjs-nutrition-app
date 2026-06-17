@@ -1,6 +1,3 @@
-Authors: Marty Orchard & Logan Young
-Area: Project documentation
-
 ## Figma design
 https://www.figma.com/proto/V04QhCvXvDZz7aP9gYCOJp/Prototype-SWE-A1--Frontend-Wireframe-Diagram-?node-id=0-1&t=34uMyQwJYsx9egKD-1
 
