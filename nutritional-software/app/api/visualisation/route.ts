@@ -2,25 +2,24 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
+import { getUserId } from "@/lib/session";
 
 export const runtime = "nodejs";
 
-// Returns daily nutrient totals and per-meal breakdowns for a date range.
 export async function GET(request: NextRequest) {
+  const userId = getUserId(request);
+  if (!userId) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+
   const { searchParams } = request.nextUrl;
   const start = searchParams.get("start");
-  const end = searchParams.get("end");
+  const end   = searchParams.get("end");
 
   if (!start || !end) {
-    return NextResponse.json(
-      { error: "start and end date params required" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "start and end date params required" }, { status: 400 });
   }
 
   const db = getDb();
 
-  // Daily aggregates for the week
   const dailyTotals = db
     .prepare(
       `SELECT
@@ -38,13 +37,12 @@ export async function GET(request: NextRequest) {
         COALESCE(SUM(vitamin_c),   0) AS vitamin_c,
         COUNT(*) AS entry_count
        FROM food_logs
-       WHERE date BETWEEN ? AND ?
+       WHERE date BETWEEN ? AND ? AND user_id = ?
        GROUP BY date
-       ORDER BY date ASC`
+       ORDER BY date ASC`,
     )
-    .all(start, end) as Record<string, number | string>[];
+    .all(start, end, userId) as Record<string, number | string>[];
 
-  // Per-meal aggregates for each day
   const mealTotals = db
     .prepare(
       `SELECT
@@ -55,11 +53,11 @@ export async function GET(request: NextRequest) {
         COALESCE(SUM(carbohydrate),0) AS carbohydrate,
         COALESCE(SUM(fat),         0) AS fat
        FROM food_logs
-       WHERE date BETWEEN ? AND ?
+       WHERE date BETWEEN ? AND ? AND user_id = ?
        GROUP BY date, meal
-       ORDER BY date ASC, meal ASC`
+       ORDER BY date ASC, meal ASC`,
     )
-    .all(start, end) as Record<string, number | string>[];
+    .all(start, end, userId) as Record<string, number | string>[];
 
   return NextResponse.json({ dailyTotals, mealTotals });
 }

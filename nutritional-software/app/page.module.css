@@ -1,175 +1,223 @@
 /*
-  Author: Marty Orchard
-  Area: Home page styling
+  Author: Logan & Marty
+  Area: Login / Signup page
 */
 
 .page {
-  --page-background: #f5f7f4;
-  --card-background: #ffffff;
-
-  --text-primary: #171717;
-  --text-secondary: #5f6b5f;
-
-  --button-primary-background: #2f7d32;
-  --button-primary-hover: #236326;
-  --button-secondary-background: #eef4ec;
-  --button-secondary-hover: #e1eadf;
-  --button-secondary-border: #dfe5dc;
-
+  min-height: 100vh;
   display: flex;
-  flex: 1;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--page-background);
+  background-color: #f5f7f4;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-radius: 16px;
+  padding: 40px 36px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f7d32;
+  margin-bottom: 28px;
+}
+
+.brandDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #2f7d32;
+  flex-shrink: 0;
+}
+
+.heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: #171717;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.subheading {
+  font-size: 14px;
+  color: #5f6b5f;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.tabs {
+  display: flex;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.tab {
+  flex: 1;
+  padding: 9px 0;
+  background: #eef4ec;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5f6b5f;
+  cursor: pointer;
+}
+
+.tabActive {
+  background: #2f7d32;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #171717;
+}
+
+.input {
+  padding: 10px 12px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #171717;
+  background: #ffffff;
+  outline: none;
   font-family: inherit;
 }
 
-.main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 900px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 48px;
-  background-color: var(--card-background);
-  padding: 120px 60px;
-  border: 1px solid var(--button-secondary-border);
-  border-radius: 28px;
-  box-shadow: 0 18px 50px rgba(25, 42, 25, 0.08);
+.input:focus {
+  border-color: #2f7d32;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+.error {
+  font-size: 13px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 8px 12px;
 }
 
-.intro h1 {
-  max-width: 520px;
-  font-size: 44px;
-  font-weight: 700;
-  line-height: 52px;
-  letter-spacing: -2px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 620px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 520px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 18px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-a.primary {
-  background: var(--button-primary-background);
+.submitBtn {
+  margin-top: 4px;
+  padding: 11px;
+  background: #2f7d32;
   color: #ffffff;
-  gap: 8px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
-  background: var(--button-secondary-background);
-  color: var(--text-primary);
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
+.switchText {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #5f6b5f;
+}
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.switchLink {
+  background: none;
+  border: none;
+  color: #2f7d32;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
 }
 
 @media (prefers-color-scheme: dark) {
   .page {
-    --page-background: #1b211d;
-    --card-background: #2b332e;
-
-    --text-primary: #f2f5f1;
-    --text-secondary: #b8c2b7;
-
-    --button-primary-background: #3f9b45;
-    --button-primary-hover: #4caf50;
-    --button-secondary-background: #3a443c;
-    --button-secondary-hover: #465248;
-    --button-secondary-border: #445047;
+    background-color: #1b211d;
   }
 
-  .main {
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+  .card {
+    background: #2b332e;
+    border-color: #445047;
+  }
+
+  .heading {
+    color: #f2f5f1;
+  }
+
+  .subheading {
+    color: #b8c2b7;
+  }
+
+  .tabs {
+    border-color: #445047;
+  }
+
+  .tab {
+    background: #3a443c;
+    color: #b8c2b7;
+  }
+
+  .tabActive {
+    background: #3f9b45;
+    color: #ffffff;
+  }
+
+  .label {
+    color: #f2f5f1;
+  }
+
+  .input {
+    background: #1b211d;
+    border-color: #445047;
+    color: #f2f5f1;
+  }
+
+  .input:focus {
+    border-color: #3f9b45;
+  }
+
+  .submitBtn {
+    background: #3f9b45;
+  }
+
+  .switchText {
+    color: #b8c2b7;
+  }
+
+  .switchLink {
+    color: #3f9b45;
   }
 }
 
-@media (max-width: 600px) {
-  .page {
-    justify-content: flex-start;
-  }
-
-  .main {
-    padding: 48px 24px;
+@media (max-width: 480px) {
+  .card {
+    padding: 28px 20px;
     border-radius: 0;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.2px;
-  }
-
-  .intro p {
-    font-size: 16px;
-    line-height: 28px;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    width: 100%;
+    border-left: none;
+    border-right: none;
   }
 }

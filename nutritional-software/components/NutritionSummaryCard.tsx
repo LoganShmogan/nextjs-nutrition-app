@@ -3,8 +3,9 @@
 // Author: Marty Orchard
 // Area: Frontend / UI / Nutrition Analysis
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "@/app/summary/page.module.css";
+import type { ProfileData } from "@/types/profile";
 
 type NutrientStatus = "low" | "ok" | "high";
 
@@ -33,72 +34,46 @@ type NutritionAnalysisResponse = {
   };
 };
 
-const demoRequestBody = {
-  profile: {
-    patientName: "Alex Taylor",
-    age: 25,
-    gender: "Female",
-    weight: 70,
-    height: 170,
-    activityLevel: "Active",
-    measurementSystem: "Metric",
-  },
-  foods: [
-    {
-      foodId: "A1007",
-      amount: 100,
-      mealType: "breakfast",
-    },
-    {
-      foodId: "A1008",
-      amount: 80,
-      mealType: "lunch",
-    },
-  ],
-};
+function todayStr() {
+  return new Date().toISOString().split("T")[0];
+}
 
 function getStatusLabel(status: NutrientStatus): string {
-  if (status === "low") {
-    return "Below target";
-  }
-
-  if (status === "high") {
-    return "Above target";
-  }
-
+  if (status === "low") return "Below target";
+  if (status === "high") return "Above target";
   return "Within range";
 }
 
 function getStatusClass(status: NutrientStatus): string {
-  if (status === "ok") {
-    return styles.successBadge;
-  }
-
-  if (status === "high") {
-    return styles.dangerBadge;
-  }
-
+  if (status === "ok") return styles.successBadge;
+  if (status === "high") return styles.dangerBadge;
   return styles.warningBadge;
 }
 
 export default function NutritionSummaryCard() {
-  const [analysis, setAnalysis] = useState<NutritionAnalysisResponse | null>(
-    null,
-  );
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [analysis, setAnalysis] = useState<NutritionAnalysisResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  async function handleRunDemoAnalysis() {
+  useEffect(() => {
+    fetch("/api/profile")
+      .then((r) => r.json())
+      .then((data) => setProfile(data.profile ?? null))
+      .catch(() => {})
+      .finally(() => setIsLoadingProfile(false));
+  }, []);
+
+  async function handleRunAnalysis() {
     setIsLoading(true);
     setErrorMessage(null);
 
     try {
       const response = await fetch("/api/nutrition-summary", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(demoRequestBody),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date: todayStr(), profile: profile ?? undefined }),
       });
 
       const result = await response.json();
@@ -123,12 +98,10 @@ export default function NutritionSummaryCard() {
   return (
     <section className={styles.summaryPage}>
       <div className={styles.summaryHeader}>
-        <p className={styles.eyebrow}>Sprint 3 · Full RDI Analysis</p>
         <h1>Nutrition Summary</h1>
         <p>
-          Compare logged food intake against profile-based daily targets,
-          including energy, macronutrients, fibre, sodium, calcium, iron, and
-          vitamin C.
+          Compare today&apos;s logged food intake against your profile-based daily targets,
+          including energy, macronutrients, fibre, sodium, calcium, iron, and vitamin C.
         </p>
       </div>
 
@@ -137,8 +110,9 @@ export default function NutritionSummaryCard() {
           <p className={styles.cardLabel}>Daily Intake Analysis</p>
           <h2>Intake vs RDI targets</h2>
           <p>
-            This demo uses Alex Taylor&apos;s profile and two logged food items
-            from the local food database to calculate full nutrient comparisons.
+            {profile
+              ? `Showing personalised targets for ${profile.patientName} based on their saved profile.`
+              : "No profile saved — using default adult targets. Save a profile for personalised targets."}
           </p>
         </div>
 
@@ -154,18 +128,21 @@ export default function NutritionSummaryCard() {
 
       <section className={styles.demoPanel}>
         <div>
-          <h2>Demo Input</h2>
+          <h2>Today&apos;s Intake — {todayStr()}</h2>
           <p>
-            Profile: 25-year-old female, 70 kg, 170 cm, active. Foods: 100 g
-            white bread and 80 g wheatmeal bread.
+            {isLoadingProfile
+              ? "Loading profile…"
+              : profile
+                ? `Profile: ${profile.patientName}, ${profile.age} years old, ${profile.gender}, ${profile.activityLevel}.`
+                : "No profile saved. Go to Profile to set up personalised targets."}
           </p>
         </div>
 
         <button
           className={styles.primaryButton}
           type="button"
-          onClick={handleRunDemoAnalysis}
-          disabled={isLoading}
+          onClick={handleRunAnalysis}
+          disabled={isLoading || isLoadingProfile}
         >
           {isLoading ? "Analysing..." : "Run RDI Analysis"}
         </button>
@@ -177,8 +154,7 @@ export default function NutritionSummaryCard() {
         <section className={styles.feedbackCard}>
           <h2>No analysis loaded yet</h2>
           <p>
-            Click <strong>Run RDI Analysis</strong> to call the new
-            nutrition-summary API and display the calculated frontend results.
+            Click <strong>Run RDI Analysis</strong> to analyse your logged food for today.
           </p>
         </section>
       ) : (
@@ -205,9 +181,7 @@ export default function NutritionSummaryCard() {
                 <div className={styles.progressTrack}>
                   <div
                     className={styles.progressFill}
-                    style={{
-                      width: `${Math.min(item.percentage, 100)}%`,
-                    }}
+                    style={{ width: `${Math.min(item.percentage, 100)}%` }}
                   />
                 </div>
 
@@ -221,9 +195,8 @@ export default function NutritionSummaryCard() {
           <section className={styles.feedbackCard}>
             <h2>Analysis Feedback</h2>
             <p>
-              The system now calculates nutrient totals from logged foods and
-              compares them against daily targets. Energy and protein targets
-              are adjusted using the saved profile.
+              Nutrient totals are calculated from your food log entries for today. Energy and protein
+              targets are adjusted using your saved profile.
             </p>
 
             <div className={styles.feedbackList}>

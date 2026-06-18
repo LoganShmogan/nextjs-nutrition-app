@@ -3,7 +3,7 @@
 // Author: Marty Orchard
 // Area: Frontend / UI
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "@/app/analysis/page.module.css";
 
@@ -14,49 +14,96 @@ type AnalysisFormData = {
   date: string;
 };
 
-const initialFormData: AnalysisFormData = {
-  analysisName: "Pregnancy Case Study - Day 1",
-  patientIdentifier: "A.M",
-  notes: "21 year old pregnant female",
-  date: "2026-04-22",
+type SavedAnalysis = {
+  id: number;
+  analysis_name: string;
+  patient_identifier: string | null;
+  notes: string | null;
+  date: string;
+  created_at: string;
+};
+
+function todayStr() {
+  return new Date().toISOString().split("T")[0];
+}
+
+const emptyForm: AnalysisFormData = {
+  analysisName: "",
+  patientIdentifier: "",
+  notes: "",
+  date: todayStr(),
 };
 
 export default function Analysis() {
-  const [formData, setFormData] = useState<AnalysisFormData>(initialFormData);
+  const [formData, setFormData] = useState<AnalysisFormData>(emptyForm);
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalysis[]>([]);
+
+  useEffect(() => {
+    fetch("/api/analyses")
+      .then((r) => r.json())
+      .then((data) => setSavedAnalyses(data.analyses ?? []))
+      .catch(() => {});
+  }, []);
 
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
     const { name, value } = event.target;
-
-    setFormData((currentData) => ({
-      ...currentData,
-      [name]: value,
-    }));
-
+    setFormData((current) => ({ ...current, [name]: value }));
     setSaved(false);
+    setSaveError(null);
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSaved(true);
+    setSaving(true);
+    setSaveError(null);
+
+    try {
+      const res = await fetch("/api/analyses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to save analysis.");
+      }
+
+      setSaved(true);
+      const newEntry: SavedAnalysis = {
+        id: data.id as number,
+        analysis_name: formData.analysisName,
+        patient_identifier: formData.patientIdentifier || null,
+        notes: formData.notes || null,
+        date: formData.date,
+        created_at: new Date().toISOString(),
+      };
+      setSavedAnalyses((prev) => [newEntry, ...prev]);
+      setFormData(emptyForm);
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : "Failed to save analysis.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   function handleCancel() {
-    setFormData(initialFormData);
+    setFormData(emptyForm);
     setSaved(false);
+    setSaveError(null);
   }
 
   return (
     <section className={styles.analysisPage}>
       <div className={styles.analysisHeader}>
-        <p className={styles.eyebrow}>Sprint 1 · Basic Version</p>
         <h1>Save Analysis</h1>
-        <p>
-          Save the current patient nutrition analysis as a frontend-only
-          placeholder. Backend saving will be added later.
-        </p>
+        <p>Save a patient nutrition analysis with notes for later review.</p>
       </div>
 
       <div className={styles.analysisLayout}>
@@ -76,6 +123,7 @@ export default function Analysis() {
                 name="analysisName"
                 value={formData.analysisName}
                 onChange={handleChange}
+                placeholder="e.g. Day 1 dietary review"
                 required
               />
             </label>
@@ -117,16 +165,14 @@ export default function Analysis() {
           <div className={styles.saveInfoBox}>
             <h2>What will be saved:</h2>
             <ul>
-              <li>Patient information and goals</li>
-              <li>All food items and quantities</li>
-              <li>Nutritional calculations and summary</li>
-              <li>Comparison to recommendations</li>
+              <li>Analysis name and patient identifier</li>
+              <li>Notes and date</li>
             </ul>
           </div>
 
           <div className={styles.formActions}>
-            <button className={styles.primaryButton} type="submit">
-              Save Analysis
+            <button className={styles.primaryButton} type="submit" disabled={saving}>
+              {saving ? "Saving…" : "Save Analysis"}
             </button>
 
             <button
@@ -134,45 +180,37 @@ export default function Analysis() {
               type="button"
               onClick={handleCancel}
             >
-              Cancel
+              Clear
             </button>
           </div>
 
           {saved && (
             <div className={styles.successMessage}>
-              Analysis saved as a Sprint 1 frontend placeholder.
+              Analysis saved successfully.
             </div>
+          )}
+
+          {saveError && (
+            <p style={{ color: "red", marginTop: "0.5rem" }}>{saveError}</p>
           )}
         </form>
 
         <aside className={styles.supportCard}>
-          <h2>Study Support</h2>
-          <p>
-            Students can save multiple patient analyses for coursework,
-            comparison, and later review.
-          </p>
+          <h2>Saved Analyses</h2>
 
-          <div className={styles.previewList}>
-            <div>
-              <span>Analysis</span>
-              <strong>{formData.analysisName || "Not provided"}</strong>
+          {savedAnalyses.length === 0 ? (
+            <p>No analyses saved yet.</p>
+          ) : (
+            <div className={styles.previewList}>
+              {savedAnalyses.map((a) => (
+                <div key={a.id}>
+                  <span>{a.date}</span>
+                  <strong>{a.analysis_name}</strong>
+                  {a.patient_identifier && <small>{a.patient_identifier}</small>}
+                </div>
+              ))}
             </div>
-
-            <div>
-              <span>Patient ID</span>
-              <strong>{formData.patientIdentifier || "Not provided"}</strong>
-            </div>
-
-            <div>
-              <span>Date</span>
-              <strong>{formData.date || "Not selected"}</strong>
-            </div>
-
-            <div>
-              <span>Status</span>
-              <strong>{saved ? "Saved" : "Not saved yet"}</strong>
-            </div>
-          </div>
+          )}
         </aside>
       </div>
     </section>

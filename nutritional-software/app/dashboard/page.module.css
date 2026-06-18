@@ -1,0 +1,153 @@
+/*
+  Author: Logan & Marty
+  Area: Dashboard page
+*/
+
+.page {
+  min-height: 100vh;
+  background-color: #f5f7f4;
+  padding: 40px 24px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2f7d32;
+  margin-bottom: 6px;
+}
+
+.brandDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #2f7d32;
+  flex-shrink: 0;
+}
+
+.heading {
+  font-size: 32px;
+  font-weight: 700;
+  color: #171717;
+  letter-spacing: -0.8px;
+}
+
+.logoutBtn {
+  margin-top: 4px;
+  padding: 8px 16px;
+  background: #eef4ec;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2f7d32;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-left: 4px solid #2f7d32;
+  border-radius: 10px;
+  padding: 20px 18px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #171717;
+}
+
+.cardDesc {
+  font-size: 13px;
+  color: #5f6b5f;
+  line-height: 1.5;
+}
+
+.exportWrap {
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-radius: 10px;
+  padding: 28px 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    background-color: #1b211d;
+  }
+
+  .heading {
+    color: #f2f5f1;
+  }
+
+  .logoutBtn {
+    background: #3a443c;
+    border-color: #445047;
+    color: #3f9b45;
+  }
+
+  .card {
+    background: #2b332e;
+    border-color: #445047;
+    border-left-color: #3f9b45;
+  }
+
+  .cardTitle {
+    color: #f2f5f1;
+  }
+
+  .cardDesc {
+    color: #b8c2b7;
+  }
+
+  .exportWrap {
+    background: #2b332e;
+    border-color: #445047;
+  }
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page {
+    padding: 24px 16px;
+  }
+}
