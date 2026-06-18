@@ -57,7 +57,54 @@ export function getDb(): Database.Database {
       vitamin_c    REAL,
       created_at   TEXT DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS profiles (
+      id                   INTEGER PRIMARY KEY,
+      patient_name         TEXT NOT NULL,
+      age                  INTEGER NOT NULL,
+      gender               TEXT NOT NULL,
+      ethnicity            TEXT,
+      weight               REAL NOT NULL,
+      height               REAL NOT NULL,
+      activity_level       TEXT NOT NULL,
+      measurement_system   TEXT NOT NULL,
+      nutrition_goal       TEXT,
+      dietary_preference   TEXT,
+      dietary_restrictions TEXT,
+      allergies            TEXT,
+      medical_conditions   TEXT,
+      medications          TEXT,
+      additional_notes     TEXT,
+      updated_at           TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS analyses (
+      id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+      analysis_name       TEXT NOT NULL,
+      patient_identifier  TEXT,
+      notes               TEXT,
+      date                TEXT NOT NULL,
+      created_at          TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS users (
+      id         INTEGER PRIMARY KEY AUTOINCREMENT,
+      username   TEXT NOT NULL UNIQUE,
+      password   TEXT NOT NULL,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
   `);
+
+  // Migrations — add user_id to existing tables (silently ignored if column already exists)
+  const migrations = [
+    "ALTER TABLE food_logs     ADD COLUMN user_id INTEGER REFERENCES users(id)",
+    "ALTER TABLE custom_foods  ADD COLUMN user_id INTEGER REFERENCES users(id)",
+    "ALTER TABLE profiles      ADD COLUMN user_id INTEGER REFERENCES users(id)",
+    "ALTER TABLE analyses      ADD COLUMN user_id INTEGER REFERENCES users(id)",
+  ];
+  for (const sql of migrations) {
+    try { _db.exec(sql); } catch {}
+  }
 
   return _db;
 }

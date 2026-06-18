@@ -32,7 +32,10 @@ ChartJS.register(
   Filler
 );
 
-const RDI = {
+type RdiKey = "energy_kcal" | "protein" | "carbohydrate" | "fat" | "sugar" | "sodium" | "fibre" | "calcium" | "iron" | "vitamin_c";
+type RdiValues = Record<RdiKey, number>;
+
+const DEFAULT_RDI: RdiValues = {
   energy_kcal: 2100,
   protein: 70,
   carbohydrate: 260,
@@ -115,6 +118,7 @@ export default function VisualisationPage() {
   const [loading, setLoading] = useState(false);
   const [seeding, setSeeding] = useState(false);
   const [seedMsg, setSeedMsg] = useState("");
+  const [rdi, setRdi] = useState<RdiValues>(DEFAULT_RDI);
 
   const weekStart = getWeekStart(weekOffset);
   const weekEnd = addDays(weekStart, 6);
@@ -132,6 +136,29 @@ export default function VisualisationPage() {
       })
       .finally(() => setLoading(false));
   }
+
+  useEffect(() => {
+    fetch("/api/profile")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.targets) {
+          const tgt = data.targets;
+          setRdi({
+            energy_kcal:  tgt.energy_kcal.target,
+            protein:      tgt.protein.target,
+            carbohydrate: tgt.carbohydrate.target,
+            fat:          tgt.fat.target,
+            sugar:        tgt.sugar.target,
+            sodium:       tgt.sodium.target,
+            fibre:        tgt.fibre.target,
+            calcium:      tgt.calcium.target,
+            iron:         tgt.iron.target,
+            vitamin_c:    tgt.vitamin_c.target,
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     fetchWeek(weekStart, weekEnd);
@@ -265,11 +292,11 @@ export default function VisualisationPage() {
       }
     : null;
 
-  const rdiKeys: (keyof typeof RDI)[] = [
+  const rdiKeys: RdiKey[] = [
     "energy_kcal", "protein", "carbohydrate", "fat",
     "sugar", "sodium", "fibre", "calcium", "iron", "vitamin_c",
   ];
-  const rdiLabels: Record<keyof typeof RDI, string> = {
+  const rdiLabels: Record<RdiKey, string> = {
     energy_kcal: "Calories",
     protein: "Protein",
     carbohydrate: "Carbs",
@@ -290,12 +317,12 @@ export default function VisualisationPage() {
             label: "% of Daily Target",
             data: rdiKeys.map((k) => {
               const val = selectedData[k as keyof DailyTotal] as number;
-              const target = RDI[k];
+              const target = rdi[k];
               return Math.min(Math.round((val / target) * 100), 200);
             }),
             backgroundColor: rdiKeys.map((k) => {
               const val = selectedData[k as keyof DailyTotal] as number;
-              const pct = (val / RDI[k]) * 100;
+              const pct = (val / rdi[k]) * 100;
               if (pct < 80) return "rgba(37, 99, 235, 0.7)";
               if (pct <= 120) return "rgba(22, 163, 74, 0.7)";
               return "rgba(220, 38, 38, 0.7)";

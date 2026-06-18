@@ -1,7 +1,8 @@
 // Author: Logan
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
+import { getUserId } from "@/lib/session";
 
 export const runtime = "nodejs";
 
@@ -62,17 +63,20 @@ function shuffled<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  const userId = getUserId(request);
+  if (!userId) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+
   const db = getDb();
-  db.prepare("DELETE FROM food_logs WHERE food_id = ?").run(SEED_FOOD_ID);
+  db.prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ?").run(SEED_FOOD_ID, userId);
 
   const today = new Date();
   const insert = db.prepare(
     `INSERT INTO food_logs
-      (food_id, food_name, amount, unit, meal, date, time,
+      (user_id, food_id, food_name, amount, unit, meal, date, time,
        energy_kcal, energy_kj, protein, carbohydrate, fat, sugar,
        sodium, fibre, calcium, iron, vitamin_c)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   );
 
   const breakfasts = MEAL_TEMPLATES.filter((t) => t.meal === "Breakfast");
@@ -104,6 +108,7 @@ export async function POST() {
 
       for (const { entry, time } of meals) {
         insert.run(
+          userId,
           SEED_FOOD_ID,
           entry.food_name,
           entry.amount,
@@ -129,12 +134,17 @@ export async function POST() {
 
   insertMany();
 
-  const count = (db.prepare("SELECT COUNT(*) as n FROM food_logs WHERE food_id = ?").get(SEED_FOOD_ID) as { n: number }).n;
+  const count = (db.prepare("SELECT COUNT(*) as n FROM food_logs WHERE food_id = ? AND user_id = ?").get(SEED_FOOD_ID, userId) as { n: number }).n;
   return NextResponse.json({ ok: true, inserted: count });
 }
 
-export async function DELETE() {
+export async function DELETE(request: NextRequest) {
+  const userId = getUserId(request);
+  if (!userId) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+
   const db = getDb();
-  const result = db.prepare("DELETE FROM food_logs WHERE food_id = ?").run(SEED_FOOD_ID);
+  const result = db
+    .prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ?")
+    .run(SEED_FOOD_ID, userId);
   return NextResponse.json({ ok: true, deleted: result.changes });
 }

@@ -2,10 +2,13 @@
 
 // Author: Logan
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./ExportSection.module.css";
 
-const RDI: Record<string, { label: string; unit: string; target: number }> = {
+type RdiEntry = { label: string; unit: string; target: number };
+type RdiMap = Record<string, RdiEntry>;
+
+const DEFAULT_RDI: RdiMap = {
   energy_kcal:  { label: "Energy",        unit: "kcal", target: 2100 },
   protein:      { label: "Protein",       unit: "g",    target: 70   },
   carbohydrate: { label: "Carbohydrates", unit: "g",    target: 260  },
@@ -67,10 +70,10 @@ async function fetchLogEntries(start: string, end: string): Promise<LogEntry[]> 
   return data.logs ?? [];
 }
 
-function avgTotals(days: DailyTotal[]): Record<string, number> {
+function avgTotals(days: DailyTotal[], rdi: RdiMap): Record<string, number> {
   if (days.length === 0) return {};
   const sums: Record<string, number> = {};
-  for (const key of Object.keys(RDI)) {
+  for (const key of Object.keys(rdi)) {
     sums[key] = days.reduce((acc, d) => acc + (Number(d[key]) || 0), 0) / days.length;
   }
   return sums;
@@ -78,9 +81,9 @@ function avgTotals(days: DailyTotal[]): Record<string, number> {
 
 // ── CSV ─────────────────────────────────────────────────────────────────────
 
-function buildCSV(logs: LogEntry[], days: DailyTotal[], start: string, end: string): string {
+function buildCSV(logs: LogEntry[], days: DailyTotal[], start: string, end: string, rdi: RdiMap): string {
   const lines: string[] = [];
-  const avgs = avgTotals(days);
+  const avgs = avgTotals(days, rdi);
 
   lines.push(`Nutritional Intake Report`);
   lines.push(`Date Range,${start} to ${end}`);
@@ -111,7 +114,7 @@ function buildCSV(logs: LogEntry[], days: DailyTotal[], start: string, end: stri
 
   lines.push(`RDI COMPARISON (${days.length}-day average)`);
   lines.push(`Nutrient,Unit,Daily Average,RDI Target,% of Target,Status`);
-  for (const [key, { label, unit, target }] of Object.entries(RDI)) {
+  for (const [key, { label, unit, target }] of Object.entries(rdi)) {
     const avg = avgs[key] ?? 0;
     const p   = pct(avg, target);
     lines.push([label, unit, fmt(avg, 1), target, p, status(p)].join(","));
@@ -134,9 +137,9 @@ async function makePDF(): Promise<any> {
 
 // ── PDF Report ───────────────────────────────────────────────────────────────
 
-async function buildPDFReport(days: DailyTotal[], start: string, end: string) {
+async function buildPDFReport(days: DailyTotal[], start: string, end: string, rdi: RdiMap) {
   const { doc, autoTable } = await makePDF();
-  const avgs = avgTotals(days);
+  const avgs = avgTotals(days, rdi);
 
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
@@ -179,7 +182,7 @@ async function buildPDFReport(days: DailyTotal[], start: string, end: string) {
   autoTable(doc, {
     startY: afterTable + 4,
     head: [["Nutrient", "Unit", "Average", "RDI Target", "% of Target", "Status"]],
-    body: Object.entries(RDI).map(([key, { label, unit, target }]) => {
+    body: Object.entries(rdi).map(([key, { label, unit, target }]) => {
       const avg = avgs[key] ?? 0;
       const p   = pct(avg, target);
       return [label, unit, fmt(avg, 1), String(target), `${p}%`, status(p)];
@@ -202,13 +205,13 @@ async function buildPDFReport(days: DailyTotal[], start: string, end: string) {
 
 // ── Assignment Summary PDF ───────────────────────────────────────────────────
 
-async function buildAssignmentPDF(days: DailyTotal[], start: string, end: string) {
+async function buildAssignmentPDF(days: DailyTotal[], start: string, end: string, rdi: RdiMap) {
   const { doc, autoTable } = await makePDF();
-  const avgs = avgTotals(days);
+  const avgs = avgTotals(days, rdi);
 
-  const below  = Object.entries(RDI).filter(([k]) => pct(avgs[k] ?? 0, RDI[k].target) < 80);
-  const above  = Object.entries(RDI).filter(([k]) => pct(avgs[k] ?? 0, RDI[k].target) > 120);
-  const onTgt  = Object.entries(RDI).filter(([k]) => { const p = pct(avgs[k] ?? 0, RDI[k].target); return p >= 80 && p <= 120; });
+  const below  = Object.entries(rdi).filter(([k]) => pct(avgs[k] ?? 0, rdi[k].target) < 80);
+  const above  = Object.entries(rdi).filter(([k]) => pct(avgs[k] ?? 0, rdi[k].target) > 120);
+  const onTgt  = Object.entries(rdi).filter(([k]) => { const p = pct(avgs[k] ?? 0, rdi[k].target); return p >= 80 && p <= 120; });
 
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
@@ -234,7 +237,7 @@ async function buildAssignmentPDF(days: DailyTotal[], start: string, end: string
     `A total of ${totalEntries} food entries were logged, providing ${fmt(totalKcal, 0)} kcal`,
     `across the period (average ${fmt(days.length > 0 ? totalKcal / days.length : 0, 0)} kcal/day).`,
     ``,
-    `Of the ${Object.keys(RDI).length} nutrients tracked:`,
+    `Of the ${Object.keys(rdi).length} nutrients tracked:`,
     `  - ${onTgt.length} were within the recommended daily intake (RDI) range`,
     `  - ${below.length} were below target: ${below.map(([, v]) => v.label).join(", ") || "none"}`,
     `  - ${above.length} were above target: ${above.map(([, v]) => v.label).join(", ") || "none"}`,
@@ -256,7 +259,7 @@ async function buildAssignmentPDF(days: DailyTotal[], start: string, end: string
   autoTable(doc, {
     startY: y + 4,
     head: [["Nutrient", "Unit", "Avg/Day", "RDI", "% of RDI", "Assessment"]],
-    body: Object.entries(RDI).map(([key, { label, unit, target }]) => {
+    body: Object.entries(rdi).map(([key, { label, unit, target }]) => {
       const avg = avgs[key] ?? 0;
       const p   = pct(avg, target);
       return [label, unit, fmt(avg, 1), String(target), `${p}%`, status(p)];
@@ -325,6 +328,30 @@ export default function ExportSection() {
   const [customEnd,   setEnd]     = useState(todayStr());
   const [loading, setLoading]     = useState<string | null>(null);
   const [message, setMessage]     = useState("");
+  const [rdi, setRdi]             = useState<RdiMap>(DEFAULT_RDI);
+
+  useEffect(() => {
+    fetch("/api/profile")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.targets) {
+          const tgt = data.targets;
+          setRdi({
+            energy_kcal:  { label: "Energy",        unit: "kcal", target: tgt.energy_kcal.target  },
+            protein:      { label: "Protein",       unit: "g",    target: tgt.protein.target       },
+            carbohydrate: { label: "Carbohydrates", unit: "g",    target: tgt.carbohydrate.target  },
+            fat:          { label: "Fat",           unit: "g",    target: tgt.fat.target           },
+            sugar:        { label: "Sugar",         unit: "g",    target: tgt.sugar.target         },
+            sodium:       { label: "Sodium",        unit: "mg",   target: tgt.sodium.target        },
+            fibre:        { label: "Fibre",         unit: "g",    target: tgt.fibre.target         },
+            calcium:      { label: "Calcium",       unit: "mg",   target: tgt.calcium.target       },
+            iron:         { label: "Iron",          unit: "mg",   target: tgt.iron.target          },
+            vitamin_c:    { label: "Vitamin C",     unit: "mg",   target: tgt.vitamin_c.target     },
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const start = preset > 0 ? offsetDate(preset) : customStart;
   const end   = preset > 0 ? todayStr()          : customEnd;
@@ -343,9 +370,9 @@ export default function ExportSection() {
         return;
       }
 
-      if (type === "csv")         triggerDownload(buildCSV(logs, days, start, end), `nutrition-${start}-to-${end}.csv`, "text/csv");
-      if (type === "pdf-report")  await buildPDFReport(days, start, end);
-      if (type === "pdf-summary") await buildAssignmentPDF(days, start, end);
+      if (type === "csv")         triggerDownload(buildCSV(logs, days, start, end, rdi), `nutrition-${start}-to-${end}.csv`, "text/csv");
+      if (type === "pdf-report")  await buildPDFReport(days, start, end, rdi);
+      if (type === "pdf-summary") await buildAssignmentPDF(days, start, end, rdi);
     } catch (e) {
       setMessage("Export failed. Check the console for details.");
       console.error(e);

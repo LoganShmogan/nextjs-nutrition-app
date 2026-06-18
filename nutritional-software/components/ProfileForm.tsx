@@ -65,6 +65,34 @@ export default function ProfileForm() {
   const [matchedCardHeight, setMatchedCardHeight] = useState<number | null>(null);
 
   useEffect(() => {
+    fetch("/api/profile")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.profile) {
+          const p = data.profile;
+          setFormData({
+            patientName:         p.patientName         ?? "",
+            age:                 String(p.age          ?? ""),
+            gender:              p.gender              ?? "",
+            ethnicity:           p.ethnicity           ?? "",
+            weight:              String(p.weight       ?? ""),
+            height:              String(p.height       ?? ""),
+            activityLevel:       p.activityLevel       ?? "",
+            measurementSystem:   p.measurementSystem   ?? "Metric",
+            nutritionGoal:       p.nutritionGoal       ?? "",
+            dietaryPreference:   p.dietaryPreference   ?? "",
+            dietaryRestrictions: p.dietaryRestrictions ?? "",
+            allergies:           p.allergies           ?? "",
+            medicalConditions:   p.medicalConditions   ?? "",
+            medications:         p.medications         ?? "",
+            additionalNotes:     p.additionalNotes     ?? "",
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     if (!submittedProfile || !previewCardRef.current) {
       setMatchedCardHeight(null);
       return;
@@ -104,18 +132,24 @@ export default function ProfileForm() {
     setEnergyExpenditure(null);
     setEnergyError(null);
 
+    const profilePayload = {
+      ...formData,
+      age:    Number(formData.age),
+      weight: Number(formData.weight),
+      height: Number(formData.height),
+    };
+
+    fetch("/api/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profilePayload),
+    }).catch(() => {});
+
     try {
       const response = await fetch("/api/energy-expenditure", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          age: Number(formData.age),
-          weight: Number(formData.weight),
-          height: Number(formData.height),
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profilePayload),
       });
 
       const result = await response.json();
