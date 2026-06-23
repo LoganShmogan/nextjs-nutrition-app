@@ -240,4 +240,10 @@
     gap: 10px;
   }
 
- 
+  .seedBtn,
+  .seedBtnDanger,
+  .navBtn,
+  .dayBtn {
+    margin-bottom: 4px;
+  }
+}
