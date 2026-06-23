@@ -1,4 +1,4 @@
-/* app/nutritional-feedback/page.module.css */
+/* Author: Logan & Marty */
 
 .page {
   min-height: 100vh;
@@ -28,132 +28,66 @@
   font-size: 14px;
 }
 
-.summaryCard {
-  background: #ffffff;
-  border: 1px solid #dfe5dc;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 16px;
-}
-
-.summaryCard h2 {
-  margin-bottom: 16px;
-  color: #171717;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.summaryGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-.summaryGrid div {
-  background: #fbfdfb;
-  border: 1px solid #dfe5dc;
-  border-radius: 8px;
-  padding: 12px;
-}
-
-.summaryGrid span {
-  display: block;
-  font-size: 11px;
-  color: #5f6b5f;
-  margin-bottom: 4px;
-  font-weight: 600;
-}
-
-.summaryGrid strong {
-  font-size: 18px;
-  color: #171717;
-}
-
-.feedbackSection {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-.feedbackCard {
-  background: #ffffff;
-  border: 1px solid #dfe5dc;
-  border-left: 4px solid #2f7d32;
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.cardHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.cardHeader h3 {
-  font-size: 16px;
-  margin-bottom: 4px;
-  color: #171717;
-  font-weight: 700;
-}
-
-.cardHeader p {
-  color: #5f6b5f;
-  font-size: 13px;
-}
-
-.statusBadge {
-  padding: 5px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.message p {
-  line-height: 1.5;
-  color: #5f6b5f;
-  font-size: 13px;
-}
-
-.good {
-  border-left-color: #2f7d32;
-}
-
-.good .statusBadge {
-  background: #eef4ec;
-  color: #2f7d32;
-}
-
-.low {
-  border-left-color: #ca8a04;
-}
-
-.low .statusBadge {
-  background: #fff5d8;
-  color: #8a5a00;
-}
-
-.high {
-  border-left-color: #c0392b;
-}
-
-.high .statusBadge {
-  background: #fff0f0;
-  color: #c0392b;
-}
-
 .seedBar {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 10px 14px;
+  padding: 12px 14px;
   border: 1px solid #dfe5dc;
   border-radius: 10px;
   background: #ffffff;
   margin-bottom: 20px;
+}
+
+.seedLabel {
+  font-size: 13px;
+  color: #5f6b5f;
+  font-weight: 700;
+}
+
+.seedBtn,
+.seedBtnDanger,
+.navBtn {
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.seedBtn,
+.navBtn {
+  background: #eef4ec;
+  color: #2f7d32;
+}
+
+.seedBtn:hover:not(:disabled),
+.navBtn:hover:not(:disabled) {
+  background: #e1eadf;
+}
+
+.seedBtnDanger {
+  background: #fff0f0;
+  color: #b91c1c;
+}
+
+.seedBtnDanger:hover:not(:disabled) {
+  background: #fee2e2;
+}
+
+.seedBtn:disabled,
+.seedBtnDanger:disabled,
+.navBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.seedMsg {
+  font-size: 13px;
+  color: #5f6b5f;
 }
 
 .weekNav {
@@ -168,59 +102,262 @@
   margin-bottom: 16px;
 }
 
+.weekLabel {
+  flex: 1;
+  min-width: 180px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #171717;
+}
+
+.dayGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.dayBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-radius: 10px;
+  padding: 12px 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.dayBtn:hover {
+  background: #eef4ec;
+}
+
+.dayBtnActive {
+  border-color: #2f7d32;
+  background: #eef4ec;
+}
+
+.dayBtnToday .dayDate {
+  font-weight: 900;
+  text-decoration: underline;
+}
+
+.dayName {
+  font-size: 11px;
+  font-weight: 700;
+  color: #5f6b5f;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dayDate {
+  font-size: 20px;
+  font-weight: 700;
+  color: #171717;
+}
+
+.dayKcal {
+  font-size: 11px;
+  color: #171717;
+  font-weight: 600;
+}
+
+.dayEmpty {
+  font-size: 11px;
+  color: #8a958a;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #171717;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #dfe5dc;
+}
+
+.chartsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.chartCard,
+.chartCardWide {
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.chartCardWide {
+  margin-bottom: 16px;
+}
+
+.chartCard h2,
+.chartCardWide h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #171717;
+  margin-bottom: 14px;
+}
+
+.chartWrap {
+  height: 260px;
+  position: relative;
+}
+
+.chartWrapSm {
+  height: 220px;
+  position: relative;
+}
+
+.chartHint {
+  font-size: 12px;
+  color: #5f6b5f;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.statCard {
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-radius: 10px;
+  border-top: 4px solid #2f7d32;
+  padding: 14px;
+  text-align: center;
+}
+
+.statLabel {
+  display: block;
+  font-size: 11px;
+  color: #5f6b5f;
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statValue {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.loading {
+  text-align: center;
+  color: #5f6b5f;
+  padding: 32px 0;
+  font-size: 14px;
+}
+
+.noDataMsg {
+  text-align: center;
+  color: #8a958a;
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
 @media (prefers-color-scheme: dark) {
   .page {
     background-color: #1b211d;
   }
 
   .header h1,
-  .summaryCard h2,
-  .summaryGrid strong,
-  .cardHeader h3 {
+  .weekLabel,
+  .dayDate,
+  .dayKcal,
+  .sectionTitle,
+  .chartCard h2,
+  .chartCardWide h2,
+  .statValue {
     color: #f2f5f1;
   }
 
   .header p,
-  .summaryGrid span,
-  .cardHeader p,
-  .message p {
+  .seedLabel,
+  .seedMsg,
+  .dayName,
+  .dayEmpty,
+  .statLabel,
+  .loading,
+  .noDataMsg,
+  .chartHint {
     color: #b8c2b7;
   }
 
-  .summaryCard,
-  .feedbackCard {
+  .seedBar,
+  .weekNav,
+  .dayBtn,
+  .chartCard,
+  .chartCardWide,
+  .statCard,
+  .noDataMsg {
     background: #2b332e;
     border-color: #445047;
   }
 
-  .summaryGrid div {
+  .seedBtn,
+  .navBtn {
     background: #3a443c;
     border-color: #445047;
+    color: #7ddc82;
   }
 
-  .good .statusBadge {
-    background: #3a443c;
-    color: #3f9b45;
+  .seedBtn:hover:not(:disabled),
+  .navBtn:hover:not(:disabled),
+  .dayBtn:hover,
+  .dayBtnActive {
+    background: #445047;
   }
 
-  .low .statusBadge {
-    background: #3d3524;
-    color: #fbbf24;
-  }
-
-  .high .statusBadge {
+  .seedBtnDanger {
     background: #3d2a2a;
+    border-color: #5c3636;
     color: #fca5a5;
+  }
+
+  .seedBtnDanger:hover:not(:disabled) {
+    background: #4a3030;
+  }
+
+  .sectionTitle {
+    border-bottom-color: #445047;
   }
 }
 
-@media (max-width: 900px) {
-  .summaryGrid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 1100px) {
+  .statsRow {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .dayGrid {
+    grid-template-columns: repeat(4, 1fr);
   }
 
-  .feedbackSection {
+  .chartsRow {
     grid-template-columns: 1fr;
+  }
+
+  .statsRow {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -229,21 +366,20 @@
     padding: 24px 16px;
   }
 
-  .summaryGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
   .seedBar,
   .weekNav {
     gap: 10px;
   }
 
-  .seedBtn,
-  .seedBtnDanger,
-  .navBtn,
-  .dayBtn {
-    margin-bottom: 4px;
+  .weekLabel {
+    order: 3;
+    flex-basis: 100%;
+    text-align: left;
+  }
+}
+
+@media (max-width: 500px) {
+  .dayGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
