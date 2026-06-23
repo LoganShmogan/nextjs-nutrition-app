@@ -1,368 +1,457 @@
 /* Author: Logan & Marty */
 
 .page {
-	min-height: 100vh;
-	background: #f9f9f9;
-	padding: 32px 20px;
+  min-height: 100vh;
+  background-color: #f5f7f4;
+  padding: 40px 24px;
 }
 
 .container {
-	max-width: 1400px;
-	margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .header {
-	margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .header h1 {
-	font-size: 28px;
-	margin-bottom: 4px;
-	color: #111;
-	font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 4px;
+  color: #171717;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .header p {
-	color: #555;
-	font-size: 14px;
+  color: #5f6b5f;
+  font-size: 14px;
 }
 
 .grid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 16px;
-	margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .card {
-	background: white;
-	border: 1px solid #ddd;
-	padding: 20px;
-	margin-bottom: 16px;
+  background: #ffffff;
+  border: 1px solid #dfe5dc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
 }
 
 .card h2 {
-	margin-bottom: 16px;
-	color: #111;
-	font-size: 16px;
-	font-weight: 700;
+  margin-bottom: 16px;
+  color: #171717;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .searchInput {
-	width: 100%;
-	padding: 10px 12px;
-	border: 1px solid #ccc;
-	margin-bottom: 14px;
-	font-size: 14px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #171717;
+  background: #ffffff;
+  font-family: inherit;
 }
 
 .searchInput:focus {
-	outline: none;
-	border-color: #555;
+  outline: 3px solid rgba(47, 125, 50, 0.18);
+  border-color: #2f7d32;
 }
 
 .foodList {
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
-	max-height: 480px;
-	overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 480px;
+  overflow-y: auto;
 }
 
 .foodItem {
-	width: 100%;
-	border: 1px solid #e0e0e0;
-	background: #fafafa;
-	padding: 12px 14px;
-	text-align: left;
-	cursor: pointer;
+  width: 100%;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  background: #fbfdfb;
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .foodItem:hover {
-	background: #f0f0f0;
+  background: #eef4ec;
 }
 
 .foodItemSelected {
-	border-color: #333;
-	background: #f0f0f0;
+  border-color: #2f7d32;
+  background: #eef4ec;
 }
 
 .foodItem h3 {
-	margin-bottom: 3px;
-	color: #111;
-	font-size: 13px;
-	font-weight: 600;
+  margin-bottom: 3px;
+  color: #171717;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .foodItem p {
-	color: #666;
-	font-size: 12px;
+  color: #5f6b5f;
+  font-size: 12px;
 }
 
 .emptyState {
-	padding: 24px 0;
-	color: #888;
-	text-align: center;
-	font-size: 13px;
+  padding: 24px 0;
+  color: #5f6b5f;
+  text-align: center;
+  font-size: 13px;
 }
 
 .notFoundState {
-	padding: 16px;
-	background: #fffbe6;
-	border: 1px solid #e0c800;
+  padding: 16px;
+  background: #fffbe6;
+  border: 1px solid #e0c800;
+  border-radius: 8px;
 }
 
 .notFoundState strong {
-	display: block;
-	margin-bottom: 6px;
-	color: #7a6000;
-	font-size: 13px;
+  display: block;
+  margin-bottom: 6px;
+  color: #7a6000;
+  font-size: 13px;
 }
 
 .notFoundState p {
-	color: #7a6000;
-	font-size: 12px;
-	line-height: 1.5;
+  color: #7a6000;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .notFoundState code {
-	background: rgba(0,0,0,0.06);
-	padding: 1px 4px;
-	font-size: 12px;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 .selectedFood {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .selectedFood h3 {
-	margin-bottom: 3px;
-	font-size: 16px;
-	color: #111;
-	font-weight: 700;
+  margin-bottom: 3px;
+  font-size: 16px;
+  color: #171717;
+  font-weight: 700;
 }
 
 .selectedFoodId {
-	color: #aaa;
-	font-size: 11px;
-	margin-bottom: 14px;
+  color: #8a958a;
+  font-size: 11px;
+  margin-bottom: 14px;
 }
 
 .nutrients {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 8px;
-	margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .nutrients div {
-	background: #f5f5f5;
-	padding: 10px 12px;
-	border: 1px solid #e8e8e8;
+  background: #fbfdfb;
+  padding: 10px 12px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
 }
 
 .nutrients span {
-	display: block;
-	font-size: 11px;
-	color: #777;
-	margin-bottom: 2px;
+  display: block;
+  font-size: 11px;
+  color: #5f6b5f;
+  margin-bottom: 2px;
 }
 
 .nutrients strong {
-	color: #111;
-	font-size: 14px;
-	font-weight: 700;
+  color: #171717;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .perAmountNote {
-	font-size: 11px;
-	color: #aaa;
-	text-align: right;
-	margin-bottom: 4px;
+  font-size: 11px;
+  color: #8a958a;
+  text-align: right;
+  margin-bottom: 4px;
 }
 
 .form {
-	display: flex;
-	flex-direction: column;
-	gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .formRow {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 
 .formGroup {
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .formGroup label {
-	font-weight: 600;
-	color: #333;
-	font-size: 13px;
+  font-weight: 600;
+  color: #171717;
+  font-size: 13px;
 }
 
 .formGroup input,
 .formGroup select {
-	padding: 9px 10px;
-	border: 1px solid #ccc;
-	font-size: 13px;
+  padding: 9px 10px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #171717;
+  background: #ffffff;
+  font-family: inherit;
 }
 
 .formGroup input:focus,
 .formGroup select:focus {
-	outline: none;
-	border-color: #555;
+  outline: 3px solid rgba(47, 125, 50, 0.18);
+  border-color: #2f7d32;
 }
 
 .portionRow {
-	display: flex;
-	gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .portionRow input {
-	flex: 1;
+  flex: 1;
 }
 
 .portionRow select {
-	width: 180px;
+  width: 180px;
 }
 
 .primaryButton,
 .secondaryButton {
-	border: 1px solid #aaa;
-	padding: 10px 18px;
-	font-weight: 600;
-	cursor: pointer;
-	font-size: 14px;
-	background: #fff;
-	color: #111;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.primaryButton {
+  border: none;
+  background: #2f7d32;
+  color: #ffffff;
 }
 
 .primaryButton:hover:not(:disabled) {
-	background: #f0f0f0;
+  background: #236326;
+}
+
+.secondaryButton {
+  border: 1px solid #dfe5dc;
+  background: #eef4ec;
+  color: #2f7d32;
 }
 
 .secondaryButton:hover:not(:disabled) {
-	background: #f0f0f0;
+  background: #e1eadf;
 }
 
 .primaryButton:disabled,
 .secondaryButton:disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .sectionHeader {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .sectionHeader p {
-	color: #666;
-	font-size: 13px;
-	margin-top: 4px;
+  color: #5f6b5f;
+  font-size: 13px;
+  margin-top: 4px;
 }
 
 .customFoodForm {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-/* Logged items */
 .logList {
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .logItem {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 10px 14px;
-	border: 1px solid #e0e0e0;
-	background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  background: #fbfdfb;
 }
 
 .logItem div {
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .logItem strong {
-	color: #111;
-	font-size: 13px;
-	font-weight: 600;
+  color: #171717;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .logItem span {
-	color: #777;
-	font-size: 12px;
+  color: #5f6b5f;
+  font-size: 12px;
 }
 
 .logRight {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .logKcal {
-	font-weight: 700;
-	color: #111;
-	font-size: 13px;
+  font-weight: 700;
+  color: #171717;
+  font-size: 13px;
 }
 
 .removeButton {
-	background: none;
-	border: none;
-	color: #bbb;
-	cursor: pointer;
-	font-size: 13px;
-	padding: 2px 6px;
+  background: none;
+  border: none;
+  color: #b91c1c;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 6px;
 }
 
 .removeButton:hover {
-	color: #b00;
+  color: #7f1d1d;
 }
 
 .customFoodList {
-	margin-top: 20px;
-	border-top: 1px solid #e5e5e5;
-	padding-top: 16px;
+  margin-top: 20px;
+  border-top: 1px solid #dfe5dc;
+  padding-top: 16px;
 }
 
 .customFoodList h3 {
-	font-size: 13px;
-	color: #333;
-	font-weight: 600;
-	margin-bottom: 10px;
+  font-size: 13px;
+  color: #171717;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    background-color: #1b211d;
+  }
+
+  .header h1,
+  .card h2,
+  .foodItem h3,
+  .selectedFood h3,
+  .nutrients strong,
+  .formGroup label,
+  .logItem strong,
+  .logKcal,
+  .customFoodList h3 {
+    color: #f2f5f1;
+  }
+
+  .header p,
+  .foodItem p,
+  .emptyState,
+  .selectedFoodId,
+  .nutrients span,
+  .sectionHeader p,
+  .logItem span {
+    color: #b8c2b7;
+  }
+
+  .card,
+  .searchInput,
+  .formGroup input,
+  .formGroup select {
+    background: #2b332e;
+    border-color: #445047;
+    color: #f2f5f1;
+  }
+
+  .foodItem,
+  .nutrients div,
+  .logItem {
+    background: #3a443c;
+    border-color: #445047;
+  }
+
+  .foodItem:hover,
+  .foodItemSelected {
+    background: #445047;
+  }
+
+  .secondaryButton {
+    background: #3a443c;
+    border-color: #445047;
+    color: #3f9b45;
+  }
+
+  .secondaryButton:hover:not(:disabled) {
+    background: #445047;
+  }
 }
 
 @media (max-width: 1000px) {
-	.grid {
-		grid-template-columns: 1fr;
-	}
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-	.formRow {
-		grid-template-columns: 1fr 1fr;
-	}
+  .formRow {
+    grid-template-columns: 1fr 1fr;
+  }
 
-	.portionRow {
-		flex-direction: column;
-	}
+  .portionRow {
+    flex-direction: column;
+  }
 
-	.portionRow select {
-		width: 100%;
-	}
+  .portionRow select {
+    width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
-	.formRow {
-		grid-template-columns: 1fr;
-	}
+  .page {
+    padding: 24px 16px;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
 }
