@@ -2,68 +2,7 @@
 
 ## High-Level Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        BROWSER                               │
-│                                                              │
-│  ┌──────────┐  ┌──────────┐  ┌───────────┐  ┌────────────┐ │
-│  │ Login/   │  │Dashboard │  │ Food Log  │  │Visualise   │ │
-│  │ Signup   │  │          │  │           │  │            │ │
-│  └────┬─────┘  └────┬─────┘  └─────┬─────┘  └─────┬──────┘ │
-│       │              │              │              │         │
-│       └──────────────┴──────────────┴──────────────┘         │
-│                          │                                    │
-│                    fetch() calls                              │
-│                          │                                    │
-└──────────────────────────┼───────────────────────────────────┘
-                           │
-                           ▼
-┌──────────────────────────────────────────────────────────────┐
-│                    NEXT.JS SERVER                             │
-│                                                              │
-│  ┌─────────────────┐    ┌──────────────────────────────────┐│
-│  │   Middleware     │    │         API Routes               ││
-│  │  (auth guard)    │    │                                  ││
-│  │                  │    │  /api/auth/*     → session mgmt  ││
-│  │  Checks cookie   │    │  /api/profile    → CRUD profiles ││
-│  │  on every req    │    │  /api/food-log   → CRUD logs     ││
-│  └────────┬─────────┘    │  /api/foods/*    → food search   ││
-│           │              │  /api/nutrition-* → analysis      ││
-│           ▼              │  /api/visualis*  → chart data    ││
-│  Allow or redirect       │  /api/analyses   → saved records ││
-│                          │  /api/seed       → test data     ││
-│                          └────────────┬─────────────────────┘│
-│                                       │                      │
-│                          ┌────────────┴──────────────┐       │
-│                          │    Business Logic Layer    │       │
-│                          │                            │       │
-│                          │  lib/nutrition/            │       │
-│                          │    calculateNutrition.ts   │       │
-│                          │    energyExpenditure.ts     │       │
-│                          │    thresholds.ts            │       │
-│                          │    foods.ts                 │       │
-│                          │                            │       │
-│                          │  lib/session.ts             │       │
-│                          │  lib/db.ts                  │       │
-│                          └────────────┬──────────────┘       │
-│                                       │                      │
-└───────────────────────────────────────┼──────────────────────┘
-                                        │
-                           ┌────────────┴────────────┐
-                           │                         │
-                           ▼                         ▼
-                   ┌──────────────┐         ┌──────────────┐
-                   │   SQLite DB  │         │  foods.json  │
-                   │  nutrition.db│         │  (2767 foods)│
-                   │              │         │              │
-                   │  users       │         │  Parsed from │
-                   │  profiles    │         │  NZ FOODfiles│
-                   │  food_logs   │         │              │
-                   │  custom_foods│         │  Read-only,  │
-                   │  analyses    │         │  cached in   │
-                   │              │         │  memory      │
-                   └──────────────┘         └──────────────┘
-```
+<img width="601" height="1171" alt="arch drawio" src="https://github.com/user-attachments/assets/1b97a923-8e1c-4f17-990f-71d4b7230fee" />
 
 ## Request Lifecycle
 
