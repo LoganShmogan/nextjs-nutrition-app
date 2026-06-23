@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
-import { getUserId } from "@/lib/session";
+import { getUserId, getActiveProfileId } from "@/lib/session";
 
 export const runtime = "nodejs";
 
@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
   const userId = getUserId(request);
   if (!userId) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
+  const profileId = getActiveProfileId(request);
   const { searchParams } = request.nextUrl;
   const date      = searchParams.get("date");
   const startDate = searchParams.get("start");
@@ -18,22 +19,22 @@ export async function GET(request: NextRequest) {
   const db = getDb();
 
   if (date) {
-    const rows = db
-      .prepare("SELECT * FROM food_logs WHERE date = ? AND user_id = ? ORDER BY time ASC")
-      .all(date, userId);
+    const rows = profileId
+      ? db.prepare("SELECT * FROM food_logs WHERE date = ? AND user_id = ? AND profile_id = ? ORDER BY time ASC").all(date, userId, profileId)
+      : db.prepare("SELECT * FROM food_logs WHERE date = ? AND user_id = ? ORDER BY time ASC").all(date, userId);
     return NextResponse.json({ logs: rows });
   }
 
   if (startDate && endDate) {
-    const rows = db
-      .prepare("SELECT * FROM food_logs WHERE date BETWEEN ? AND ? AND user_id = ? ORDER BY date ASC, time ASC")
-      .all(startDate, endDate, userId);
+    const rows = profileId
+      ? db.prepare("SELECT * FROM food_logs WHERE date BETWEEN ? AND ? AND user_id = ? AND profile_id = ? ORDER BY date ASC, time ASC").all(startDate, endDate, userId, profileId)
+      : db.prepare("SELECT * FROM food_logs WHERE date BETWEEN ? AND ? AND user_id = ? ORDER BY date ASC, time ASC").all(startDate, endDate, userId);
     return NextResponse.json({ logs: rows });
   }
 
-  const rows = db
-    .prepare("SELECT * FROM food_logs WHERE user_id = ? ORDER BY date DESC, time DESC LIMIT 100")
-    .all(userId);
+  const rows = profileId
+    ? db.prepare("SELECT * FROM food_logs WHERE user_id = ? AND profile_id = ? ORDER BY date DESC, time DESC LIMIT 100").all(userId, profileId)
+    : db.prepare("SELECT * FROM food_logs WHERE user_id = ? ORDER BY date DESC, time DESC LIMIT 100").all(userId);
   return NextResponse.json({ logs: rows });
 }
 
@@ -41,6 +42,7 @@ export async function POST(request: NextRequest) {
   const userId = getUserId(request);
   if (!userId) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
+  const profileId = getActiveProfileId(request);
   const body = await request.json();
   const {
     food_id, food_name, amount, unit, meal, date, time,
@@ -56,13 +58,13 @@ export async function POST(request: NextRequest) {
   const result = db
     .prepare(
       `INSERT INTO food_logs
-        (user_id, food_id, food_name, amount, unit, meal, date, time,
+        (user_id, profile_id, food_id, food_name, amount, unit, meal, date, time,
          energy_kcal, energy_kj, protein, carbohydrate, fat, sugar,
          sodium, fibre, calcium, iron, vitamin_c)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .run(
-      userId,
+      userId, profileId ?? null,
       food_id ?? null, food_name, amount, unit ?? "grams (g)",
       meal, date, time,
       energy_kcal ?? null, energy_kj ?? null, protein ?? null,

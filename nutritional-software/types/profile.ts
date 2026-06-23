@@ -15,6 +15,7 @@ export type ActivityLevel =
 export type MeasurementSystem = "Metric" | "Imperial";
 
 export type ProfileData = {
+  id?: number;
   patientName: string;
   age: number;
   gender: Gender;
@@ -30,4 +31,8 @@ export type ProfileData = {
   medicalConditions?: string;
   medications?: string;
   additionalNotes?: string;
+  beepTestLevel?: string;
+  vo2Max?: number;
+  restingHeartRate?: number;
+  bloodPressure?: string;
 };

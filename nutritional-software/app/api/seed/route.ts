@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
-import { getUserId } from "@/lib/session";
+import { getUserId, getActiveProfileId } from "@/lib/session";
 
 export const runtime = "nodejs";
 
@@ -26,28 +26,21 @@ type SeedEntry = {
 };
 
 const MEAL_TEMPLATES: SeedEntry[] = [
-  // Breakfasts
   { food_name: "Oats with milk", meal: "Breakfast", amount: 300, energy_kcal: 320, energy_kj: 1339, protein: 12, carbohydrate: 52, fat: 7, sugar: 10, sodium: 120, fibre: 5, calcium: 180, iron: 3, vitamin_c: 0 },
   { food_name: "Scrambled eggs on toast", meal: "Breakfast", amount: 250, energy_kcal: 390, energy_kj: 1632, protein: 22, carbohydrate: 28, fat: 18, sugar: 2, sodium: 480, fibre: 2, calcium: 100, iron: 3, vitamin_c: 0 },
   { food_name: "Banana and yoghurt", meal: "Breakfast", amount: 280, energy_kcal: 220, energy_kj: 920, protein: 9, carbohydrate: 38, fat: 3, sugar: 28, sodium: 60, fibre: 3, calcium: 200, iron: 1, vitamin_c: 12 },
   { food_name: "Wholegrain toast with peanut butter", meal: "Breakfast", amount: 100, energy_kcal: 290, energy_kj: 1213, protein: 11, carbohydrate: 30, fat: 14, sugar: 5, sodium: 200, fibre: 4, calcium: 50, iron: 2, vitamin_c: 0 },
   { food_name: "Muesli with almond milk", meal: "Breakfast", amount: 280, energy_kcal: 350, energy_kj: 1464, protein: 9, carbohydrate: 55, fat: 10, sugar: 18, sodium: 90, fibre: 6, calcium: 150, iron: 3, vitamin_c: 0 },
-
-  // Lunches
   { food_name: "Chicken and salad sandwich", meal: "Lunch", amount: 300, energy_kcal: 420, energy_kj: 1757, protein: 30, carbohydrate: 40, fat: 12, sugar: 5, sodium: 680, fibre: 4, calcium: 80, iron: 3, vitamin_c: 15 },
   { food_name: "Vegetable soup with bread", meal: "Lunch", amount: 400, energy_kcal: 280, energy_kj: 1172, protein: 8, carbohydrate: 48, fat: 5, sugar: 8, sodium: 800, fibre: 6, calcium: 70, iron: 2, vitamin_c: 20 },
   { food_name: "Tuna salad", meal: "Lunch", amount: 250, energy_kcal: 260, energy_kj: 1088, protein: 28, carbohydrate: 8, fat: 12, sugar: 3, sodium: 520, fibre: 3, calcium: 60, iron: 2, vitamin_c: 18 },
   { food_name: "Pasta with tomato sauce", meal: "Lunch", amount: 350, energy_kcal: 450, energy_kj: 1884, protein: 14, carbohydrate: 80, fat: 7, sugar: 10, sodium: 400, fibre: 5, calcium: 60, iron: 2, vitamin_c: 12 },
   { food_name: "Rice and beans", meal: "Lunch", amount: 300, energy_kcal: 380, energy_kj: 1590, protein: 14, carbohydrate: 70, fat: 4, sugar: 2, sodium: 300, fibre: 8, calcium: 80, iron: 4, vitamin_c: 0 },
-
-  // Dinners
   { food_name: "Grilled salmon with vegetables", meal: "Dinner", amount: 400, energy_kcal: 520, energy_kj: 2176, protein: 42, carbohydrate: 22, fat: 28, sugar: 6, sodium: 420, fibre: 5, calcium: 60, iron: 2, vitamin_c: 30 },
   { food_name: "Chicken stir fry with rice", meal: "Dinner", amount: 450, energy_kcal: 580, energy_kj: 2428, protein: 38, carbohydrate: 65, fat: 14, sugar: 8, sodium: 700, fibre: 4, calcium: 80, iron: 3, vitamin_c: 25 },
   { food_name: "Beef and vegetable casserole", meal: "Dinner", amount: 400, energy_kcal: 490, energy_kj: 2051, protein: 34, carbohydrate: 30, fat: 22, sugar: 6, sodium: 650, fibre: 5, calcium: 70, iron: 5, vitamin_c: 20 },
   { food_name: "Vegetarian pasta bake", meal: "Dinner", amount: 400, energy_kcal: 460, energy_kj: 1925, protein: 18, carbohydrate: 70, fat: 12, sugar: 10, sodium: 500, fibre: 6, calcium: 200, iron: 3, vitamin_c: 15 },
   { food_name: "Lamb chops with kumara", meal: "Dinner", amount: 380, energy_kcal: 550, energy_kj: 2302, protein: 36, carbohydrate: 40, fat: 26, sugar: 12, sodium: 380, fibre: 4, calcium: 60, iron: 4, vitamin_c: 18 },
-
-  // Snacks
   { food_name: "Apple", meal: "Snack", amount: 150, energy_kcal: 78, energy_kj: 326, protein: 0, carbohydrate: 20, fat: 0, sugar: 15, sodium: 0, fibre: 3, calcium: 10, iron: 0, vitamin_c: 8 },
   { food_name: "Greek yoghurt", meal: "Snack", amount: 170, energy_kcal: 140, energy_kj: 586, protein: 15, carbohydrate: 8, fat: 5, sugar: 7, sodium: 60, fibre: 0, calcium: 180, iron: 0, vitamin_c: 0 },
   { food_name: "Handful of almonds", meal: "Snack", amount: 30, energy_kcal: 174, energy_kj: 728, protein: 6, carbohydrate: 5, fat: 15, sugar: 1, sodium: 0, fibre: 2, calcium: 75, iron: 1, vitamin_c: 0 },
@@ -67,16 +60,22 @@ export async function POST(request: NextRequest) {
   const userId = getUserId(request);
   if (!userId) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
+  const profileId = getActiveProfileId(request);
+
   const db = getDb();
-  db.prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ?").run(SEED_FOOD_ID, userId);
+  if (profileId) {
+    db.prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ? AND profile_id = ?").run(SEED_FOOD_ID, userId, profileId);
+  } else {
+    db.prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ?").run(SEED_FOOD_ID, userId);
+  }
 
   const today = new Date();
   const insert = db.prepare(
     `INSERT INTO food_logs
-      (user_id, food_id, food_name, amount, unit, meal, date, time,
+      (user_id, profile_id, food_id, food_name, amount, unit, meal, date, time,
        energy_kcal, energy_kj, protein, carbohydrate, fat, sugar,
        sodium, fibre, calcium, iron, vitamin_c)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   );
 
   const breakfasts = MEAL_TEMPLATES.filter((t) => t.meal === "Breakfast");
@@ -90,7 +89,6 @@ export async function POST(request: NextRequest) {
       date.setDate(today.getDate() - daysBack);
       const dateStr = date.toISOString().split("T")[0];
 
-      // Some days skip a meal to vary data
       const skipLunch = daysBack % 5 === 0;
       const skipSnack = daysBack % 3 === 0;
 
@@ -101,32 +99,19 @@ export async function POST(request: NextRequest) {
         ...(skipSnack ? [] : [{ entry: pickRandom(snacks), time: "15:00" }]),
       ];
 
-      // Occasionally add a second snack
       if (daysBack % 4 === 1) {
         meals.push({ entry: pickRandom(shuffled(snacks)), time: "21:00" });
       }
 
       for (const { entry, time } of meals) {
         insert.run(
-          userId,
-          SEED_FOOD_ID,
-          entry.food_name,
-          entry.amount,
-          "grams (g)",
-          entry.meal,
-          dateStr,
-          time,
-          entry.energy_kcal,
-          entry.energy_kj,
-          entry.protein,
-          entry.carbohydrate,
-          entry.fat,
-          entry.sugar,
-          entry.sodium,
-          entry.fibre,
-          entry.calcium,
-          entry.iron,
-          entry.vitamin_c
+          userId, profileId ?? null,
+          SEED_FOOD_ID, entry.food_name, entry.amount, "grams (g)",
+          entry.meal, dateStr, time,
+          entry.energy_kcal, entry.energy_kj, entry.protein,
+          entry.carbohydrate, entry.fat, entry.sugar,
+          entry.sodium, entry.fibre, entry.calcium,
+          entry.iron, entry.vitamin_c
         );
       }
     }
@@ -134,7 +119,9 @@ export async function POST(request: NextRequest) {
 
   insertMany();
 
-  const count = (db.prepare("SELECT COUNT(*) as n FROM food_logs WHERE food_id = ? AND user_id = ?").get(SEED_FOOD_ID, userId) as { n: number }).n;
+  const count = profileId
+    ? (db.prepare("SELECT COUNT(*) as n FROM food_logs WHERE food_id = ? AND user_id = ? AND profile_id = ?").get(SEED_FOOD_ID, userId, profileId) as { n: number }).n
+    : (db.prepare("SELECT COUNT(*) as n FROM food_logs WHERE food_id = ? AND user_id = ?").get(SEED_FOOD_ID, userId) as { n: number }).n;
   return NextResponse.json({ ok: true, inserted: count });
 }
 
@@ -142,9 +129,11 @@ export async function DELETE(request: NextRequest) {
   const userId = getUserId(request);
   if (!userId) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
+  const profileId = getActiveProfileId(request);
   const db = getDb();
-  const result = db
-    .prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ?")
-    .run(SEED_FOOD_ID, userId);
+
+  const result = profileId
+    ? db.prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ? AND profile_id = ?").run(SEED_FOOD_ID, userId, profileId)
+    : db.prepare("DELETE FROM food_logs WHERE food_id = ? AND user_id = ?").run(SEED_FOOD_ID, userId);
   return NextResponse.json({ ok: true, deleted: result.changes });
 }

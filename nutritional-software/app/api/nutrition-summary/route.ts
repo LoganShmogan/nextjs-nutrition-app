@@ -82,10 +82,12 @@ export async function POST(request: NextRequest) {
   // Date mode: sum pre-computed nutrient values from food_logs for that date
   if (body.date) {
     const userId = request.cookies.get("session_user_id")?.value;
+    const profileId = request.cookies.get("active_profile_id")?.value;
     const db = getDb();
-    const entries = db
-      .prepare("SELECT * FROM food_logs WHERE date = ? AND (user_id = ? OR user_id IS NULL)")
-      .all(body.date, userId ? parseInt(userId, 10) : 0) as FoodLogRow[];
+    const uid = userId ? parseInt(userId, 10) : 0;
+    const entries = profileId
+      ? db.prepare("SELECT * FROM food_logs WHERE date = ? AND user_id = ? AND profile_id = ?").all(body.date, uid, parseInt(profileId, 10)) as FoodLogRow[]
+      : db.prepare("SELECT * FROM food_logs WHERE date = ? AND (user_id = ? OR user_id IS NULL)").all(body.date, uid) as FoodLogRow[];
 
     const totals = sumEntries(entries);
     const comparisons = compareNutritionToTargets(totals, body.profile);

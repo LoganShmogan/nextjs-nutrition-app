@@ -59,7 +59,7 @@ export function getDb(): Database.Database {
     );
 
     CREATE TABLE IF NOT EXISTS profiles (
-      id                   INTEGER PRIMARY KEY,
+      id                   INTEGER PRIMARY KEY AUTOINCREMENT,
       patient_name         TEXT NOT NULL,
       age                  INTEGER NOT NULL,
       gender               TEXT NOT NULL,
@@ -95,12 +95,18 @@ export function getDb(): Database.Database {
     );
   `);
 
-  // Migrations — add user_id to existing tables (silently ignored if column already exists)
   const migrations = [
     "ALTER TABLE food_logs     ADD COLUMN user_id INTEGER REFERENCES users(id)",
     "ALTER TABLE custom_foods  ADD COLUMN user_id INTEGER REFERENCES users(id)",
     "ALTER TABLE profiles      ADD COLUMN user_id INTEGER REFERENCES users(id)",
     "ALTER TABLE analyses      ADD COLUMN user_id INTEGER REFERENCES users(id)",
+    "ALTER TABLE food_logs     ADD COLUMN profile_id INTEGER REFERENCES profiles(id)",
+    "ALTER TABLE custom_foods  ADD COLUMN profile_id INTEGER REFERENCES profiles(id)",
+    "ALTER TABLE analyses      ADD COLUMN profile_id INTEGER REFERENCES profiles(id)",
+    "ALTER TABLE profiles      ADD COLUMN beep_test_level TEXT",
+    "ALTER TABLE profiles      ADD COLUMN vo2_max REAL",
+    "ALTER TABLE profiles      ADD COLUMN resting_heart_rate INTEGER",
+    "ALTER TABLE profiles      ADD COLUMN blood_pressure TEXT",
   ];
   for (const sql of migrations) {
     try { _db.exec(sql); } catch {}
