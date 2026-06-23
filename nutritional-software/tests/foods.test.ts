@@ -25,4 +25,45 @@ describe("foods data loader", () => {
     expect(results.length).toBeGreaterThan(0);
     expect(results[0].name.toLowerCase()).toContain("bread");
   });
+
+  it("returns null for a non-existent food id", async () => {
+    const food = await findFoodById("DOES_NOT_EXIST_999");
+    expect(food).toBeNull();
+  });
+
+  it("returns limited results when empty query is given", async () => {
+    const results = await searchFoods("", 5);
+    expect(results.length).toBeLessThanOrEqual(5);
+    expect(results.length).toBeGreaterThan(0);
+  });
+
+  it("respects the limit parameter", async () => {
+    const results = await searchFoods("", 3);
+    expect(results.length).toBeLessThanOrEqual(3);
+  });
+
+  it("returns foods with complete nutrient structures", async () => {
+    const foods = await getAllFoods();
+    const firstFood = foods[0];
+
+    expect(firstFood.nutrients).toBeDefined();
+    expect("energyKcal" in firstFood.nutrients).toBe(true);
+    expect("protein" in firstFood.nutrients).toBe(true);
+  });
+
+  it("search is case-insensitive", async () => {
+    const upper = await searchFoods("BREAD", 10);
+    const lower = await searchFoods("bread", 10);
+
+    expect(upper.length).toBe(lower.length);
+  });
+
+  it("all foods have an id and name", async () => {
+    const foods = await getAllFoods();
+
+    for (const food of foods.slice(0, 20)) {
+      expect(food.id).toBeTruthy();
+      expect(food.name).toBeTruthy();
+    }
+  });
 });
