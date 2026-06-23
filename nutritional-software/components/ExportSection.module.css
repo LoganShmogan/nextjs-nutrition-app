@@ -2,20 +2,20 @@
 
 .section {
   width: 100%;
-  border-top: 1px solid #ddd;
-  padding-top: 28px;
+  border-top: 1px solid #dfe5dc;
+  padding-top: 24px;
 }
 
 .heading {
   font-size: 18px;
   font-weight: 700;
-  color: #111;
+  color: #171717;
   margin-bottom: 4px;
 }
 
 .sub {
   font-size: 13px;
-  color: #666;
+  color: #5f6b5f;
   margin-bottom: 16px;
 }
 
@@ -27,22 +27,25 @@
 }
 
 .presetBtn {
-  padding: 6px 14px;
-  border: 1px solid #bbb;
-  background: #fff;
+  padding: 7px 14px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  background: #eef4ec;
   font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
-  color: #222;
+  color: #2f7d32;
+  font-family: inherit;
 }
 
 .presetBtn:hover {
-  background: #f0f0f0;
+  background: #e1eadf;
 }
 
 .presetActive {
-  border-color: #111;
-  background: #f0f0f0;
-  font-weight: 600;
+  border-color: #2f7d32;
+  background: #2f7d32;
+  color: #ffffff;
 }
 
 .customRow {
@@ -50,7 +53,7 @@
   gap: 16px;
   margin-bottom: 12px;
   font-size: 13px;
-  color: #333;
+  color: #171717;
 }
 
 .customRow label {
@@ -61,14 +64,23 @@
 }
 
 .customRow input {
-  padding: 6px 8px;
-  border: 1px solid #ccc;
+  padding: 8px 10px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
   font-size: 13px;
+  color: #171717;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+.customRow input:focus {
+  outline: 3px solid rgba(47, 125, 50, 0.18);
+  border-color: #2f7d32;
 }
 
 .rangeLabel {
   font-size: 12px;
-  color: #777;
+  color: #5f6b5f;
   margin-bottom: 16px;
 }
 
@@ -86,18 +98,20 @@
 
 .exportBtn {
   min-width: 200px;
-  padding: 9px 16px;
-  border: 1px solid #999;
-  background: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2f7d32;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  color: #111;
+  color: #ffffff;
   text-align: left;
+  font-family: inherit;
 }
 
 .exportBtn:hover:not(:disabled) {
-  background: #f0f0f0;
+  background: #236326;
 }
 
 .exportBtn:disabled {
@@ -107,11 +121,63 @@
 
 .btnDesc {
   font-size: 12px;
-  color: #888;
+  color: #5f6b5f;
 }
 
 .message {
   margin-top: 12px;
   font-size: 13px;
-  color: #555;
+  color: #5f6b5f;
+}
+
+@media (prefers-color-scheme: dark) {
+  .section {
+    border-top-color: #445047;
+  }
+
+  .heading,
+  .customRow,
+  .customRow input {
+    color: #f2f5f1;
+  }
+
+  .sub,
+  .rangeLabel,
+  .btnDesc,
+  .message {
+    color: #b8c2b7;
+  }
+
+  .presetBtn {
+    background: #3a443c;
+    border-color: #445047;
+    color: #3f9b45;
+  }
+
+  .presetBtn:hover {
+    background: #445047;
+  }
+
+  .presetActive {
+    background: #3f9b45;
+    border-color: #3f9b45;
+    color: #ffffff;
+  }
+
+  .customRow input {
+    background: #1b211d;
+    border-color: #445047;
+  }
+}
+
+@media (max-width: 600px) {
+  .customRow,
+  .exportItem {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .exportBtn {
+    width: 100%;
+  }
 }
